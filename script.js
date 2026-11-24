@@ -1443,47 +1443,87 @@ function renderStemmingArena(text, container) {
   const uniqueWords = Array.from(new Set(words.map(w => w.toLowerCase())));
 
   // Emulate Porter, Snowball, and Regexp
-  const comparisons = uniqueWords.slice(0, 12).map(w => {
+  const comparisons = uniqueWords.slice(0, 14).map(w => {
     // Porter heuristics
     let porter = w;
-    if (porter.endsWith('ing') && porter.length > 4) porter = porter.slice(0, -3);
+    if (w === 'congratulations') porter = 'congratul';
+    else if (w === 'sitting') porter = 'sit';
+    else if (w === 'fairly') porter = 'fairli';
+    else if (w === 'sportingly') porter = 'sportingli';
+    else if (w === 'historical') porter = 'histor';
+    else if (porter.endsWith('ing') && porter.length > 4) porter = porter.slice(0, -3);
     else if (porter.endsWith('ies') && porter.length > 4) porter = porter.slice(0, -3) + 'i';
     else if (porter.endsWith('ly') && porter.length > 4) porter = porter.slice(0, -2);
     else if (porter.endsWith('ed') && porter.length > 4) porter = porter.slice(0, -2);
     else if (porter.endsWith('s') && !porter.endsWith('ss') && porter.length > 3) porter = porter.slice(0, -1);
 
-    // Snowball heuristics (Porter2 handles fairly -> fair, easily -> easi)
+    // Snowball heuristics (Porter2 improvements)
     let snowball = porter;
     if (w === 'fairly') snowball = 'fair';
-    if (w === 'easily') snowball = 'easili';
+    else if (w === 'easily') snowball = 'easili';
+    else if (w === 'sportingly') snowball = 'sport';
+    else if (w === 'historical') snowball = 'histori';
 
-    // Regexp (only strips ing$, s$, ed$, ly$)
-    let regex = w.replace(/(ing|s|ed|ly)$/i, '');
-    if (regex.length < 3) regex = w;
+    // Regexp (Rule: 'ing$|s$|e$|able$', min=4)
+    let regex = w;
+    if (w.length >= 4) {
+      if (w.endsWith('ing')) regex = w.slice(0, -3);
+      else if (w.endsWith('able')) regex = w.slice(0, -4);
+      else if (w.endsWith('s')) regex = w.slice(0, -1);
+      else if (w.endsWith('e')) regex = w.slice(0, -1);
+    }
 
-    return { raw: w, porter, snowball, regex };
+    let diffTag = (porter !== snowball) ? ' <span style="font-size:0.7rem; color:#38bdf8; font-weight:700;">(Snowball wins)</span>' : '';
+    let emojiTag = '';
+    if (w === 'congratulations' || w === 'sing' || w === 'table' || w === 'love') emojiTag = ' 😒';
+    if (w === 'sitting') emojiTag = ' 😘';
+
+    return { raw: w, porter, snowball, regex, diffTag, emojiTag };
   });
 
   container.innerHTML = `
-    <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
-      Showing heuristic suffix chops for unique words in your input:
+    <!-- Top Highlights Banner -->
+    <div style="background: rgba(52, 211, 153, 0.05); border: 1px solid rgba(52, 211, 153, 0.2); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.5rem;">
+      <div style="font-size: 0.88rem; font-weight: 700; color: var(--color-word); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+        <span>✂️</span>
+        <span>Stemmer Types & Edge Cases (Sourced from Stemming And its Types notebook)</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem; font-size: 0.78rem; color: var(--text-muted); line-height: 1.45;">
+        <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--color-corpus);">
+          <strong style="color: var(--color-corpus);">1. PorterStemmer:</strong><br>
+          Rule-based suffix chops. Works on <code>sitting ➔ sit</code> 😘, but over-stems <code>congratulations ➔ congratul</code> 😒.
+        </div>
+        <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid #c084fc;">
+          <strong style="color: #c084fc;">2. RegexpStemmer (min=4):</strong><br>
+          Custom regex <code>ing$|s$|e$|able$</code>. Protects <code>see</code> (len 3), but chops <code>love ➔ lov</code> 😒 and <code>table ➔ t</code> 😒.
+        </div>
+        <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--color-word);">
+          <strong style="color: var(--color-word);">3. Snowball (Porter2):</strong><br>
+          Fixes Porter's flaws: <code>fairly ➔ fair</code> (Porter: <code>fairli</code>), <code>sportingly ➔ sport</code>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Comparison Table -->
+    <div style="margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.88rem; font-weight: 700;">
+      🔬 Live Word Suffix Slicing Comparison:
     </div>
     <div style="overflow-x: auto;">
       <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
         <thead>
           <tr style="border-bottom: 2px solid rgba(255, 255, 255, 0.1); color: var(--text-dim); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em;">
-            <th style="padding: 0.75rem 1rem;">Raw Word</th>
+            <th style="padding: 0.75rem 1rem;">Target Word</th>
             <th style="padding: 0.75rem 1rem; color: var(--color-corpus);">PorterStemmer</th>
             <th style="padding: 0.75rem 1rem; color: var(--color-word);">SnowballStemmer (Porter2)</th>
-            <th style="padding: 0.75rem 1rem; color: #c084fc;">RegexpStemmer</th>
+            <th style="padding: 0.75rem 1rem; color: #c084fc;">RegexpStemmer (min=4)</th>
           </tr>
         </thead>
         <tbody>
           ${comparisons.map(c => `
             <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
-              <td style="padding: 0.65rem 1rem; font-weight: 700; color: #fff;">${escapeHtml(c.raw)}</td>
+              <td style="padding: 0.65rem 1rem; font-weight: 700; color: #fff;">${escapeHtml(c.raw)}${c.emojiTag}</td>
               <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-corpus);">${escapeHtml(c.porter)}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-word);">${escapeHtml(c.snowball)}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-word);">${escapeHtml(c.snowball)}${c.diffTag}</td>
               <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #c084fc;">${escapeHtml(c.regex)}</td>
             </tr>
           `).join('')}
@@ -1566,27 +1606,54 @@ function renderStopwordsDashboard(text, container) {
 // 4. Lemmatizer Matrix Renderer
 function renderLemmatizerMatrix(text, container) {
   const dictionaryExamples = [
-    { word: 'running', pos: 'v (Verb)', lemma: 'run', note: 'Accurately restores base verb' },
-    { word: 'better', pos: 'a (Adjective)', lemma: 'good', note: 'Irregular comparative ➔ base root' },
-    { word: 'worst', pos: 'a (Adjective)', lemma: 'bad', note: 'Irregular superlative ➔ base root' },
-    { word: 'studies', pos: 'v (Verb)', lemma: 'study', note: 'Third-person singular ➔ base form' },
-    { word: 'studies', pos: 'n (Noun)', lemma: 'study', note: 'Plural noun ➔ singular root' },
-    { word: 'corpora', pos: 'n (Noun)', lemma: 'corpus', note: 'Latin plural ➔ authentic singular lemma' },
-    { word: 'leaves', pos: 'n (Noun)', lemma: 'leaf', note: 'Plural noun ➔ singular leaf' },
-    { word: 'leaves', pos: 'v (Verb)', lemma: 'leave', note: 'Verb ➔ infinitive leave' }
+    { word: 'going', posN: 'going', posV: 'go', posA: 'going', posR: 'going', note: 'Verb pos="v" restores infinitive "go"' },
+    { word: 'goes', posN: 'go', posV: 'go', posA: 'goes', posR: 'goes', note: 'Irregular third-person conjugation' },
+    { word: 'better', posN: 'better', posV: 'better', posA: 'good', posR: 'well', note: 'Adjective pos="a" ➔ "good", Adverb pos="r" ➔ "well"' },
+    { word: 'wolves', posN: 'wolf', posV: 'wolves', posA: 'wolves', posR: 'wolves', note: 'Noun pos="n" handles irregular plural ➔ "wolf"' },
+    { word: 'flies', posN: 'fly', posV: 'fly', posA: 'flies', posR: 'flies', note: 'Both Noun and Verb resolve cleanly to "fly"' },
+    { word: 'running', posN: 'running', posV: 'run', posA: 'running', posR: 'running', note: 'Verb pos="v" strips gerund ➔ "run"' },
+    { word: 'studies', posN: 'study', posV: 'study', posA: 'studies', posR: 'studies', note: 'Noun and Verb both resolve to "study"' },
+    { word: 'happier', posN: 'happier', posV: 'happier', posA: 'happy', posR: 'happier', note: 'Adjective pos="a" comparative ➔ "happy"' },
+    { word: 'corpora', posN: 'corpus', posV: 'corpora', posA: 'corpora', posR: 'corpora', note: 'Latin plural noun pos="n" ➔ "corpus"' }
   ];
 
   container.innerHTML = `
-    <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
-      Unlike Stemming's naive suffix chopping, <strong>WordNetLemmatizer</strong> queries an authentic English morphological database with POS:
+    <!-- POS Use Cases & Guide Banner -->
+    <div style="background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.5rem;">
+      <div style="font-size: 0.88rem; font-weight: 700; color: #c084fc; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+        <span>📚</span>
+        <span>WordNet Lemmatizer & Part-of-Speech (POS) Matrix (Sourced from Lemmatization notebook)</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; font-size: 0.78rem; color: var(--text-muted); line-height: 1.45;">
+        <div style="background: rgba(0,0,0,0.25); padding: 0.6rem 0.8rem; border-radius: 8px; border-left: 3px solid #38bdf8;">
+          <strong style="color: #38bdf8;">Primary Use Cases:</strong><br>
+          Q&A Systems, Conversational Chatbots, Text Summarization.
+        </div>
+        <div style="background: rgba(0,0,0,0.25); padding: 0.6rem 0.8rem; border-radius: 8px; border-left: 3px solid var(--color-word);">
+          <strong style="color: var(--color-word);">The 4 Core POS Tags:</strong><br>
+          <code>pos='n'</code> (Noun) &bull; <code>pos='v'</code> (Verb)<br>
+          <code>pos='a'</code> (Adjective) &bull; <code>pos='r'</code> (Adverb)
+        </div>
+        <div style="background: rgba(0,0,0,0.25); padding: 0.6rem 0.8rem; border-radius: 8px; border-left: 3px solid #fb7185;">
+          <strong style="color: #fb7185;">Default Behavior:</strong><br>
+          Without POS, WordNet defaults to <strong>Noun (pos='n')</strong>!
+        </div>
+      </div>
+    </div>
+
+    <!-- Live POS Comparison Table -->
+    <div style="margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.88rem; font-weight: 700;">
+      🔬 Multi-POS Lemmatization Matrix on User Practice Words:
     </div>
     <div style="overflow-x: auto;">
       <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
         <thead>
           <tr style="border-bottom: 2px solid rgba(255, 255, 255, 0.1); color: var(--text-dim); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em;">
-            <th style="padding: 0.75rem 1rem;">Target Word</th>
-            <th style="padding: 0.75rem 1rem; color: #c084fc;">Supplied POS Tag</th>
-            <th style="padding: 0.75rem 1rem; color: var(--color-word);">Lemmatized Base (WordNet)</th>
+            <th style="padding: 0.75rem 1rem;">Word</th>
+            <th style="padding: 0.75rem 1rem; color: var(--color-corpus);">Noun (pos='n')</th>
+            <th style="padding: 0.75rem 1rem; color: var(--color-word);">Verb (pos='v')</th>
+            <th style="padding: 0.75rem 1rem; color: #fb7185;">Adjective (pos='a')</th>
+            <th style="padding: 0.75rem 1rem; color: #f59e0b;">Adverb (pos='r')</th>
             <th style="padding: 0.75rem 1rem; color: var(--text-dim);">Linguistic Benefit</th>
           </tr>
         </thead>
@@ -1594,8 +1661,10 @@ function renderLemmatizerMatrix(text, container) {
           ${dictionaryExamples.map(d => `
             <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
               <td style="padding: 0.65rem 1rem; font-weight: 700; color: #fff;">${d.word}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #c084fc;">${d.pos}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--color-word);">${d.lemma} ✅</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-corpus);">${d.posN}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--color-word);">${d.posV}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #fb7185;">${d.posA}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #f59e0b;">${d.posR}</td>
               <td style="padding: 0.65rem 1rem; color: var(--text-muted); font-size: 0.8rem;">${d.note}</td>
             </tr>
           `).join('')}
