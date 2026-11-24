@@ -1630,6 +1630,474 @@ a {
 }
 
 /* =========================================================
+   APPLE-INSPIRED NLTK VISUAL STUDIO STYLES
+   Minimalist, Glassmorphism, Visual Transformations, Zero Clutter
+   ========================================================= */
+.apple-studio-wrapper {
+  max-width: 1080px;
+  margin: 0 auto 3.5rem auto;
+}
+
+/* Apple-style Segmented Navigation Control */
+.apple-segmented-control {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  padding: 0.4rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.apple-segment-pill {
+  flex: 1;
+  min-width: 130px;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.apple-segment-pill:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.apple-segment-pill.active {
+  background: #1e293b;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+}
+
+.apple-segment-pill.active.pill-token { border-color: var(--color-corpus-border); color: var(--color-corpus); }
+.apple-segment-pill.active.pill-stopwords { border-color: rgba(244, 63, 94, 0.4); color: #fb7185; }
+.apple-segment-pill.active.pill-stem { border-color: var(--color-word-border); color: var(--color-word); }
+.apple-segment-pill.active.pill-lemma { border-color: var(--color-document-border); color: var(--color-document); }
+.apple-segment-pill.active.pill-freq { border-color: var(--color-vocab-border); color: var(--color-vocab); }
+
+/* The Apple-style Visual Stage Card */
+.apple-studio-card {
+  background: rgba(17, 24, 39, 0.75);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 22px;
+  padding: 2.25rem 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  margin-bottom: 2.5rem;
+  position: relative;
+  transition: var(--transition);
+}
+
+.studio-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.studio-mode-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  letter-spacing: -0.02em;
+}
+
+.studio-rule-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-family: monospace;
+}
+
+/* Studio Live Input */
+.apple-input-container {
+  margin-bottom: 1.75rem;
+}
+
+.apple-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.apple-textarea {
+  width: 100%;
+  min-height: 80px;
+  background: #090e17;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.85rem 1.1rem;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  resize: vertical;
+  transition: var(--transition);
+}
+
+.apple-textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25);
+}
+
+/* Visual Transformation Canvas */
+.visual-transformation-canvas {
+  background: #070b12;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.canvas-step-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Transformation: Tokenization */
+.apple-doc-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.apple-doc-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.doc-sentence-header {
+  font-size: 0.82rem;
+  color: var(--color-document);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Transformation: Stopwords Remover */
+.stopwords-legend-bar {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.chip-stopword {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px dashed rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  text-decoration: line-through;
+  opacity: 0.65;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: var(--transition);
+}
+
+.chip-stopword:hover {
+  opacity: 1;
+  background: rgba(239, 68, 68, 0.16);
+}
+
+.chip-keyword {
+  background: rgba(52, 211, 153, 0.12);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  color: #34d399;
+  font-weight: 700;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.15);
+}
+
+/* Transformation: Suffix Slicer Cards (Stemming) */
+.slice-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.slice-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+.slice-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(52, 211, 153, 0.35);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.slice-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.slice-formula-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  margin: 0.2rem 0;
+}
+
+.slice-original {
+  color: #e2e8f0;
+}
+
+.slice-arrow {
+  color: var(--text-dim);
+}
+
+.slice-stem-badge {
+  background: var(--color-word-bg);
+  color: var(--color-word);
+  border: 1px solid var(--color-word-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 800;
+}
+
+.slice-cut-label {
+  font-size: 0.72rem;
+  color: #f87171;
+}
+
+/* Transformation: Lemmatization Smart Roots */
+.lemma-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.lemma-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(192, 132, 252, 0.25);
+  border-radius: 12px;
+  padding: 1.1rem;
+  transition: var(--transition);
+}
+
+.lemma-card:hover {
+  border-color: rgba(192, 132, 252, 0.5);
+  transform: translateY(-2px);
+}
+
+.lemma-pos-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(192, 132, 252, 0.15);
+  color: #c084fc;
+}
+
+.lemma-resolution-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.6rem 0 0.3rem 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.lemma-input-word {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.lemma-result-badge {
+  background: rgba(192, 132, 252, 0.2);
+  color: #d8b4fe;
+  border: 1px solid rgba(192, 132, 252, 0.4);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.lemma-explanation {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+/* Transformation: FreqDist Ranking Bars */
+.freq-bars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.freq-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.freq-word-label {
+  width: 110px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.freq-track {
+  flex-grow: 1;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.freq-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.freq-count-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-vocab);
+  min-width: 45px;
+  text-align: right;
+  font-family: monospace;
+}
+
+/* Apple-style Code Drawer */
+.apple-code-drawer {
+  background: #05080e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.code-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.copy-pill-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.copy-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.minimal-python-code {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 0.9rem;
+  color: #38bdf8;
+  line-height: 1.6;
+}
+
+/* Quick Install Banner (Apple Style) */
+.apple-install-banner {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.install-command-chip {
+  background: #020617;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: #34d399;
+}
+
+/* =========================================================
    RESPONSIVE
    ========================================================= */
 @media (max-width: 768px) {

@@ -562,6 +562,365 @@ function inspectTreeNode(key) {
   }
 }
 
+// =========================================================
+// APPLE-INSPIRED NLTK VISUAL STUDIO LOGIC
+// =========================================================
+let currentAppleMode = 'token';
+
+const APPLE_PRESETS = {
+  token: "Natural Language Processing with NLTK is fascinating! Computers learn to understand human languages easily.",
+  stopwords: "This is a great study website for learning NLP and mastering AI with Python.",
+  stem: "The programmer is studying algorithms, running experiments, and writing better programs.",
+  lemma: "The best corpora show that running wolves and studying better algorithms help science.",
+  freq: "NLP helps computers learn. Natural language processing and NLP help humans. AI and NLP are great!"
+};
+
+const APPLE_SNIPPETS = {
+  token: `from nltk.tokenize import sent_tokenize, word_tokenize
+
+sentences = sent_tokenize(text)
+words = [word_tokenize(s) for s in sentences]`,
+  stopwords: `from nltk.corpus import stopwords
+
+stop_words = set(stopwords.words('english'))
+keywords = [w for w in tokens if w.lower() not in stop_words and w.isalnum()]`,
+  stem: `from nltk.stem import PorterStemmer
+
+ps = PorterStemmer()
+stemmed_words = [ps.stem(w) for w in tokens]`,
+  lemma: `from nltk.stem import WordNetLemmatizer
+
+lemmatizer = WordNetLemmatizer()
+# Lemmatize with part-of-speech context
+lemma = lemmatizer.lemmatize("better", pos="a")  # Output: 'good'`,
+  freq: `from nltk.probability import FreqDist
+
+fdist = FreqDist(tokens)
+top_keywords = fdist.most_common(5)`
+};
+
+const APPLE_MODE_INFO = {
+  token: {
+    title: "✂️ Visual Tokenizer",
+    badge: "Paragraph ➔ Sentences ➔ Words",
+    badgeColor: "var(--color-corpus)",
+    label: "Input text to break into sentences and tokens:"
+  },
+  stopwords: {
+    title: "🛑 Stopwords Filter",
+    badge: "Noise Elimination",
+    badgeColor: "#fb7185",
+    label: "Input text to see filler words get filtered out:"
+  },
+  stem: {
+    title: "🌱 Suffix Slicer (Stemming)",
+    badge: "Heuristic Suffix Stripping",
+    badgeColor: "var(--color-word)",
+    label: "Input words to slice off suffixes into root stems:"
+  },
+  lemma: {
+    title: "📚 Smart Roots (Lemmatization)",
+    badge: "Dictionary-Backed Roots",
+    badgeColor: "var(--color-document)",
+    label: "Input inflected words to resolve to true dictionary lemmas:"
+  },
+  freq: {
+    title: "📊 Keyword Frequency (FreqDist)",
+    badge: "Vocabulary Frequency",
+    badgeColor: "var(--color-vocab)",
+    label: "Input text to discover top keywords and ranking bars:"
+  }
+};
+
+const LEMMA_DICTIONARY = {
+  'better': { lemma: 'good', pos: 'Adjective' },
+  'best': { lemma: 'good', pos: 'Adjective' },
+  'worse': { lemma: 'bad', pos: 'Adjective' },
+  'worst': { lemma: 'bad', pos: 'Adjective' },
+  'corpora': { lemma: 'corpus', pos: 'Noun' },
+  'wolves': { lemma: 'wolf', pos: 'Noun' },
+  'running': { lemma: 'run', pos: 'Verb' },
+  'ran': { lemma: 'run', pos: 'Verb' },
+  'runs': { lemma: 'run', pos: 'Verb' },
+  'studies': { lemma: 'study', pos: 'Verb / Noun' },
+  'studying': { lemma: 'study', pos: 'Verb' },
+  'crying': { lemma: 'cry', pos: 'Verb' },
+  'cries': { lemma: 'cry', pos: 'Verb' },
+  'algorithms': { lemma: 'algorithm', pos: 'Noun' },
+  'computers': { lemma: 'computer', pos: 'Noun' },
+  'languages': { lemma: 'language', pos: 'Noun' }
+};
+
+function switchAppleMode(mode) {
+  currentAppleMode = mode;
+
+  // Update Segmented Control Buttons
+  const buttons = document.querySelectorAll('.apple-segment-pill');
+  buttons.forEach(btn => {
+    btn.classList.remove('active', 'pill-token', 'pill-stopwords', 'pill-stem', 'pill-lemma', 'pill-freq');
+    if (btn.getAttribute('data-mode') === mode) {
+      btn.classList.add('active', `pill-${mode}`);
+    }
+  });
+
+  const info = APPLE_MODE_INFO[mode];
+  const titleEl = document.getElementById('apple-studio-title');
+  const badgeEl = document.getElementById('apple-studio-badge');
+  const labelEl = document.getElementById('apple-studio-label');
+  const textareaEl = document.getElementById('apple-studio-input');
+  const snippetEl = document.getElementById('apple-code-snippet');
+
+  if (titleEl) titleEl.textContent = info.title;
+  if (badgeEl) {
+    badgeEl.textContent = info.badge;
+    badgeEl.style.color = info.badgeColor;
+  }
+  if (labelEl) labelEl.textContent = info.label;
+  if (textareaEl && APPLE_PRESETS[mode]) {
+    textareaEl.value = APPLE_PRESETS[mode];
+  }
+  if (snippetEl && APPLE_SNIPPETS[mode]) {
+    snippetEl.textContent = APPLE_SNIPPETS[mode];
+  }
+
+  updateAppleVisualStage();
+}
+
+function updateAppleVisualStage() {
+  const textareaEl = document.getElementById('apple-studio-input');
+  const canvasEl = document.getElementById('apple-canvas-content');
+  if (!textareaEl || !canvasEl) return;
+
+  const text = textareaEl.value.trim();
+  if (!text) {
+    canvasEl.innerHTML = '<span style="color:#6b7280; font-style:italic;">Type some text above to see visual transformation.</span>';
+    return;
+  }
+
+  if (currentAppleMode === 'token') {
+    renderAppleTokenization(text, canvasEl);
+  } else if (currentAppleMode === 'stopwords') {
+    renderAppleStopwords(text, canvasEl);
+  } else if (currentAppleMode === 'stem') {
+    renderAppleStemming(text, canvasEl);
+  } else if (currentAppleMode === 'lemma') {
+    renderAppleLemmatization(text, canvasEl);
+  } else if (currentAppleMode === 'freq') {
+    renderAppleFreqDist(text, canvasEl);
+  }
+}
+
+// 1. Render Visual Tokenization
+function renderAppleTokenization(text, container) {
+  const docMatches = text.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g) || [];
+  const sents = docMatches.map(s => s.trim()).filter(s => s.length > 0);
+
+  if (sents.length === 0) {
+    container.innerHTML = '<span style="color:#6b7280;">No sentences detected.</span>';
+    return;
+  }
+
+  let html = `<div class="apple-doc-flow">`;
+  sents.forEach((sent, sIdx) => {
+    const tokens = sent.match(/\b[A-Za-z0-9'-]+\b|[.,!?;:()]/g) || [];
+    html += `
+      <div class="apple-doc-item">
+        <div class="doc-sentence-header">
+          <span>📄 Document ${sIdx + 1} (${tokens.length} tokens):</span>
+          <span style="font-weight: normal; color: #cbd5e1; font-style: italic;">"${sent}"</span>
+        </div>
+        <div class="token-list">
+          ${tokens.map((tok, tIdx) => `
+            <span class="token-chip" style="font-size:0.85rem; padding:0.3rem 0.65rem;">
+              <span class="token-index">#${tIdx}</span>
+              <span>${tok}</span>
+            </span>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  container.innerHTML = html;
+}
+
+// 2. Render Visual Stopwords Filtering
+function renderAppleStopwords(text, container) {
+  const tokens = text.match(/\b[A-Za-z0-9'-]+\b/g) || [];
+  let stopCount = 0;
+  let keyCount = 0;
+
+  const chipsHtml = tokens.map(tok => {
+    const isStop = NLTK_STOPWORDS.has(tok.toLowerCase());
+    if (isStop) {
+      stopCount++;
+      return `
+        <span class="chip-stopword" title="Filtered Stopword">
+          <span>${tok}</span>
+          <span style="font-size:0.7rem; opacity:0.8;">❌</span>
+        </span>
+      `;
+    } else {
+      keyCount++;
+      return `
+        <span class="chip-keyword" title="Informative Keyword">
+          <span>${tok}</span>
+          <span style="font-size:0.7rem; color:var(--color-word);">⭐</span>
+        </span>
+      `;
+    }
+  }).join(' ');
+
+  container.innerHTML = `
+    <div class="stopwords-legend-bar">
+      <div class="legend-item" style="color: #34d399;">
+        <span>⭐ <strong>${keyCount}</strong> Informative Keywords Kept</span>
+      </div>
+      <div class="legend-item" style="color: #f87171;">
+        <span>❌ <strong>${stopCount}</strong> Low-information Stopwords Removed</span>
+      </div>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:0.5rem; line-height:2.2;">
+      ${chipsHtml}
+    </div>
+  `;
+}
+
+// 3. Render Visual Stemming (Suffix Slicer)
+function renderAppleStemming(text, container) {
+  const tokens = text.match(/\b[A-Za-z0-9'-]+\b/g) || [];
+  const uniqueTokens = Array.from(new Set(tokens));
+
+  if (uniqueTokens.length === 0) {
+    container.innerHTML = '<span style="color:#6b7280;">No words to stem.</span>';
+    return;
+  }
+
+  const cardsHtml = uniqueTokens.slice(0, 12).map(orig => {
+    const stem = simulateStem(orig);
+    const suffix = orig.length > stem.length ? orig.slice(stem.length) : (orig !== stem ? 'changed' : 'none');
+    return `
+      <div class="slice-card">
+        <div class="slice-top">
+          <span>Word</span>
+          <span class="slice-cut-label">${suffix !== 'none' ? `✂️ cut: -${suffix}` : 'no suffix'}</span>
+        </div>
+        <div class="slice-formula-row">
+          <span class="slice-original">${orig}</span>
+          <span class="slice-arrow">➔</span>
+          <span class="slice-stem-badge">${stem}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="slice-card-grid">
+      ${cardsHtml}
+    </div>
+    <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-dim);">
+      💡 <strong>Stemming Rule:</strong> Chops affixes quickly using rules without checking a dictionary.
+    </p>
+  `;
+}
+
+// 4. Render Visual Lemmatization (Smart Roots)
+function renderAppleLemmatization(text, container) {
+  const tokens = text.match(/\b[A-Za-z0-9'-]+\b/g) || [];
+  const uniqueTokens = Array.from(new Set(tokens.map(t => t.toLowerCase())));
+
+  // Pick sample words that demonstrate lemmatization clearly
+  const demoList = ['better', 'running', 'studies', 'corpora', 'wolves', 'crying'];
+  uniqueTokens.forEach(t => {
+    if (LEMMA_DICTIONARY[t] && !demoList.includes(t)) demoList.push(t);
+  });
+
+  const cardsHtml = demoList.slice(0, 8).map(w => {
+    const entry = LEMMA_DICTIONARY[w] || { lemma: simulateStem(w), pos: 'Word' };
+    return `
+      <div class="lemma-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span class="lemma-pos-tag">${entry.pos}</span>
+          <span style="font-size:0.75rem; color:#34d399;">✓ Valid Root</span>
+        </div>
+        <div class="lemma-resolution-row">
+          <span class="lemma-input-word">${w}</span>
+          <span style="color:var(--text-dim); font-size:1.1rem;">➔</span>
+          <span class="lemma-result-badge">${entry.lemma}</span>
+        </div>
+        <div class="lemma-explanation">
+          ${w === 'better' ? 'Recognized as superlative of "good"' : (w === 'corpora' ? 'Irregular plural of "corpus"' : 'Dictionary base form')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="lemma-card-grid">
+      ${cardsHtml}
+    </div>
+    <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-dim);">
+      💡 <strong>Lemmatization Advantage:</strong> Looks up in WordNet dictionary to always return a valid, meaningful English root word.
+    </p>
+  `;
+}
+
+// 5. Render Visual FreqDist
+function renderAppleFreqDist(text, container) {
+  const words = (text.match(/\b[A-Za-z0-9'-]+\b/g) || []).map(w => w.toLowerCase());
+  const freqMap = new Map();
+  words.forEach(w => freqMap.set(w, (freqMap.get(w) || 0) + 1));
+
+  const sorted = Array.from(freqMap.entries()).sort((a, b) => b[1] - a[1]);
+  if (sorted.length === 0) {
+    container.innerHTML = '<span style="color:#6b7280;">No words found.</span>';
+    return;
+  }
+
+  const maxCount = sorted[0][1] || 1;
+  const top10 = sorted.slice(0, 8);
+
+  const barsHtml = top10.map(([w, c]) => {
+    const pct = Math.max(8, Math.round((c / maxCount) * 100));
+    return `
+      <div class="freq-bar-row">
+        <span class="freq-word-label" title="${w}">${w}</span>
+        <div class="freq-track">
+          <div class="freq-fill" style="width: ${pct}%;"></div>
+        </div>
+        <span class="freq-count-badge">${c}x</span>
+      </div>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div style="margin-bottom: 0.85rem; font-size: 0.85rem; color: var(--text-muted);">
+      Vocabulary Size: <strong>${freqMap.size} Unique Words</strong> across <strong>${words.length} Total Tokens</strong>
+    </div>
+    <div class="freq-bars-list">
+      ${barsHtml}
+    </div>
+  `;
+}
+
+// 1-Click Code Copy
+function copyAppleCode() {
+  const snippetEl = document.getElementById('apple-code-snippet');
+  const btnEl = document.getElementById('apple-copy-btn');
+  if (!snippetEl) return;
+
+  navigator.clipboard.writeText(snippetEl.textContent).then(() => {
+    if (btnEl) {
+      btnEl.textContent = 'Copied! ✓';
+      btnEl.style.background = '#059669';
+      setTimeout(() => {
+        btnEl.textContent = 'Copy Code';
+        btnEl.style.background = '';
+      }, 2000);
+    }
+  });
+}
+
 // Standalone Page Helpers
 function initCorpusDemo() {
   const btnAdd = document.getElementById('btn-add-doc');
@@ -709,6 +1068,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize NLTK Tree Inspector if present
   if (document.getElementById('inspector-title')) {
     inspectTreeNode('word_tokenize');
+  }
+
+  // Initialize Apple Visual Studio if present
+  if (document.getElementById('apple-studio-input')) {
+    const appleInput = document.getElementById('apple-studio-input');
+    appleInput.addEventListener('input', updateAppleVisualStage);
+    switchAppleMode('token');
   }
 
   initCorpusDemo();

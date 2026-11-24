@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NLTK Library Masterclass - Start NLP</title>
+  <title>NLTK Visual Studio - Start NLP</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Top Global Navbar -->
+  <!-- Top Global Navbar (Apple Glass Style) -->
   <header class="top-navbar">
     <a href="index.html" class="brand-logo">
       <div class="brand-icon">📚</div>
@@ -19,747 +19,224 @@
     </a>
     <ul class="nav-links">
       <li><a href="index.html" class="nav-link">Home</a></li>
-      <li><a href="study.html" class="nav-link">NLP Pillars</a></li>
-      <li><a href="nltk.html" class="nav-link active">NLTK Library</a></li>
+      <li><a href="study.html" class="nav-link">🏛️ NLP Pillars</a></li>
+      <li><a href="nltk.html" class="nav-link active">🐍 NLTK Studio</a></li>
     </ul>
-    <a href="index.html" class="nav-cta-btn" style="background: rgba(255,255,255,0.08); box-shadow: none;">
-      <span>← Back to Home</span>
+    <a href="study.html" class="nav-cta-btn" style="background: rgba(255,255,255,0.08); box-shadow: none;">
+      <span>← NLP Pillars</span>
     </a>
   </header>
 
-  <!-- Upper Sub-headings Bar: Quick Jump to NLTK Sections -->
-  <nav class="upper-subheadings-wrapper">
-    <div class="upper-subheadings-title">⚡ Jump to NLTK Topics (Click to Scroll):</div>
-    <div class="upper-subheadings-bar">
-      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('nltk-import-tree')" style="box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);">
-        <span>🌳 Visual Import Tree</span>
-      </button>
-      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('nltk-live-runner')">
-        <span>🧪 Live NLTK Simulator</span>
-      </button>
-      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('nltk-install')">
-        <span>📥 1. Installation & Setup</span>
-      </button>
-      <button class="subheading-btn btn-document" onclick="scrollToSubtopic('nltk-tokenization')">
-        <span>✂️ 2. Tokenization</span>
-      </button>
-      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('nltk-corpora')">
-        <span>📚 3. Corpora & Datasets</span>
-      </button>
-      <button class="subheading-btn btn-vocab" onclick="scrollToSubtopic('nltk-stopwords')">
-        <span>🛑 4. Stopwords Removal</span>
-      </button>
-      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('nltk-stem-lemma')">
-        <span>🌱 5. Stemming & Lemmatization</span>
-      </button>
-      <button class="subheading-btn btn-document" onclick="scrollToSubtopic('nltk-freqdist')">
-        <span>📊 6. FreqDist (Vocabulary)</span>
-      </button>
-      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('nltk-pos-ner')">
-        <span>🏷️ 7. POS & NER</span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Layout: Sidebar + Main Content -->
-  <div class="study-layout">
+  <!-- Main Content Layout (Clean, Centered, Apple Aesthetic) -->
+  <main class="study-content" style="max-width: 1160px; margin: 0 auto; padding: 2.5rem 2rem;">
     
-    <!-- Left Sidebar -->
-    <aside class="study-sidebar">
-      <div class="sidebar-category">Study Modules</div>
-      
-      <!-- Module 1: NLP Pillars Link -->
-      <div class="topic-card-box" style="margin-bottom: 1rem;">
-        <a href="study.html" class="topic-main-link" style="color: var(--text-muted);">
-          <span>🏛️ Topic 1: NLP Pillars</span>
-          <span style="font-size: 0.75rem; color: var(--color-corpus);">View ➔</span>
-        </a>
+    <!-- Hero Header -->
+    <header style="text-align: center; margin-bottom: 2.5rem;">
+      <div class="hero-badge" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
+        <span>✨ Interactive NLP Studio</span>
       </div>
+      <h1 style="font-size: 3.2rem; font-weight: 800; letter-spacing: -0.03em; margin: 0.5rem 0 1rem 0;">
+        NLTK <span style="background: linear-gradient(135deg, #38bdf8, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Visual Studio</span>
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1.15rem; max-width: 680px; margin: 0 auto;">
+        See how human text transforms in Python — visual, interactive, zero walls of text. Click any mode below to see it live.
+      </p>
+    </header>
 
-      <!-- Module 2: NLTK Library (Active) -->
-      <div class="topic-card-box">
-        <div class="topic-main-link">
-          <span>🐍 Topic 2: NLTK Library</span>
-          <span class="topic-badge-active">Active</span>
+    <!-- Quick Apple Install Strip -->
+    <div class="apple-install-banner">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span style="font-size: 1.2rem;">📦</span>
+        <div>
+          <strong style="font-size: 0.95rem; color: #fff;">Quick Setup</strong>
+          <span style="display: block; font-size: 0.8rem; color: var(--text-dim);">One-line terminal installation for Python</span>
         </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+        <code class="install-command-chip">pip install nltk</code>
+        <code class="install-command-chip">nltk.download('punkt')</code>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         THE CORE ATTRACTION: APPLE-STYLE VISUAL STUDIO
+         ========================================================= -->
+    <section class="apple-studio-wrapper">
+      
+      <!-- Segmented Pill Selector (Apple Style) -->
+      <nav class="apple-segmented-control" aria-label="NLTK Visual Tools">
+        <button class="apple-segment-pill active pill-token" data-mode="token" onclick="switchAppleMode('token')">
+          <span>✂️ Tokenize</span>
+        </button>
+        <button class="apple-segment-pill" data-mode="stopwords" onclick="switchAppleMode('stopwords')">
+          <span>🛑 Stopwords</span>
+        </button>
+        <button class="apple-segment-pill" data-mode="stem" onclick="switchAppleMode('stem')">
+          <span>🌱 Stemming</span>
+        </button>
+        <button class="apple-segment-pill" data-mode="lemma" onclick="switchAppleMode('lemma')">
+          <span>📚 Lemmatize</span>
+        </button>
+        <button class="apple-segment-pill" data-mode="freq" onclick="switchAppleMode('freq')">
+          <span>📊 FreqDist</span>
+        </button>
+      </nav>
+
+      <!-- The Main Interactive Studio Stage Card -->
+      <div class="apple-studio-card">
         
-        <ul class="topic-sublist">
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-import-tree')">
-              <span>• Visual Import Tree</span>
-              <span class="item-badge" style="background:var(--color-corpus-bg); color:var(--color-corpus);">Tree</span>
-            </a>
-          </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-live-runner')">
-              <span>• Live Simulator</span>
-              <span class="item-badge" style="background:var(--color-word-bg); color:var(--color-word);">Runner</span>
-            </a>
-          </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-install')">
-              <span>• Install & Setup</span>
-              <span class="item-badge">pip</span>
-            </a>
-          </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-tokenization')">
-              <span>• Tokenization</span>
-              <span class="item-badge">word/sent</span>
-            </a>
-          </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-corpora')">
-              <span>• Corpora & Datasets</span>
-              <span class="item-badge">corpus</span>
-            </a>
-          </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-stopwords')">
-              <span>• Stopwords</span>
-              <span class="item-badge">filter</span>
-            </a>
-          </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-stem-lemma')">
-              <span>• Stem & Lemmatize</span>
-              <span class="item-badge">roots</span>
-            </a>
-          </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-freqdist')">
-              <span>• FreqDist (Vocab)</span>
-              <span class="item-badge">counts</span>
-            </a>
-          </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-pos-ner')">
-              <span>• POS & NER</span>
-              <span class="item-badge">grammar</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div class="sidebar-footer-note">
-        <strong>Python NLTK v3.8+</strong>
-        <p style="margin-top:0.35rem; line-height:1.4;">
-          The industry-standard toolkit for symbolic and statistical Natural Language Processing.
-        </p>
-      </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="study-content">
-      
-      <!-- Module Header -->
-      <header style="margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
-        <div class="hero-badge" style="background: rgba(52, 211, 153, 0.15); border-color: var(--color-word-border); color: var(--color-word);">
-          <span>🐍 Python Natural Language Toolkit (NLTK)</span>
-        </div>
-        <h1 style="font-size: 2.6rem; font-weight: 800; margin-top: 0.5rem; letter-spacing: -0.02em;">
-          NLTK Library Complete Guide
-        </h1>
-        <p style="color: var(--text-muted); font-size: 1.15rem; max-width: 850px; margin-top: 0.5rem;">
-          Learn how to install NLTK, download essential corpora, and use every key function with real Python code, input/output, and industry use cases.
-        </p>
-      </header>
-
-      <!-- =========================================================
-           VISUAL NLTK ARCHITECTURE & IMPORT TREE DIAGRAM
-           ========================================================= -->
-      <section class="nltk-tree-container" id="nltk-import-tree">
-        <div class="tree-header-wrapper">
-          <div class="tree-main-title">
-            <span>🌳 NLTK Library Architecture & Import Tree</span>
+        <!-- Studio Header -->
+        <div class="studio-top-bar">
+          <div class="studio-mode-title" id="apple-studio-title" style="color: #fff;">
+            ✂️ Visual Tokenizer
           </div>
-          <p class="tree-main-desc">
-            Explore how much and what you import from NLTK. Click any node in the tree below to inspect <strong>what it does</strong> and <strong>how to use it with Python code</strong>.
-          </p>
-        </div>
-
-        <!-- Root Node: nltk -->
-        <div class="tree-root-center">
-          <div class="tree-root-node">
-            <span>📦 nltk</span>
-            <span class="root-tag">Master Library</span>
-          </div>
-          <div class="tree-root-stem-line"></div>
-        </div>
-
-        <!-- 7 Module Branches Grid -->
-        <div class="tree-branches-grid">
-          
-          <!-- Branch 1: tokenize -->
-          <div class="tree-branch-card" style="border-top: 3px solid var(--color-corpus);">
-            <div class="branch-header">
-              <span class="branch-name" style="color: var(--color-corpus);">🌿 .tokenize</span>
-              <span class="branch-role">Tokenization</span>
-            </div>
-            <ul class="tree-leaf-list">
-              <li>
-                <button class="tree-leaf-btn active" data-key="word_tokenize" onclick="inspectTreeNode('word_tokenize')">
-                  <span>word_tokenize</span>
-                  <span class="leaf-type-badge">func</span>
-                </button>
-              </li>
-              <li>
-                <button class="tree-leaf-btn" data-key="sent_tokenize" onclick="inspectTreeNode('sent_tokenize')">
-                  <span>sent_tokenize</span>
-                  <span class="leaf-type-badge">func</span>
-                </button>
-              </li>
-              <li>
-                <button class="tree-leaf-btn" data-key="RegexpTokenizer" onclick="inspectTreeNode('RegexpTokenizer')">
-                  <span>RegexpTokenizer</span>
-                  <span class="leaf-type-badge">class</span>
-                </button>
-              </li>
-              <li>
-                <button class="tree-leaf-btn" data-key="wordpunct_tokenize" onclick="inspectTreeNode('wordpunct_tokenize')">
-                  <span>wordpunct_tokenize</span>
-                  <span class="leaf-type-badge">func</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Branch 2: corpus -->
-          <div class="tree-branch-card" style="border-top: 3px solid var(--color-document);">
-            <div class="branch-header">
-              <span class="branch-name" style="color: var(--color-document);">🌿 .corpus</span>
-              <span class="branch-role">Datasets</span>
-            </div>
-            <ul class="tree-leaf-list">
-              <li>
-                <button class="tree-leaf-btn" data-key="stopwords" onclick="inspectTreeNode('stopwords')">
-                  <span>stopwords</span>
-                  <span class="leaf-type-badge">data</span>
-                </button>
-              </li>
-              <li>
-                <button class="tree-leaf-btn" data-key="gutenberg" onclick="inspectTreeNode('gutenberg')">
-                  <span>gutenberg</span>
-                  <span class="leaf-type-badge">books</span>
-                </button>
-              </li>
-              <li>
-                <button class="tree-leaf-btn" data-key="wordnet" onclick="inspectTreeNode('wordnet')">
-                  <span>wordnet</span>
-                  <span class="leaf-type-badge">lexicon</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Branch 3: stem -->
-          <div class="tree-branch-card" style="border-top: 3px solid var(--color-word);">
-            <div class="branch-header">
-              <span class="branch-name" style="color: var(--color-word);">🌿 .stem</span>
-              <span class="branch-role">Stem & Lemma</span>
-            </div>
-            <ul class="tree-leaf-list">
-              <li>
-                <button class="tree-leaf-btn" data-key="PorterStemmer" onclick="inspectTreeNode('PorterStemmer')">
-                  <span>PorterStemmer</span>
-                  <span class="leaf-type-badge">class</span>
-                </button>
-              </li>
-              <li>
-                <button class="tree-leaf-btn" data-key="SnowballStemmer" onclick="inspectTreeNode('SnowballStemmer')">
-                  <span>SnowballStemmer</span>
-                  <span class="leaf-type-badge">class</span>
-                </button>
-              </li>
-              <li>
-                <button class="tree-leaf-btn" data-key="WordNetLemmatizer" onclick="inspectTreeNode('WordNetLemmatizer')">
-                  <span>WordNetLemmatizer</span>
-                  <span class="leaf-type-badge">class</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Branch 4: probability -->
-          <div class="tree-branch-card" style="border-top: 3px solid var(--color-vocab);">
-            <div class="branch-header">
-              <span class="branch-name" style="color: var(--color-vocab);">🌿 .probability</span>
-              <span class="branch-role">Statistics</span>
-            </div>
-            <ul class="tree-leaf-list">
-              <li>
-                <button class="tree-leaf-btn" data-key="FreqDist" onclick="inspectTreeNode('FreqDist')">
-                  <span>FreqDist</span>
-                  <span class="leaf-type-badge">class</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Branch 5: tag -->
-          <div class="tree-branch-card" style="border-top: 3px solid #ec4899;">
-            <div class="branch-header">
-              <span class="branch-name" style="color: #ec4899;">🌿 .tag</span>
-              <span class="branch-role">Grammar</span>
-            </div>
-            <ul class="tree-leaf-list">
-              <li>
-                <button class="tree-leaf-btn" data-key="pos_tag" onclick="inspectTreeNode('pos_tag')">
-                  <span>pos_tag</span>
-                  <span class="leaf-type-badge">func</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Branch 6: chunk -->
-          <div class="tree-branch-card" style="border-top: 3px solid #06b6d4;">
-            <div class="branch-header">
-              <span class="branch-name" style="color: #06b6d4;">🌿 .chunk</span>
-              <span class="branch-role">NER & Parsing</span>
-            </div>
-            <ul class="tree-leaf-list">
-              <li>
-                <button class="tree-leaf-btn" data-key="ne_chunk" onclick="inspectTreeNode('ne_chunk')">
-                  <span>ne_chunk</span>
-                  <span class="leaf-type-badge">func</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Branch 7: sentiment -->
-          <div class="tree-branch-card" style="border-top: 3px solid #f97316;">
-            <div class="branch-header">
-              <span class="branch-name" style="color: #f97316;">🌿 .sentiment</span>
-              <span class="branch-role">Polarity Analysis</span>
-            </div>
-            <ul class="tree-leaf-list">
-              <li>
-                <button class="tree-leaf-btn" data-key="SentimentIntensityAnalyzer" onclick="inspectTreeNode('SentimentIntensityAnalyzer')">
-                  <span>SentimentIntensityAnalyzer</span>
-                  <span class="leaf-type-badge">vader</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-        <!-- Interactive Node Inspector Panel -->
-        <div class="tree-node-inspector" id="tree-inspector">
-          <div class="inspector-top-row">
-            <h3 id="inspector-title" style="font-size: 1.35rem; font-weight: 800; display: flex; align-items: center; gap: 0.6rem;">
-              <span>word_tokenize</span>
-              <span class="leaf-type-badge">Function</span>
-            </h3>
-            <button id="inspector-sim-btn" class="action-btn primary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">
-              ⚡ Run in Live Simulator
-            </button>
-          </div>
-
-          <div class="inspector-import-statement">
-            <span style="color: var(--text-dim); font-size: 0.85rem;">Import Statement:</span>
-            <strong id="inspector-import">from nltk.tokenize import word_tokenize</strong>
-          </div>
-
-          <div class="inspector-grid">
-            <div class="inspector-detail-box">
-              <span class="inspector-label">💡 What it is & Does:</span>
-              <p id="inspector-what" class="inspector-desc-text">
-                Splits sentences into individual discrete word and punctuation tokens. It handles contractions and isolates punctuation.
-              </p>
-            </div>
-
-            <div class="inspector-detail-box">
-              <span class="inspector-label">🛠️ How to use it (Python):</span>
-              <pre id="inspector-how" class="inspector-code-block">from nltk.tokenize import word_tokenize
-
-text = "Natural Language Processing with NLTK is fun!"
-tokens = word_tokenize(text)
-print(tokens)
-# Output: ['Natural', 'Language', 'Processing', 'with', 'NLTK', 'is', 'fun', '!']</pre>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================================================
-           INTERACTIVE NLTK IN-BROWSER SIMULATOR
-           ========================================================= -->
-      <section class="conversion-showcase-panel" id="nltk-live-runner" style="border-color: rgba(52, 211, 153, 0.4);">
-        <div class="pipeline-header">
-          <div class="pipeline-title" style="color: var(--color-word);">
-            <span>🧪 Interactive Live NLTK Simulator (In-Browser)</span>
-          </div>
-          <span class="stage-formula" style="background: var(--color-word-bg); color: var(--color-word);">
-            Runs Client-Side Instant NLP
+          <span class="studio-rule-badge" id="apple-studio-badge" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">
+            Paragraph ➔ Sentences ➔ Words
           </span>
         </div>
-        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
-          Select an NLTK function below, enter custom text, and watch how Python NLTK processes it live!
-        </p>
 
-        <!-- Function Selector Tabs -->
-        <div class="nltk-tabs-row">
-          <button class="nltk-tab-btn active" onclick="switchNltkDemo('word_tokenize')">word_tokenize()</button>
-          <button class="nltk-tab-btn" onclick="switchNltkDemo('sent_tokenize')">sent_tokenize()</button>
-          <button class="nltk-tab-btn" onclick="switchNltkDemo('stopwords')">Stopwords Filter</button>
-          <button class="nltk-tab-btn" onclick="switchNltkDemo('stemmer')">PorterStemmer</button>
-          <button class="nltk-tab-btn" onclick="switchNltkDemo('freqdist')">FreqDist (Top Words)</button>
-        </div>
-
-        <div class="pipeline-input-box" style="margin-top: 1rem; margin-bottom: 1.25rem;">
-          <label id="nltk-demo-label" style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.4rem;">
-            Test text for word_tokenize():
-          </label>
+        <!-- Live Reactive Input Field -->
+        <div class="apple-input-container">
+          <div class="apple-input-label">
+            <span id="apple-studio-label">Input text to break into sentences and tokens:</span>
+            <span style="color: #38bdf8; font-size: 0.8rem; font-weight: 700;">⚡ Live Reactive</span>
+          </div>
           <textarea 
-            id="nltk-demo-input" 
-            class="pipeline-textarea" 
-            style="min-height: 75px;"
-          >Natural Language Processing with NLTK is fast, flexible, and powerful. Let's tokenize this sentence!</textarea>
+            id="apple-studio-input" 
+            class="apple-textarea" 
+            placeholder="Type your text here..."
+          >Natural Language Processing with NLTK is fascinating! Computers learn to understand human languages easily.</textarea>
         </div>
 
-        <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem; align-items: center;">
-          <button class="action-btn primary" onclick="runNltkSimulator()">
-            ▶ Execute NLTK Function
-          </button>
-          <span id="nltk-sim-stat" style="font-size: 0.85rem; color: var(--color-word); font-weight: 600;"></span>
-        </div>
-
-        <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.4rem;">
-          Execution Output (Python Data Structure):
-        </div>
-        <div id="nltk-demo-output" class="stage-visual-output" style="font-family: monospace; font-size: 0.9rem; line-height: 1.6; max-height: 220px; overflow-y: auto;">
-          <!-- Populated by JS -->
-        </div>
-      </section>
-
-      <!-- =========================================================
-           SECTION 1: INSTALLATION & DOWNLOAD
-           ========================================================= -->
-      <section class="nltk-doc-section" id="nltk-install">
-        <div class="nltk-section-header">
-          <span class="nltk-num-badge">01</span>
-          <div>
-            <h2 class="nltk-section-title">How to Install NLTK & Download Corpora</h2>
-            <p class="nltk-section-subtitle">Set up Python NLTK and fetch tokenizers, dictionaries, and language models.</p>
+        <!-- Visual Transformation Stage (Before ➔ After) -->
+        <div class="visual-transformation-canvas">
+          <div class="canvas-step-title">
+            <span>✨ Live Visual Output:</span>
+          </div>
+          <div id="apple-canvas-content">
+            <!-- Dynamically populated by JS with visual chips, cards, and bar charts -->
           </div>
         </div>
 
-        <!-- Step 1: pip install -->
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">Terminal (CLI)</span>
-            <span class="code-purpose-tag">Step 1: Install Python Package</span>
+        <!-- Apple Minimalist Code Drawer -->
+        <div class="apple-code-drawer">
+          <div class="code-drawer-header">
+            <span>🐍 Python Code (Run in your script or notebook):</span>
+            <button id="apple-copy-btn" class="copy-pill-btn" onclick="copyAppleCode()">Copy Code</button>
           </div>
-          <pre class="code-content"><code># Install NLTK via pip
-pip install nltk
+          <pre id="apple-code-snippet" class="minimal-python-code">from nltk.tokenize import sent_tokenize, word_tokenize
 
-# Optional: verify installation in terminal
-python -c "import nltk; print(nltk.__version__)"</code></pre>
-          <div class="use-case-box">
-            <strong>💡 Use Case:</strong> Installs the core NLTK algorithms and token parsing engine into your active virtual environment.
+sentences = sent_tokenize(text)
+words = [word_tokenize(s) for s in sentences]</pre>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================================================
+         INTERACTIVE NLTK ARCHITECTURE DIRECTORY (APPLE GRID)
+         ========================================================= -->
+    <section style="margin-bottom: 4rem;">
+      <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em;">
+          🏛️ NLTK Library Quick Directory
+        </h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">
+          Click any tool below to load its interactive visualizer directly in the studio above:
+        </p>
+      </div>
+
+      <div class="tree-branches-grid">
+        
+        <!-- Module 1: Tokenize -->
+        <div class="tree-branch-card" style="border-top: 3px solid var(--color-corpus); cursor: pointer;" onclick="switchAppleMode('token')">
+          <div class="branch-header">
+            <span class="branch-name" style="color: var(--color-corpus);">✂️ nltk.tokenize</span>
+            <span class="branch-role">Tokenization</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+            Breaks continuous text into structured sentences and word token chips.
+          </p>
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <span class="token-chip" style="font-size:0.75rem;">word_tokenize()</span>
+            <span class="token-chip" style="font-size:0.75rem;">sent_tokenize()</span>
           </div>
         </div>
 
-        <!-- Step 2: nltk.download() -->
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">Python Script</span>
-            <span class="code-purpose-tag">Step 2: Download Required Corpora & Models</span>
+        <!-- Module 2: Stopwords -->
+        <div class="tree-branch-card" style="border-top: 3px solid #fb7185; cursor: pointer;" onclick="switchAppleMode('stopwords')">
+          <div class="branch-header">
+            <span class="branch-name" style="color: #fb7185;">🛑 nltk.corpus.stopwords</span>
+            <span class="branch-role">Noise Removal</span>
           </div>
-          <pre class="code-content"><code>import nltk
-
-# 1. Download Punkt Tokenizer Models (Required for sent_tokenize & word_tokenize)
-nltk.download('punkt')
-
-# 2. Download Stopwords Corpus (Required for filtering English stopwords)
-nltk.download('stopwords')
-
-# 3. Download WordNet (Required for Lemmatization)
-nltk.download('wordnet')
-
-# 4. Download Averaged Perceptron Tagger (Required for POS Tagging)
-nltk.download('averaged_perceptron_tagger')
-
-# Optional: Download popular packages in one command
-# nltk.download('popular')</code></pre>
-          <div class="use-case-box">
-            <strong>💡 Why this is needed:</strong> NLTK is modular to keep the base library lightweight. Large corpora and pretrained token boundary models are downloaded on-demand when required.
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================================================
-           SECTION 2: TOKENIZATION
-           ========================================================= -->
-      <section class="nltk-doc-section" id="nltk-tokenization">
-        <div class="nltk-section-header">
-          <span class="nltk-num-badge" style="background: var(--color-document-bg); color: var(--color-document); border-color: var(--color-document-border);">02</span>
-          <div>
-            <h2 class="nltk-section-title">Tokenization Functions</h2>
-            <p class="nltk-section-subtitle">Slicing paragraphs into sentences (Documents) and words (Tokens).</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+            Eliminates high-frequency filler words (is, the, with) to focus on key concepts.
+          </p>
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <span class="token-chip" style="font-size:0.75rem; border-color:#fb7185; color:#fb7185;">stopwords.words('english')</span>
           </div>
         </div>
 
-        <!-- word_tokenize & sent_tokenize -->
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">nltk.tokenize</span>
-            <span class="code-purpose-tag">sent_tokenize() & word_tokenize()</span>
+        <!-- Module 3: Stem -->
+        <div class="tree-branch-card" style="border-top: 3px solid var(--color-word); cursor: pointer;" onclick="switchAppleMode('stem')">
+          <div class="branch-header">
+            <span class="branch-name" style="color: var(--color-word);">🌱 nltk.stem</span>
+            <span class="branch-role">Stemming</span>
           </div>
-          <pre class="code-content"><code>from nltk.tokenize import sent_tokenize, word_tokenize
-
-paragraph = "NLP is fun. Computers read human words using tokens!"
-
-# 1. Sentence Tokenization (Corpus -> Documents)
-sentences = sent_tokenize(paragraph)
-print("Sentences:", sentences)
-# Output: ['NLP is fun.', "Computers read human words using tokens!"]
-
-# 2. Word Tokenization (Document -> Tokens)
-words = word_tokenize(sentences[0])
-print("Words:", words)
-# Output: ['NLP', 'is', 'fun', '.']</code></pre>
-          <div class="use-case-box">
-            <strong>🎯 Real-world Use Case:</strong> Text preprocessing for search engines, chatbot intent extractors, and NLP transformers where unstructured paragraphs must be split into clean token arrays.
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+            Chops off prefixes and suffixes using rule-based heuristics (Porter & Snowball).
+          </p>
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <span class="token-chip" style="font-size:0.75rem;">PorterStemmer</span>
+            <span class="token-chip" style="font-size:0.75rem;">SnowballStemmer</span>
           </div>
         </div>
 
-        <!-- RegexpTokenizer & wordpunct_tokenize -->
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">nltk.tokenize</span>
-            <span class="code-purpose-tag">RegexpTokenizer & wordpunct_tokenize()</span>
+        <!-- Module 4: Lemmatize -->
+        <div class="tree-branch-card" style="border-top: 3px solid var(--color-document); cursor: pointer;" onclick="switchAppleMode('lemma')">
+          <div class="branch-header">
+            <span class="branch-name" style="color: var(--color-document);">📚 nltk.stem.wordnet</span>
+            <span class="branch-role">Dictionary Roots</span>
           </div>
-          <pre class="code-content"><code>from nltk.tokenize import RegexpTokenizer, wordpunct_tokenize
-
-text = "Deep learning, ML, & AI: revolutionize tech in 2026!"
-
-# Extract words only (strip all punctuation symbols)
-tokenizer = RegexpTokenizer(r'\w+')
-clean_words = tokenizer.tokenize(text)
-print("Words without punctuation:", clean_words)
-# Output: ['Deep', 'learning', 'ML', 'AI', 'revolutionize', 'tech', 'in', '2026']</code></pre>
-          <div class="use-case-box">
-            <strong>🎯 Real-world Use Case:</strong> Cleaning noisy user comments, Twitter/X posts, or social media text where punctuation must be excluded before building word frequency dictionaries.
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================================================
-           SECTION 3: CORPORA & DATASETS
-           ========================================================= -->
-      <section class="nltk-doc-section" id="nltk-corpora">
-        <div class="nltk-section-header">
-          <span class="nltk-num-badge" style="background: var(--color-corpus-bg); color: var(--color-corpus); border-color: var(--color-corpus-border);">03</span>
-          <div>
-            <h2 class="nltk-section-title">Corpora & Pre-built Datasets (nltk.corpus)</h2>
-            <p class="nltk-section-subtitle">Accessing benchmark paragraphs and classic text collections.</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+            Consults WordNet dictionary to extract true grammatical root words (better ➔ good).
+          </p>
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <span class="token-chip" style="font-size:0.75rem; border-color:var(--color-document); color:var(--color-document);">WordNetLemmatizer</span>
           </div>
         </div>
 
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">nltk.corpus</span>
-            <span class="code-purpose-tag">Accessing Built-in Corpora</span>
+        <!-- Module 5: FreqDist -->
+        <div class="tree-branch-card" style="border-top: 3px solid var(--color-vocab); cursor: pointer;" onclick="switchAppleMode('freq')">
+          <div class="branch-header">
+            <span class="branch-name" style="color: var(--color-vocab);">📊 nltk.probability</span>
+            <span class="branch-role">Keyword Frequency</span>
           </div>
-          <pre class="code-content"><code>import nltk
-from nltk.corpus import gutenberg, brown
-
-# Download Gutenberg corpus if not downloaded
-nltk.download('gutenberg')
-
-# 1. List files in Gutenberg corpus
-print(gutenberg.fileids()[:3])
-# Output: ['austen-emma.txt', 'austen-persuasion.txt', 'austen-sense.txt']
-
-# 2. Access raw text, sentences (documents), or words (tokens)
-emma_words = gutenberg.words('austen-emma.txt')
-emma_sents = gutenberg.sents('austen-emma.txt')
-
-print("Total Tokens in Emma:", len(emma_words))
-print("Total Sentences (Documents):", len(emma_sents))</code></pre>
-          <div class="use-case-box">
-            <strong>🎯 Real-world Use Case:</strong> Training benchmark language models, testing semantic analysis algorithms, and linguistically comparing classical literature across centuries.
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================================================
-           SECTION 4: STOPWORDS REMOVAL
-           ========================================================= -->
-      <section class="nltk-doc-section" id="nltk-stopwords">
-        <div class="nltk-section-header">
-          <span class="nltk-num-badge" style="background: var(--color-vocab-bg); color: var(--color-vocab); border-color: var(--color-vocab-border);">04</span>
-          <div>
-            <h2 class="nltk-section-title">Stopwords Removal</h2>
-            <p class="nltk-section-subtitle">Eliminating low-information words like "the", "is", "at", "which".</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+            Counts word occurrences and ranks top keywords with visual frequency bars.
+          </p>
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <span class="token-chip" style="font-size:0.75rem; border-color:var(--color-vocab); color:var(--color-vocab);">FreqDist()</span>
           </div>
         </div>
 
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">nltk.corpus.stopwords</span>
-            <span class="code-purpose-tag">Filtering English Stopwords</span>
-          </div>
-          <pre class="code-content"><code>from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+      </div>
+    </section>
 
-# Load English stopwords set
-stop_words = set(stopwords.words('english'))
+    <!-- Footer Navigation (Apple Minimalist) -->
+    <footer class="page-nav-footer" style="margin-top: 2rem;">
+      <a href="study.html" class="nav-pager-link prev">
+        <span class="nav-pager-sub">Previous Module</span>
+        <span class="nav-pager-title">← 🏛️ NLP Pillars</span>
+      </a>
+      <a href="index.html" class="nav-pager-link next">
+        <span class="nav-pager-sub">Home Portal</span>
+        <span class="nav-pager-title">Start NLP Home ➔</span>
+      </a>
+    </footer>
 
-sentence = "This is a great study website for learning NLP with Python."
-tokens = word_tokenize(sentence)
-
-# Filter tokens
-filtered_tokens = [w for w in tokens if w.lower() not in stop_words and w.isalnum()]
-
-print("Original Tokens (Count: {}):".format(len(tokens)), tokens)
-print("Filtered Tokens (Count: {}):".format(len(filtered_tokens)), filtered_tokens)
-# Output: ['great', 'study', 'website', 'learning', 'NLP', 'Python']</code></pre>
-          <div class="use-case-box">
-            <strong>🎯 Real-world Use Case:</strong> Spam detection, document search indexing, and keyword extraction where non-informative filler words add noise to classification algorithms.
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================================================
-           SECTION 5: STEMMING & LEMMATIZATION
-           ========================================================= -->
-      <section class="nltk-doc-section" id="nltk-stem-lemma">
-        <div class="nltk-section-header">
-          <span class="nltk-num-badge" style="background: var(--color-word-bg); color: var(--color-word); border-color: var(--color-word-border);">05</span>
-          <div>
-            <h2 class="nltk-section-title">Stemming & Lemmatization</h2>
-            <p class="nltk-section-subtitle">Reducing inflected and derived words to their root or base vocabulary form.</p>
-          </div>
-        </div>
-
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">nltk.stem</span>
-            <span class="code-purpose-tag">PorterStemmer vs WordNetLemmatizer</span>
-          </div>
-          <pre class="code-content"><code>from nltk.stem import PorterStemmer, WordNetLemmatizer
-
-ps = PorterStemmer()
-lemmatizer = WordNetLemmatizer()
-
-words = ["running", "runs", "ran", "studies", "studying", "better"]
-
-print("--- STEMMING (Heuristic Suffix Chopping) ---")
-for w in words:
-    print(f"{w:10} -> {ps.stem(w)}")
-# running -> run, studies -> studi, better -> better
-
-print("\n--- LEMMATIZATION (Dictionary Root with POS) ---")
-for w in words:
-    print(f"{w:10} -> {lemmatizer.lemmatize(w, pos='v')}")
-# running -> run, studies -> study, better -> good (if pos='a')</code></pre>
-          <div class="use-case-box">
-            <strong>🎯 Real-world Use Case:</strong> Search query matching (e.g. searching "studying" matches documents containing "study") and building normalized vocabulary sets in information retrieval.
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================================================
-           SECTION 6: FREQUENCY DISTRIBUTION (VOCABULARY)
-           ========================================================= -->
-      <section class="nltk-doc-section" id="nltk-freqdist">
-        <div class="nltk-section-header">
-          <span class="nltk-num-badge" style="background: var(--color-document-bg); color: var(--color-document); border-color: var(--color-document-border);">06</span>
-          <div>
-            <h2 class="nltk-section-title">Frequency Distribution (FreqDist)</h2>
-            <p class="nltk-section-subtitle">Tallying word frequencies and discovering the vocabulary of a corpus.</p>
-          </div>
-        </div>
-
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">nltk.probability.FreqDist</span>
-            <span class="code-purpose-tag">Count Unique Words & Discover Top Keywords</span>
-          </div>
-          <pre class="code-content"><code>from nltk.probability import FreqDist
-from nltk.tokenize import word_tokenize
-
-text = "NLP helps computers learn. NLP processes language. Computers learn words."
-tokens = [w.lower() for w in word_tokenize(text) if w.isalnum()]
-
-# Build Frequency Distribution
-fdist = FreqDist(tokens)
-
-# 1. Total tokens vs Unique Vocabulary Size
-print("Total Word Tokens:", fdist.N())          # Output: 11
-print("Unique Vocabulary Size:", fdist.B())     # Output: 6
-
-# 2. Get 3 Most Common Words
-print("Top 3 Words:", fdist.most_common(3))
-# Output: [('nlp', 2), ('computers', 2), ('learn', 2)]
-
-# 3. Frequency of a specific word
-print("Frequency of 'nlp':", fdist['nlp'])      # Output: 2</code></pre>
-          <div class="use-case-box">
-            <strong>🎯 Real-world Use Case:</strong> Word clouds, topic modeling, TF-IDF feature extraction, and identifying domain-specific terminology in legal or medical documents.
-          </div>
-        </div>
-      </section>
-
-      <!-- =========================================================
-           SECTION 7: POS TAGGING & NER
-           ========================================================= -->
-      <section class="nltk-doc-section" id="nltk-pos-ner">
-        <div class="nltk-section-header">
-          <span class="nltk-num-badge" style="background: var(--color-vocab-bg); color: var(--color-vocab); border-color: var(--color-vocab-border);">07</span>
-          <div>
-            <h2 class="nltk-section-title">Part-of-Speech (POS) Tagging & NER</h2>
-            <p class="nltk-section-subtitle">Labeling words as nouns, verbs, adjectives, and identifying entity names.</p>
-          </div>
-        </div>
-
-        <div class="code-card">
-          <div class="code-card-header">
-            <span class="code-lang-tag">nltk.tag & nltk.chunk</span>
-            <span class="code-purpose-tag">pos_tag() and ne_chunk()</span>
-          </div>
-          <pre class="code-content"><code>import nltk
-from nltk.tokenize import word_tokenize
-
-sentence = "Sundar Pichai leads Google in Mountain View."
-tokens = word_tokenize(sentence)
-
-# 1. Part-of-Speech Tagging
-tagged = nltk.pos_tag(tokens)
-print("POS Tags:", tagged)
-# Output: [('Sundar', 'NNP'), ('Pichai', 'NNP'), ('leads', 'VBZ'), ('Google', 'NNP'), ...]
-# NNP = Proper Noun, VBZ = 3rd person singular present verb
-
-# 2. Named Entity Recognition (Extract Names, Organizations, Locations)
-nltk.download('maxent_ne_chunker')
-nltk.download('words')
-tree = nltk.ne_chunk(tagged)
-print("Named Entity Tree:\n", tree)</code></pre>
-          <div class="use-case-box">
-            <strong>🎯 Real-world Use Case:</strong> Customer support ticket routing, extracting company/person names from financial news, and resume/CV parsing.
-          </div>
-        </div>
-      </section>
-
-      <!-- Footer Navigation -->
-      <footer class="page-nav-footer">
-        <a href="study.html" class="nav-pager-link prev">
-          <span class="nav-pager-sub">Previous Module</span>
-          <span class="nav-pager-title">← Topic 1: NLP Pillars</span>
-        </a>
-        <a href="index.html" class="nav-pager-link next">
-          <span class="nav-pager-sub">Home</span>
-          <span class="nav-pager-title">Start NLP Home ➔</span>
-        </a>
-      </footer>
-
-    </main>
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
