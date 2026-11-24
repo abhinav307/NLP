@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NLP Pillars - Study Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Global Navbar -->
+  <header class="top-navbar">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">📚</div>
+      <span>Start NLP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="study.html" class="nav-link active">NLP Pillars</a></li>
+      <li><a href="nltk.html" class="nav-link">NLTK Library</a></li>
+    </ul>
+    <a href="index.html" class="nav-cta-btn" style="background: rgba(255,255,255,0.08); box-shadow: none;">
+      <span>← Back to Home</span>
+    </a>
+  </header>
+
+  <!-- Upper Sub-headings Bar: Highlight 4 Sub-topics (Click to Go) -->
+  <nav class="upper-subheadings-wrapper" aria-label="Subtopic Quick Navigation">
+    <div class="upper-subheadings-title">⚡ Sub-topics inside NLP Pillars (Click to Jump):</div>
+    <div class="upper-subheadings-bar">
+      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('subtopic-corpus')">
+        <span>📦 1. Corpus</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Paragraph)</span>
+      </button>
+
+      <button class="subheading-btn btn-document" onclick="scrollToSubtopic('subtopic-document')">
+        <span>📄 2. Document</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Sentence)</span>
+      </button>
+
+      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('subtopic-word')">
+        <span>🏷️ 3. Word</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Token)</span>
+      </button>
+
+      <button class="subheading-btn btn-vocab" onclick="scrollToSubtopic('subtopic-vocab')">
+        <span>🔤 4. Vocabulary</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Unique Word)</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Layout: Sidebar (Topic) + Content -->
+  <div class="study-layout">
+    
+    <!-- Left Sidebar: Only Topic inside NLP -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">NLP Topics</div>
+      
+      <!-- Topic 1 Box -->
+      <div class="topic-card-box">
+        <div class="topic-main-link">
+          <span>🏛️ Topic 1: NLP Pillars</span>
+          <span class="topic-badge-active">Active</span>
+        </div>
+        
+        <!-- The 4 Sub-topics inside the main topic -->
+        <ul class="topic-sublist">
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('subtopic-corpus')">
+              <span>• Corpus</span>
+              <span style="color:var(--color-corpus); font-size:0.75rem;">Paragraph</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('subtopic-document')">
+              <span>• Document</span>
+              <span style="color:var(--color-document); font-size:0.75rem;">Sentence</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('subtopic-word')">
+              <span>• Word</span>
+              <span style="color:var(--color-word); font-size:0.75rem;">Token</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('subtopic-vocab')">
+              <span>• Vocabulary</span>
+              <span style="color:var(--color-vocab); font-size:0.75rem;">Unique Word</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Topic 2 Box (NLTK) -->
+      <div class="topic-card-box" style="margin-bottom: 1.5rem;">
+        <a href="nltk.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🐍 Topic 2: NLTK Library</span>
+          <span style="font-size: 0.75rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <div class="sidebar-footer-note">
+        <strong>💡 Visual Context First</strong>
+        <p style="margin-top:0.35rem; line-height:1.4;">
+          Watch below how text converts step-by-step from a paragraph all the way to unique vocabulary!
+        </p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="study-content">
+      
+      <!-- Content Header -->
+      <header style="margin-bottom: 2rem;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-corpus); text-transform: uppercase; letter-spacing: 0.05em;">
+          Topic 1 &bull; Core Pillars of NLP
+        </span>
+        <h1 style="font-size: 2.3rem; font-weight: 800; margin-top: 0.25rem;">
+          How Text Converts in NLP
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem; margin-top: 0.25rem;">
+          See how <strong>1 Corpus</strong> breaks into <strong>Documents</strong>, then splits into <strong>Tokens</strong>, and filters into <strong>Vocabulary</strong>.
+        </p>
+      </header>
+
+      <!-- =========================================================
+           LIVE STEP-BY-STEP CONVERSION PIPELINE SHOWCASE
+           Corpus ➔ Document ➔ Word (Token) ➔ Vocabulary
+           ========================================================= -->
+      <section class="conversion-showcase-panel">
+        <div class="pipeline-header">
+          <div class="pipeline-title">
+            <span>🔄 Interactive Visual Conversion Pipeline</span>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <span style="font-size: 0.8rem; color: var(--text-dim);">Load Example:</span>
+            <button class="preset-btn" onclick="loadPipelinePreset('repeat')">Repetition Demo</button>
+            <button class="preset-btn" onclick="loadPipelinePreset('nlp')">NLP Rules</button>
+            <button class="preset-btn" onclick="loadPipelinePreset('simple')">Simple Sentences</button>
+          </div>
+        </div>
+
+        <!-- Input Box -->
+        <div class="pipeline-input-box">
+          <div class="pipeline-input-label">
+            <span>Enter any Paragraph (Corpus) below:</span>
+            <span style="color: var(--color-corpus);">Live Reactive Processing ⚡</span>
+          </div>
+          <textarea 
+            id="pipeline-input" 
+            class="pipeline-textarea" 
+            placeholder="Type your paragraph here..."
+          ></textarea>
+        </div>
+
+        <!-- 4 Step-by-Step Connected Stages -->
+        <div class="conversion-stages-flow">
+          
+          <!-- STAGE 1: CORPUS -->
+          <div class="stage-card stage-corpus">
+            <div class="stage-header">
+              <div class="stage-badge" style="color: var(--color-corpus);">
+                <span>📦 Stage 1: Corpus</span>
+              </div>
+              <span class="stage-formula">Corpus = Paragraph</span>
+              <span class="stage-count-indicator" id="pipeline-corpus-count">1 Paragraph</span>
+            </div>
+            <p class="stage-explanation-simple">
+              The complete original paragraph containing all text.
+            </p>
+            <div class="stage-visual-output" id="pipeline-corpus-output">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- CONNECTOR ARROW 1 -->
+          <div class="stage-connector-arrow">
+            <span class="arrow-symbol">▼</span>
+            <span>Step 1: Split Paragraph into Sentences</span>
+          </div>
+
+          <!-- STAGE 2: DOCUMENT -->
+          <div class="stage-card stage-document">
+            <div class="stage-header">
+              <div class="stage-badge" style="color: var(--color-document);">
+                <span>📄 Stage 2: Document</span>
+              </div>
+              <span class="stage-formula">Document = Sentence</span>
+              <span class="stage-count-indicator" id="pipeline-doc-count">0 Documents</span>
+            </div>
+            <p class="stage-explanation-simple">
+              Each individual sentence inside the paragraph is treated as one Document.
+            </p>
+            <div class="stage-visual-output" id="pipeline-doc-output">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- CONNECTOR ARROW 2 -->
+          <div class="stage-connector-arrow">
+            <span class="arrow-symbol" style="color: var(--color-word);">▼</span>
+            <span>Step 2: Tokenize (Split Sentences into Individual Words)</span>
+          </div>
+
+          <!-- STAGE 3: WORD (TOKEN) -->
+          <div class="stage-card stage-word">
+            <div class="stage-header">
+              <div class="stage-badge" style="color: var(--color-word);">
+                <span>🏷️ Stage 3: Word</span>
+              </div>
+              <span class="stage-formula">Word = Token</span>
+              <span class="stage-count-indicator" id="pipeline-word-count">0 Tokens</span>
+            </div>
+            <p class="stage-explanation-simple">
+              Sentences are sliced into individual words. In NLP, every word is an indexed <strong>Token</strong>.
+            </p>
+            <div class="stage-visual-output" id="pipeline-word-output">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- CONNECTOR ARROW 3 -->
+          <div class="stage-connector-arrow">
+            <span class="arrow-symbol" style="color: var(--color-vocab);">▼</span>
+            <span>Step 3: Remove Repeated Words & Deduplicate</span>
+          </div>
+
+          <!-- STAGE 4: VOCABULARY (UNIQUE WORD) -->
+          <div class="stage-card stage-vocab">
+            <div class="stage-header">
+              <div class="stage-badge" style="color: var(--color-vocab);">
+                <span>🔤 Stage 4: Vocabulary</span>
+              </div>
+              <span class="stage-formula">Vocabulary = Unique Word</span>
+              <span class="stage-count-indicator" id="pipeline-vocab-count">0 Unique Words</span>
+            </div>
+            <p class="stage-explanation-simple">
+              Repeated tokens are removed! Only unique distinct words remain in the <strong>Vocabulary</strong> set.
+            </p>
+            <div class="stage-visual-output" id="pipeline-vocab-output">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =========================================================
+           CONCISE VISUAL SUB-TOPIC CARDS (ANCHOR TARGETS)
+           Simple to understand, minimal words, high visual context
+           ========================================================= -->
+      <section style="margin-top: 3.5rem;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem;">
+          Quick Visual Summary: The 4 Sub-topics
+        </h2>
+
+        <div class="subtopic-cards-container">
+          
+          <!-- Sub-topic 1: Corpus -->
+          <div class="subtopic-card" id="subtopic-corpus" style="border-top: 3px solid var(--color-corpus);">
+            <div class="subtopic-top-bar">
+              <span class="subtopic-title" style="color: var(--color-corpus);">1. Corpus</span>
+              <span class="subtopic-formula" style="background: var(--color-corpus-bg); color: var(--color-corpus);">Corpus = Paragraph</span>
+            </div>
+            <p class="subtopic-simple-rule">
+              <strong>Rule:</strong> The entire text paragraph is 1 Corpus.
+            </p>
+            <div class="subtopic-visual-box">
+              <div class="corpus-paragraph-box">
+                "Cats like fish. Dogs like fish. Cats and dogs both love fish!"
+              </div>
+            </div>
+            <div class="subtopic-takeaway">
+              <span>👉 1 Paragraph container</span>
+            </div>
+          </div>
+
+          <!-- Sub-topic 2: Document -->
+          <div class="subtopic-card" id="subtopic-document" style="border-top: 3px solid var(--color-document);">
+            <div class="subtopic-top-bar">
+              <span class="subtopic-title" style="color: var(--color-document);">2. Document</span>
+              <span class="subtopic-formula" style="background: var(--color-document-bg); color: var(--color-document);">Document = Sentence</span>
+            </div>
+            <p class="subtopic-simple-rule">
+              <strong>Rule:</strong> Each separate sentence is 1 Document.
+            </p>
+            <div class="subtopic-visual-box">
+              <div class="doc-list">
+                <div class="doc-item">
+                  <span class="doc-tag">Doc 1</span>
+                  <span>"Cats like fish."</span>
+                </div>
+                <div class="doc-item">
+                  <span class="doc-tag">Doc 2</span>
+                  <span>"Dogs like fish."</span>
+                </div>
+                <div class="doc-item">
+                  <span class="doc-tag">Doc 3</span>
+                  <span>"Cats and dogs both love fish!"</span>
+                </div>
+              </div>
+            </div>
+            <div class="subtopic-takeaway">
+              <span>👉 3 Sentences = 3 Documents</span>
+            </div>
+          </div>
+
+          <!-- Sub-topic 3: Word -->
+          <div class="subtopic-card" id="subtopic-word" style="border-top: 3px solid var(--color-word);">
+            <div class="subtopic-top-bar">
+              <span class="subtopic-title" style="color: var(--color-word);">3. Word</span>
+              <span class="subtopic-formula" style="background: var(--color-word-bg); color: var(--color-word);">Word = Token</span>
+            </div>
+            <p class="subtopic-simple-rule">
+              <strong>Rule:</strong> Every individual word is counted as a Token.
+            </p>
+            <div class="subtopic-visual-box">
+              <div class="token-list">
+                <span class="token-chip"><span class="token-index">#0</span>Cats</span>
+                <span class="token-chip"><span class="token-index">#1</span>like</span>
+                <span class="token-chip"><span class="token-index">#2</span>fish</span>
+                <span class="token-chip"><span class="token-index">#3</span>Dogs</span>
+                <span class="token-chip"><span class="token-index">#4</span>like</span>
+                <span class="token-chip"><span class="token-index">#5</span>fish</span>
+                <span class="token-chip"><span class="token-index">#6</span>...</span>
+              </div>
+            </div>
+            <div class="subtopic-takeaway">
+              <span>👉 Counted as Tokens (includes duplicates)</span>
+            </div>
+          </div>
+
+          <!-- Sub-topic 4: Vocabulary -->
+          <div class="subtopic-card" id="subtopic-vocab" style="border-top: 3px solid var(--color-vocab);">
+            <div class="subtopic-top-bar">
+              <span class="subtopic-title" style="color: var(--color-vocab);">4. Vocabulary</span>
+              <span class="subtopic-formula" style="background: var(--color-vocab-bg); color: var(--color-vocab);">Vocabulary = Unique Word</span>
+            </div>
+            <p class="subtopic-simple-rule">
+              <strong>Rule:</strong> Duplicates removed! Only unique words are kept.
+            </p>
+            <div class="subtopic-visual-box">
+              <div class="vocab-tag-cloud">
+                <span class="vocab-pill">and <span class="freq">1x</span></span>
+                <span class="vocab-pill">both <span class="freq">1x</span></span>
+                <span class="vocab-pill">cats <span class="freq">2x</span></span>
+                <span class="vocab-pill">dogs <span class="freq">2x</span></span>
+                <span class="vocab-pill">fish <span class="freq">3x</span></span>
+                <span class="vocab-pill">like <span class="freq">2x</span></span>
+                <span class="vocab-pill">love <span class="freq">1x</span></span>
+              </div>
+            </div>
+            <div class="subtopic-takeaway">
+              <span>👉 Counted as Unique Vocabulary Set</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Module Navigation Footer -->
+      <footer class="page-nav-footer">
+        <a href="index.html" class="nav-pager-link prev">
+          <span class="nav-pager-sub">Home</span>
+          <span class="nav-pager-title">← Home Portal</span>
+        </a>
+        <a href="nltk.html" class="nav-pager-link next">
+          <span class="nav-pager-sub">Next Module</span>
+          <span class="nav-pager-title">Topic 2: NLTK Library 🚀 →</span>
+        </a>
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

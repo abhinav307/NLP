@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document (Sentence) - Start NLP</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Global Navbar -->
+  <header class="top-navbar">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">📚</div>
+      <span>Start NLP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="study.html" class="nav-link">Study Hub</a></li>
+    </ul>
+    <a href="study.html" class="nav-cta-btn">
+      <span>Study Hub</span>
+      <span>➔</span>
+    </a>
+  </header>
+
+  <!-- Upper Sub-headings Bar -->
+  <nav class="upper-subheadings-wrapper">
+    <div class="upper-subheadings-title">⚡ Sub-topics inside NLP Pillars:</div>
+    <div class="upper-subheadings-bar">
+      <a href="corpus.html" class="subheading-btn btn-corpus">
+        <span>📦 1. Corpus (Paragraph)</span>
+      </a>
+      <a href="document.html" class="subheading-btn btn-document" style="box-shadow: 0 0 10px rgba(192, 132, 252, 0.4);">
+        <span>📄 2. Document (Sentence)</span>
+      </a>
+      <a href="word.html" class="subheading-btn btn-word">
+        <span>🏷️ 3. Word (Token)</span>
+      </a>
+      <a href="vocabulary.html" class="subheading-btn btn-vocab">
+        <span>🔤 4. Vocabulary (Unique Word)</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="study-layout">
+    <!-- Left Sidebar: Only Topic inside NLP -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">NLP Topics</div>
+      
+      <div class="topic-card-box">
+        <a href="study.html" class="topic-main-link">
+          <span>🏛️ Topic 1: NLP Pillars</span>
+          <span class="topic-badge-active">Active</span>
+        </a>
+        
+        <ul class="topic-sublist">
+          <li class="subtopic-item">
+            <a href="corpus.html">
+              <span>• Corpus</span>
+              <span style="color:var(--color-corpus); font-size:0.75rem;">Paragraph</span>
+            </a>
+          </li>
+          <li class="subtopic-item active">
+            <a href="document.html">
+              <span>• Document</span>
+              <span style="color:var(--color-document); font-size:0.75rem;">Sentence</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="word.html">
+              <span>• Word</span>
+              <span style="color:var(--color-word); font-size:0.75rem;">Token</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="vocabulary.html">
+              <span>• Vocabulary</span>
+              <span style="color:var(--color-vocab); font-size:0.75rem;">Unique Word</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer-note">
+        <strong>Sub-topic 2 of 4</strong>
+        <p style="margin-top:0.25rem;">Document is an individual sentence.</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="study-content">
+      <header style="margin-bottom: 2rem;">
+        <span class="stage-formula" style="background: var(--color-document-bg); color: var(--color-document);">
+          Document = Sentence
+        </span>
+        <h1 style="font-size: 2.2rem; font-weight: 800; margin-top: 0.5rem;">
+          2. Document (Sentence)
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem;">
+          When a Corpus (Paragraph) is broken down, each standalone sentence is treated as <strong>One Document</strong>.
+        </p>
+      </header>
+
+      <!-- Visual Context Box -->
+      <section class="stage-card stage-document" style="margin-bottom: 2rem;">
+        <div class="stage-header">
+          <span class="stage-badge" style="color: var(--color-document);">📄 Visual Demonstration</span>
+          <span class="stage-count-indicator">3 Documents Extracted</span>
+        </div>
+        <div class="stage-visual-output">
+          <div class="doc-list">
+            <div class="doc-item">
+              <span class="doc-tag">Document 1</span>
+              <span>"The cat sat on the warm mat."</span>
+            </div>
+            <div class="doc-item">
+              <span class="doc-tag">Document 2</span>
+              <span>"It looked outside at the bright sunshine."</span>
+            </div>
+            <div class="doc-item">
+              <span class="doc-tag">Document 3</span>
+              <span>"Was the cat happy today?"</span>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">
+          👉 <strong>Simple takeaway:</strong> 3 Sentences = 3 Documents.
+        </p>
+      </section>
+
+      <!-- Interactive Splitter Demo -->
+      <section class="interactive-demo-box" id="doc-splitter-demo">
+        <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--color-document); margin-bottom: 0.5rem;">
+          ✂️ Interactive Sentence Splitter
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Type sentences below to see how NLP converts a paragraph into numbered documents:
+        </p>
+
+        <textarea 
+          id="doc-raw-input" 
+          class="nlp-textarea" 
+          style="min-height: 80px; margin-bottom: 1rem;"
+        >Corpus is a full paragraph. Each document inside is a single sentence. NLP processes them one by one!</textarea>
+
+        <div id="doc-split-output"></div>
+      </section>
+
+      <!-- Navigation -->
+      <footer class="page-nav-footer">
+        <a href="corpus.html" class="nav-pager-link prev">
+          <span class="nav-pager-sub">Previous Sub-topic</span>
+          <span class="nav-pager-title">← 1. Corpus (Paragraph)</span>
+        </a>
+        <a href="word.html" class="nav-pager-link next">
+          <span class="nav-pager-sub">Next Sub-topic</span>
+          <span class="nav-pager-title">3. Word (Token) →</span>
+        </a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

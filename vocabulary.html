@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocabulary (Unique Word) - Start NLP</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Global Navbar -->
+  <header class="top-navbar">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">📚</div>
+      <span>Start NLP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="study.html" class="nav-link">Study Hub</a></li>
+    </ul>
+    <a href="study.html" class="nav-cta-btn">
+      <span>Study Hub</span>
+      <span>➔</span>
+    </a>
+  </header>
+
+  <!-- Upper Sub-headings Bar -->
+  <nav class="upper-subheadings-wrapper">
+    <div class="upper-subheadings-title">⚡ Sub-topics inside NLP Pillars:</div>
+    <div class="upper-subheadings-bar">
+      <a href="corpus.html" class="subheading-btn btn-corpus">
+        <span>📦 1. Corpus (Paragraph)</span>
+      </a>
+      <a href="document.html" class="subheading-btn btn-document">
+        <span>📄 2. Document (Sentence)</span>
+      </a>
+      <a href="word.html" class="subheading-btn btn-word">
+        <span>🏷️ 3. Word (Token)</span>
+      </a>
+      <a href="vocabulary.html" class="subheading-btn btn-vocab" style="box-shadow: 0 0 10px rgba(251, 191, 36, 0.4);">
+        <span>🔤 4. Vocabulary (Unique Word)</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="study-layout">
+    <!-- Left Sidebar: Only Topic inside NLP -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">NLP Topics</div>
+      
+      <div class="topic-card-box">
+        <a href="study.html" class="topic-main-link">
+          <span>🏛️ Topic 1: NLP Pillars</span>
+          <span class="topic-badge-active">Active</span>
+        </a>
+        
+        <ul class="topic-sublist">
+          <li class="subtopic-item">
+            <a href="corpus.html">
+              <span>• Corpus</span>
+              <span style="color:var(--color-corpus); font-size:0.75rem;">Paragraph</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="document.html">
+              <span>• Document</span>
+              <span style="color:var(--color-document); font-size:0.75rem;">Sentence</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="word.html">
+              <span>• Word</span>
+              <span style="color:var(--color-word); font-size:0.75rem;">Token</span>
+            </a>
+          </li>
+          <li class="subtopic-item active">
+            <a href="vocabulary.html">
+              <span>• Vocabulary</span>
+              <span style="color:var(--color-vocab); font-size:0.75rem;">Unique Word</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer-note">
+        <strong>Sub-topic 4 of 4</strong>
+        <p style="margin-top:0.25rem;">Vocabulary is counted as the unique word set.</p>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="study-content">
+      <header style="margin-bottom: 2rem;">
+        <span class="stage-formula" style="background: var(--color-vocab-bg); color: var(--color-vocab);">
+          Vocabulary = Unique Word
+        </span>
+        <h1 style="font-size: 2.2rem; font-weight: 800; margin-top: 0.5rem;">
+          4. Vocabulary (Unique Word)
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem;">
+          Repeated words are eliminated! <strong>Vocabulary</strong> is the clean set of all unique words.
+        </p>
+      </header>
+
+      <!-- Visual Context Box -->
+      <section class="stage-card stage-vocab" style="margin-bottom: 2rem;">
+        <div class="stage-header">
+          <span class="stage-badge" style="color: var(--color-vocab);">🔤 Visual Demonstration</span>
+          <span class="stage-count-indicator" style="color: var(--color-vocab);">Counted: 4 Unique Words</span>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+          Input: <em>"AI is smart. AI is fast."</em> (6 words total) ➔ Filters into:
+        </p>
+        <div class="stage-visual-output">
+          <div class="vocab-tag-cloud">
+            <span class="vocab-pill">ai <span class="freq">2x</span></span>
+            <span class="vocab-pill">fast <span class="freq">1x</span></span>
+            <span class="vocab-pill">is <span class="freq">2x</span></span>
+            <span class="vocab-pill">smart <span class="freq">1x</span></span>
+          </div>
+        </div>
+        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">
+          👉 <strong>Simple takeaway:</strong> Duplicates removed. Only unique words count toward Vocabulary.
+        </p>
+      </section>
+
+      <!-- Interactive Deduplicator Demo -->
+      <section class="interactive-demo-box" id="vocab-dedup-demo">
+        <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--color-vocab); margin-bottom: 0.5rem;">
+          🔍 Interactive Duplicate Filter
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Type sentences with repeated words to watch them filter into unique vocabulary words:
+        </p>
+
+        <input 
+          type="text" 
+          id="vocab-input" 
+          value="cats eat fish and dogs eat fish and cats love humans" 
+          style="width: 100%; padding: 0.8rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: #0b0f19; color: #fff; font-size: 1rem; margin-bottom: 1.25rem;"
+        />
+
+        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+          <div>
+            <span style="font-size:0.8rem; font-weight:700; color:var(--text-dim); text-transform:uppercase;">All Words (with duplicates):</span>
+            <div id="vocab-all-words" class="token-list" style="margin-top:0.35rem;"></div>
+          </div>
+          <div>
+            <span style="font-size:0.8rem; font-weight:700; color:var(--color-vocab); text-transform:uppercase;">Vocabulary (Unique Words only):</span>
+            <div id="vocab-unique-words" class="vocab-tag-cloud" style="margin-top:0.35rem;"></div>
+          </div>
+        </div>
+
+        <div id="vocab-stats-label" style="margin-top: 1rem; font-size: 0.85rem; font-weight: 700; color: #94a3b8;"></div>
+      </section>
+
+      <!-- Navigation -->
+      <footer class="page-nav-footer">
+        <a href="word.html" class="nav-pager-link prev">
+          <span class="nav-pager-sub">Previous Sub-topic</span>
+          <span class="nav-pager-title">← 3. Word (Token)</span>
+        </a>
+        <a href="study.html" class="nav-pager-link next">
+          <span class="nav-pager-sub">All Topics</span>
+          <span class="nav-pager-title">Study Hub & Pipeline ➔</span>
+        </a>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
