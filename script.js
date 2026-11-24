@@ -323,6 +323,245 @@ ${JSON.stringify(Object.fromEntries(sorted), null, 2)}`;
   }
 }
 
+// =========================================================
+// NLTK VISUAL IMPORT TREE DATA & INSPECTOR LOGIC
+// =========================================================
+const NLTK_TREE_DATA = {
+  'word_tokenize': {
+    name: 'word_tokenize',
+    module: 'nltk.tokenize',
+    type: 'Function',
+    importStmt: 'from nltk.tokenize import word_tokenize',
+    what: 'Splits sentences into individual discrete word and punctuation tokens. It handles contractions (e.g. "don\'t" -> "do", "n\'t") and isolates punctuation.',
+    how: `from nltk.tokenize import word_tokenize
+
+text = "Natural Language Processing with NLTK is fun!"
+tokens = word_tokenize(text)
+print(tokens)
+# Output: ['Natural', 'Language', 'Processing', 'with', 'NLTK', 'is', 'fun', '!']`,
+    simFunc: 'word_tokenize'
+  },
+  'sent_tokenize': {
+    name: 'sent_tokenize',
+    module: 'nltk.tokenize',
+    type: 'Function',
+    importStmt: 'from nltk.tokenize import sent_tokenize',
+    what: 'Breaks down a full paragraph (Corpus) into separate sentences (Documents) using Punkt boundary detection.',
+    how: `from nltk.tokenize import sent_tokenize
+
+corpus = "NLP is amazing. It powers AI chatbots! Are you ready?"
+docs = sent_tokenize(corpus)
+print(docs)
+# Output: ['NLP is amazing.', 'It powers AI chatbots!', 'Are you ready?']`,
+    simFunc: 'sent_tokenize'
+  },
+  'RegexpTokenizer': {
+    name: 'RegexpTokenizer',
+    module: 'nltk.tokenize',
+    type: 'Class',
+    importStmt: 'from nltk.tokenize import RegexpTokenizer',
+    what: 'A customizable tokenizer using regular expressions. Often used with r\'\\w+\' to strip all punctuation and symbols during token extraction.',
+    how: `from nltk.tokenize import RegexpTokenizer
+
+tokenizer = RegexpTokenizer(r'\\w+')
+words = tokenizer.tokenize("Deep learning, ML, & AI: revolutionize 2026!")
+print(words)
+# Output: ['Deep', 'learning', 'ML', 'AI', 'revolutionize', '2026']`,
+    simFunc: 'word_tokenize'
+  },
+  'wordpunct_tokenize': {
+    name: 'wordpunct_tokenize',
+    module: 'nltk.tokenize',
+    type: 'Function',
+    importStmt: 'from nltk.tokenize import wordpunct_tokenize',
+    what: 'Splits text into alphabetic and non-alphabetic tokens by scanning sequences of word characters and non-whitespace symbols.',
+    how: `from nltk.tokenize import wordpunct_tokenize
+
+tokens = wordpunct_tokenize("User's email: info@test.com")
+print(tokens)
+# Output: ['User', \"'\", 's', 'email', ':', 'info', '@', 'test', '.', 'com']`,
+    simFunc: 'word_tokenize'
+  },
+  'stopwords': {
+    name: 'stopwords',
+    module: 'nltk.corpus',
+    type: 'Corpus Reader',
+    importStmt: 'from nltk.corpus import stopwords',
+    what: 'Provides standardized lists of non-informative filler words (e.g. "the", "is", "at", "which") across 20+ languages to filter noise before training models.',
+    how: `from nltk.corpus import stopwords
+
+stop_words = set(stopwords.words('english'))
+tokens = ['this', 'is', 'a', 'great', 'nlp', 'model']
+filtered = [w for w in tokens if w.lower() not in stop_words]
+print(filtered)
+# Output: ['great', 'nlp', 'model']`,
+    simFunc: 'stopwords'
+  },
+  'gutenberg': {
+    name: 'gutenberg',
+    module: 'nltk.corpus',
+    type: 'Corpus Reader',
+    importStmt: 'from nltk.corpus import gutenberg',
+    what: 'Provides direct access to thousands of classic public domain literature books and texts for linguistic testing and corpus research.',
+    how: `from nltk.corpus import gutenberg
+
+# List all available book files
+print(gutenberg.fileids()[:2]) # ['austen-emma.txt', 'austen-persuasion.txt']
+
+# Get token list
+words = gutenberg.words('austen-emma.txt')
+print("Total words:", len(words)) # 192,427 words`,
+    simFunc: 'freqdist'
+  },
+  'wordnet': {
+    name: 'wordnet',
+    module: 'nltk.corpus',
+    type: 'Lexical Database',
+    importStmt: 'from nltk.corpus import wordnet',
+    what: 'A lexical database of English nouns, verbs, adjectives, and adverbs organized into sets of cognitive synonyms (synsets) with definitions and relationships.',
+    how: `from nltk.corpus import wordnet
+
+syns = wordnet.synsets('computer')
+print(syns[0].definition())
+# Output: 'a machine for performing calculations automatically'`,
+    simFunc: null
+  },
+  'PorterStemmer': {
+    name: 'PorterStemmer',
+    module: 'nltk.stem',
+    type: 'Class',
+    importStmt: 'from nltk.stem import PorterStemmer',
+    what: 'Heuristic algorithm that chops off common suffixes (e.g. -ing, -es, -ed) to reduce words to their base stem form.',
+    how: `from nltk.stem import PorterStemmer
+
+ps = PorterStemmer()
+print(ps.stem('running'))   # 'run'
+print(ps.stem('studies'))   # 'studi'
+print(ps.stem('processes')) # 'process'`,
+    simFunc: 'stemmer'
+  },
+  'SnowballStemmer': {
+    name: 'SnowballStemmer',
+    module: 'nltk.stem',
+    type: 'Class',
+    importStmt: 'from nltk.stem import SnowballStemmer',
+    what: 'An improved, more aggressive multi-language stemmer (also known as Porter2) supporting English, Spanish, French, German, etc.',
+    how: `from nltk.stem import SnowballStemmer
+
+stemmer = SnowballStemmer('english')
+print(stemmer.stem('generously')) # 'generous'
+print(stemmer.stem('studying'))   # 'studi'`,
+    simFunc: 'stemmer'
+  },
+  'WordNetLemmatizer': {
+    name: 'WordNetLemmatizer',
+    module: 'nltk.stem',
+    type: 'Class',
+    importStmt: 'from nltk.stem import WordNetLemmatizer',
+    what: 'Dictionary-backed lemmatizer that uses WordNet to find legitimate dictionary base forms (lemmas) based on Part-of-Speech.',
+    how: `from nltk.stem import WordNetLemmatizer
+
+lem = WordNetLemmatizer()
+print(lem.lemmatize('better', pos='a'))  # 'good' (adjective)
+print(lem.lemmatize('ran', pos='v'))     # 'run' (verb)
+print(lem.lemmatize('corpora', pos='n')) # 'corpus' (noun)`,
+    simFunc: 'stemmer'
+  },
+  'FreqDist': {
+    name: 'FreqDist',
+    module: 'nltk.probability',
+    type: 'Class',
+    importStmt: 'from nltk.probability import FreqDist',
+    what: 'Frequency distribution counter that tallies tokens, discovers the vocabulary set, and identifies the most frequent keywords in a corpus.',
+    how: `from nltk.probability import FreqDist
+
+tokens = ['ai', 'nlp', 'nlp', 'ai', 'ai', 'machine']
+fdist = FreqDist(tokens)
+
+print(fdist.N())              # 6 total tokens
+print(fdist.B())              # 3 unique vocabulary words
+print(fdist.most_common(2))   # [('ai', 3), ('nlp', 2)]`,
+    simFunc: 'freqdist'
+  },
+  'pos_tag': {
+    name: 'pos_tag',
+    module: 'nltk.tag',
+    type: 'Function',
+    importStmt: 'from nltk.tag import pos_tag',
+    what: 'Labels each token with its grammatical part of speech (e.g. NNP for proper noun, VBZ for present verb, JJ for adjective) using the Penn Treebank tagset.',
+    how: `from nltk.tag import pos_tag
+
+tokens = ['Sundar', 'leads', 'Google', 'in', 'California']
+tags = pos_tag(tokens)
+print(tags)
+# Output: [('Sundar', 'NNP'), ('leads', 'VBZ'), ('Google', 'NNP'), ('in', 'IN'), ('California', 'NNP')]`,
+    simFunc: null
+  },
+  'ne_chunk': {
+    name: 'ne_chunk',
+    module: 'nltk.chunk',
+    type: 'Function',
+    importStmt: 'from nltk.chunk import ne_chunk',
+    what: 'Extracts Named Entities (People, Organizations, Geographic Locations) from POS-tagged text into a parsed entity syntax tree.',
+    how: `from nltk.chunk import ne_chunk
+from nltk.tag import pos_tag
+
+tags = pos_tag(['Sundar', 'Pichai', 'leads', 'Google'])
+tree = ne_chunk(tags)
+print(tree)
+# Output: (S (PERSON Sundar/NNP Pichai/NNP) leads/VBZ (ORGANIZATION Google/NNP))`,
+    simFunc: null
+  },
+  'SentimentIntensityAnalyzer': {
+    name: 'SentimentIntensityAnalyzer',
+    module: 'nltk.sentiment.vader',
+    type: 'Class',
+    importStmt: 'from nltk.sentiment.vader import SentimentIntensityAnalyzer',
+    what: 'VADER (Valence Aware Dictionary and sEntiment Reasoner) rule-based sentiment model providing positive, negative, neutral, and normalized compound polarity scores.',
+    how: `from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+sia = SentimentIntensityAnalyzer()
+score = sia.polarity_scores("NLTK makes NLP super fun and powerful!")
+print(score)
+# Output: {'neg': 0.0, 'neu': 0.385, 'pos': 0.615, 'compound': 0.7712}`,
+    simFunc: null
+  }
+};
+
+function inspectTreeNode(key) {
+  const item = NLTK_TREE_DATA[key];
+  if (!item) return;
+
+  // Highlight active leaf button
+  const buttons = document.querySelectorAll('.tree-leaf-btn');
+  buttons.forEach(b => b.classList.remove('active'));
+  const activeBtn = document.querySelector(`.tree-leaf-btn[data-key="${key}"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  const nameEl = document.getElementById('inspector-title');
+  const importEl = document.getElementById('inspector-import');
+  const whatEl = document.getElementById('inspector-what');
+  const howEl = document.getElementById('inspector-how');
+  const simBtn = document.getElementById('inspector-sim-btn');
+
+  if (nameEl) nameEl.innerHTML = `<span>${item.name}</span> <span class="leaf-type-badge">${item.type}</span>`;
+  if (importEl) importEl.textContent = item.importStmt;
+  if (whatEl) whatEl.textContent = item.what;
+  if (howEl) howEl.textContent = item.how;
+
+  if (simBtn) {
+    if (item.simFunc) {
+      simBtn.style.display = 'inline-flex';
+      simBtn.onclick = () => {
+        scrollToSubtopic('nltk-live-runner');
+        switchNltkDemo(item.simFunc);
+      };
+    } else {
+      simBtn.style.display = 'none';
+    }
+  }
+}
+
 // Standalone Page Helpers
 function initCorpusDemo() {
   const btnAdd = document.getElementById('btn-add-doc');
@@ -465,6 +704,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize NLTK Simulator if present
   if (document.getElementById('nltk-demo-input')) {
     runNltkSimulator();
+  }
+
+  // Initialize NLTK Tree Inspector if present
+  if (document.getElementById('inspector-title')) {
+    inspectTreeNode('word_tokenize');
   }
 
   initCorpusDemo();

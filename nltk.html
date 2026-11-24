@@ -31,6 +31,12 @@
   <nav class="upper-subheadings-wrapper">
     <div class="upper-subheadings-title">⚡ Jump to NLTK Topics (Click to Scroll):</div>
     <div class="upper-subheadings-bar">
+      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('nltk-import-tree')" style="box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);">
+        <span>🌳 Visual Import Tree</span>
+      </button>
+      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('nltk-live-runner')">
+        <span>🧪 Live NLTK Simulator</span>
+      </button>
       <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('nltk-install')">
         <span>📥 1. Installation & Setup</span>
       </button>
@@ -51,9 +57,6 @@
       </button>
       <button class="subheading-btn btn-word" onclick="scrollToSubtopic('nltk-pos-ner')">
         <span>🏷️ 7. POS & NER</span>
-      </button>
-      <button class="subheading-btn btn-vocab" onclick="scrollToSubtopic('nltk-live-runner')">
-        <span>🧪 Live NLTK Simulator</span>
       </button>
     </div>
   </nav>
@@ -81,6 +84,18 @@
         </div>
         
         <ul class="topic-sublist">
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-import-tree')">
+              <span>• Visual Import Tree</span>
+              <span class="item-badge" style="background:var(--color-corpus-bg); color:var(--color-corpus);">Tree</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-live-runner')">
+              <span>• Live Simulator</span>
+              <span class="item-badge" style="background:var(--color-word-bg); color:var(--color-word);">Runner</span>
+            </a>
+          </li>
           <li class="subtopic-item">
             <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-install')">
               <span>• Install & Setup</span>
@@ -123,12 +138,6 @@
               <span class="item-badge">grammar</span>
             </a>
           </li>
-          <li class="subtopic-item">
-            <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-live-runner')">
-              <span>• Live Simulator</span>
-              <span class="item-badge" style="background:var(--color-word-bg); color:var(--color-word);">Runner</span>
-            </a>
-          </li>
         </ul>
       </div>
 
@@ -155,6 +164,225 @@
           Learn how to install NLTK, download essential corpora, and use every key function with real Python code, input/output, and industry use cases.
         </p>
       </header>
+
+      <!-- =========================================================
+           VISUAL NLTK ARCHITECTURE & IMPORT TREE DIAGRAM
+           ========================================================= -->
+      <section class="nltk-tree-container" id="nltk-import-tree">
+        <div class="tree-header-wrapper">
+          <div class="tree-main-title">
+            <span>🌳 NLTK Library Architecture & Import Tree</span>
+          </div>
+          <p class="tree-main-desc">
+            Explore how much and what you import from NLTK. Click any node in the tree below to inspect <strong>what it does</strong> and <strong>how to use it with Python code</strong>.
+          </p>
+        </div>
+
+        <!-- Root Node: nltk -->
+        <div class="tree-root-center">
+          <div class="tree-root-node">
+            <span>📦 nltk</span>
+            <span class="root-tag">Master Library</span>
+          </div>
+          <div class="tree-root-stem-line"></div>
+        </div>
+
+        <!-- 7 Module Branches Grid -->
+        <div class="tree-branches-grid">
+          
+          <!-- Branch 1: tokenize -->
+          <div class="tree-branch-card" style="border-top: 3px solid var(--color-corpus);">
+            <div class="branch-header">
+              <span class="branch-name" style="color: var(--color-corpus);">🌿 .tokenize</span>
+              <span class="branch-role">Tokenization</span>
+            </div>
+            <ul class="tree-leaf-list">
+              <li>
+                <button class="tree-leaf-btn active" data-key="word_tokenize" onclick="inspectTreeNode('word_tokenize')">
+                  <span>word_tokenize</span>
+                  <span class="leaf-type-badge">func</span>
+                </button>
+              </li>
+              <li>
+                <button class="tree-leaf-btn" data-key="sent_tokenize" onclick="inspectTreeNode('sent_tokenize')">
+                  <span>sent_tokenize</span>
+                  <span class="leaf-type-badge">func</span>
+                </button>
+              </li>
+              <li>
+                <button class="tree-leaf-btn" data-key="RegexpTokenizer" onclick="inspectTreeNode('RegexpTokenizer')">
+                  <span>RegexpTokenizer</span>
+                  <span class="leaf-type-badge">class</span>
+                </button>
+              </li>
+              <li>
+                <button class="tree-leaf-btn" data-key="wordpunct_tokenize" onclick="inspectTreeNode('wordpunct_tokenize')">
+                  <span>wordpunct_tokenize</span>
+                  <span class="leaf-type-badge">func</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Branch 2: corpus -->
+          <div class="tree-branch-card" style="border-top: 3px solid var(--color-document);">
+            <div class="branch-header">
+              <span class="branch-name" style="color: var(--color-document);">🌿 .corpus</span>
+              <span class="branch-role">Datasets</span>
+            </div>
+            <ul class="tree-leaf-list">
+              <li>
+                <button class="tree-leaf-btn" data-key="stopwords" onclick="inspectTreeNode('stopwords')">
+                  <span>stopwords</span>
+                  <span class="leaf-type-badge">data</span>
+                </button>
+              </li>
+              <li>
+                <button class="tree-leaf-btn" data-key="gutenberg" onclick="inspectTreeNode('gutenberg')">
+                  <span>gutenberg</span>
+                  <span class="leaf-type-badge">books</span>
+                </button>
+              </li>
+              <li>
+                <button class="tree-leaf-btn" data-key="wordnet" onclick="inspectTreeNode('wordnet')">
+                  <span>wordnet</span>
+                  <span class="leaf-type-badge">lexicon</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Branch 3: stem -->
+          <div class="tree-branch-card" style="border-top: 3px solid var(--color-word);">
+            <div class="branch-header">
+              <span class="branch-name" style="color: var(--color-word);">🌿 .stem</span>
+              <span class="branch-role">Stem & Lemma</span>
+            </div>
+            <ul class="tree-leaf-list">
+              <li>
+                <button class="tree-leaf-btn" data-key="PorterStemmer" onclick="inspectTreeNode('PorterStemmer')">
+                  <span>PorterStemmer</span>
+                  <span class="leaf-type-badge">class</span>
+                </button>
+              </li>
+              <li>
+                <button class="tree-leaf-btn" data-key="SnowballStemmer" onclick="inspectTreeNode('SnowballStemmer')">
+                  <span>SnowballStemmer</span>
+                  <span class="leaf-type-badge">class</span>
+                </button>
+              </li>
+              <li>
+                <button class="tree-leaf-btn" data-key="WordNetLemmatizer" onclick="inspectTreeNode('WordNetLemmatizer')">
+                  <span>WordNetLemmatizer</span>
+                  <span class="leaf-type-badge">class</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Branch 4: probability -->
+          <div class="tree-branch-card" style="border-top: 3px solid var(--color-vocab);">
+            <div class="branch-header">
+              <span class="branch-name" style="color: var(--color-vocab);">🌿 .probability</span>
+              <span class="branch-role">Statistics</span>
+            </div>
+            <ul class="tree-leaf-list">
+              <li>
+                <button class="tree-leaf-btn" data-key="FreqDist" onclick="inspectTreeNode('FreqDist')">
+                  <span>FreqDist</span>
+                  <span class="leaf-type-badge">class</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Branch 5: tag -->
+          <div class="tree-branch-card" style="border-top: 3px solid #ec4899;">
+            <div class="branch-header">
+              <span class="branch-name" style="color: #ec4899;">🌿 .tag</span>
+              <span class="branch-role">Grammar</span>
+            </div>
+            <ul class="tree-leaf-list">
+              <li>
+                <button class="tree-leaf-btn" data-key="pos_tag" onclick="inspectTreeNode('pos_tag')">
+                  <span>pos_tag</span>
+                  <span class="leaf-type-badge">func</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Branch 6: chunk -->
+          <div class="tree-branch-card" style="border-top: 3px solid #06b6d4;">
+            <div class="branch-header">
+              <span class="branch-name" style="color: #06b6d4;">🌿 .chunk</span>
+              <span class="branch-role">NER & Parsing</span>
+            </div>
+            <ul class="tree-leaf-list">
+              <li>
+                <button class="tree-leaf-btn" data-key="ne_chunk" onclick="inspectTreeNode('ne_chunk')">
+                  <span>ne_chunk</span>
+                  <span class="leaf-type-badge">func</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Branch 7: sentiment -->
+          <div class="tree-branch-card" style="border-top: 3px solid #f97316;">
+            <div class="branch-header">
+              <span class="branch-name" style="color: #f97316;">🌿 .sentiment</span>
+              <span class="branch-role">Polarity Analysis</span>
+            </div>
+            <ul class="tree-leaf-list">
+              <li>
+                <button class="tree-leaf-btn" data-key="SentimentIntensityAnalyzer" onclick="inspectTreeNode('SentimentIntensityAnalyzer')">
+                  <span>SentimentIntensityAnalyzer</span>
+                  <span class="leaf-type-badge">vader</span>
+                </button>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Interactive Node Inspector Panel -->
+        <div class="tree-node-inspector" id="tree-inspector">
+          <div class="inspector-top-row">
+            <h3 id="inspector-title" style="font-size: 1.35rem; font-weight: 800; display: flex; align-items: center; gap: 0.6rem;">
+              <span>word_tokenize</span>
+              <span class="leaf-type-badge">Function</span>
+            </h3>
+            <button id="inspector-sim-btn" class="action-btn primary" style="font-size: 0.85rem; padding: 0.4rem 1rem;">
+              ⚡ Run in Live Simulator
+            </button>
+          </div>
+
+          <div class="inspector-import-statement">
+            <span style="color: var(--text-dim); font-size: 0.85rem;">Import Statement:</span>
+            <strong id="inspector-import">from nltk.tokenize import word_tokenize</strong>
+          </div>
+
+          <div class="inspector-grid">
+            <div class="inspector-detail-box">
+              <span class="inspector-label">💡 What it is & Does:</span>
+              <p id="inspector-what" class="inspector-desc-text">
+                Splits sentences into individual discrete word and punctuation tokens. It handles contractions and isolates punctuation.
+              </p>
+            </div>
+
+            <div class="inspector-detail-box">
+              <span class="inspector-label">🛠️ How to use it (Python):</span>
+              <pre id="inspector-how" class="inspector-code-block">from nltk.tokenize import word_tokenize
+
+text = "Natural Language Processing with NLTK is fun!"
+tokens = word_tokenize(text)
+print(tokens)
+# Output: ['Natural', 'Language', 'Processing', 'with', 'NLTK', 'is', 'fun', '!']</pre>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <!-- =========================================================
            INTERACTIVE NLTK IN-BROWSER SIMULATOR

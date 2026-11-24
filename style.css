@@ -1381,6 +1381,255 @@ a {
 }
 
 /* =========================================================
+   NLTK VISUAL IMPORT TREE DIAGRAM & INSPECTOR
+   ========================================================= */
+.nltk-tree-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 2rem;
+  margin-bottom: 3.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.tree-header-wrapper {
+  margin-bottom: 2rem;
+}
+
+.tree-main-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.tree-main-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* Root Node Visual */
+.tree-root-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.tree-root-node {
+  background: linear-gradient(135deg, #059669, #0284c7);
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 800;
+  box-shadow: 0 0 25px rgba(2, 132, 199, 0.45);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
+
+.tree-root-node .root-tag {
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 0.75rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+}
+
+.tree-root-stem-line {
+  width: 2px;
+  height: 28px;
+  background: linear-gradient(to bottom, #0284c7, var(--border-color));
+  margin: 0 auto;
+}
+
+/* Branches Grid */
+.tree-branches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.tree-branch-card {
+  background: #0d121d;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  transition: var(--transition);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.tree-branch-card:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.branch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0.85rem;
+}
+
+.branch-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.branch-role {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.tree-leaf-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.tree-leaf-btn {
+  width: 100%;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-main);
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+}
+
+.tree-leaf-btn:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: var(--color-corpus-border);
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.tree-leaf-btn.active {
+  background: var(--color-word-bg);
+  border-color: var(--color-word-border);
+  color: var(--color-word);
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.3);
+}
+
+.leaf-type-badge {
+  font-size: 0.68rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--text-dim);
+  font-family: inherit;
+}
+
+/* Tree Node Interactive Inspector Box */
+.tree-node-inspector {
+  background: #090e18;
+  border: 2px solid var(--color-corpus-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1.75rem;
+  transition: var(--transition);
+}
+
+.inspector-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.inspector-import-statement {
+  background: #040810;
+  border: 1px solid var(--border-color);
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-sm);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.inspector-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 850px) {
+  .inspector-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.inspector-detail-box {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+}
+
+.inspector-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.inspector-desc-text {
+  font-size: 0.95rem;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.inspector-code-block {
+  background: #03060d;
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #34d399;
+  overflow-x: auto;
+}
+
+/* =========================================================
    RESPONSIVE
    ========================================================= */
 @media (max-width: 768px) {
