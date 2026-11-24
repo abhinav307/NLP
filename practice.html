@@ -33,30 +33,30 @@
 
   <!-- Upper Sub-headings Bar: Quick Click-to-Jump -->
   <nav class="upper-subheadings-wrapper" aria-label="Practice 1 Quick Navigation">
-    <div class="upper-subheadings-title">⚡ Practice 1 Interactive Labs (Click to Jump):</div>
+    <div class="upper-subheadings-title">⚡ Master Workbench Labs (Click to Switch):</div>
     <div class="upper-subheadings-bar">
       <button class="subheading-btn btn-corpus" onclick="switchPracticeLab('tokenizer')">
-        <span>🥊 1. Tokenizer Arena</span>
+        <span>🥊 Lab 1: Tokenizer Arena</span>
       </button>
 
       <button class="subheading-btn btn-word" onclick="switchPracticeLab('stemming')">
-        <span>✂️ 2. Stemming Slicers</span>
+        <span>✂️ Lab 2: Stemming Slicers</span>
       </button>
 
       <button class="subheading-btn" style="background: rgba(251, 113, 133, 0.15); color: #fb7185; border-color: rgba(251, 113, 133, 0.3);" onclick="switchPracticeLab('stopwords')">
-        <span>🧹 3. Stopwords Filter</span>
+        <span>🧹 Lab 3: Stopwords Filter</span>
       </button>
 
       <button class="subheading-btn btn-document" onclick="switchPracticeLab('lemma')">
-        <span>📚 4. Lemmatize + POS</span>
+        <span>📚 Lab 4: Lemmatize + POS</span>
       </button>
 
       <button class="subheading-btn btn-vocab" onclick="switchPracticeLab('freqdist')">
-        <span>📊 5. FreqDist Bars</span>
+        <span>📊 Lab 5: FreqDist Bars</span>
       </button>
 
       <button class="subheading-btn" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border-color: rgba(168, 85, 247, 0.3);" onclick="switchPracticeLab('review')">
-        <span>🏆 6. Review Cleaner</span>
+        <span>🏆 Lab 6: Review Cleaner</span>
       </button>
     </div>
   </nav>
@@ -64,71 +64,104 @@
   <!-- Multi-page Layout with Left Sidebar -->
   <div class="study-layout">
     
-    <!-- Left Sidebar: Content Control for Practice 1 -->
+    <!-- Left Sidebar: Unified 6 Course Units + Master Workbench -->
     <aside class="study-sidebar">
-      <div class="sidebar-category">NLP Learning Modules</div>
+      <div class="sidebar-category">6 Course Units</div>
       
-      <!-- Module 1 Link -->
-      <div class="topic-card-box" style="margin-bottom: 0.85rem;">
+      <!-- Unit 1 -->
+      <div class="topic-card-box" style="margin-bottom: 0.5rem;">
         <a href="study.html" class="topic-main-link" style="color: var(--text-muted);">
-          <span>🏛️ Topic 1: NLP Pillars</span>
-          <span style="font-size: 0.75rem; color: var(--color-corpus);">View ➔</span>
+          <span>🏛️ Unit 1: NLP Pillars</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
         </a>
       </div>
 
-      <!-- Module 2 Link -->
-      <div class="topic-card-box" style="margin-bottom: 0.85rem;">
+      <!-- Unit 2 -->
+      <div class="topic-card-box" style="margin-bottom: 0.5rem;">
         <a href="nltk.html" class="topic-main-link" style="color: var(--text-muted);">
-          <span>🐍 Topic 2: NLTK Studio</span>
-          <span style="font-size: 0.75rem; color: var(--color-word);">View ➔</span>
+          <span>🐍 Unit 2: NLTK Studio</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
         </a>
       </div>
 
-      <!-- Chapter 3: Practice 1 (Active) -->
-      <div class="topic-card-box">
+      <!-- Unit 3 -->
+      <div class="topic-card-box" style="margin-bottom: 0.5rem;">
+        <a href="tokenization.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>✂️ Unit 3: Tokenization</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 4 -->
+      <div class="topic-card-box" style="margin-bottom: 0.5rem;">
+        <a href="stemming.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🌱 Unit 4: Stemming & Types</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 5 -->
+      <div class="topic-card-box" style="margin-bottom: 0.5rem;">
+        <a href="stopwords.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🛑 Unit 5: Stopwords Filter</span>
+          <span style="font-size: 0.72rem; color: #fb7185;">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 6 -->
+      <div class="topic-card-box" style="margin-bottom: 1rem;">
+        <a href="lemmatization.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>📚 Unit 6: Lemmatization</span>
+          <span style="font-size: 0.72rem; color: var(--color-document);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Master Workbench (Active) -->
+      <div class="sidebar-category">Hands-On Practice Lab</div>
+      <div class="topic-card-box" style="border: 1px solid rgba(192, 132, 252, 0.4); background: rgba(168, 85, 247, 0.08);">
         <div class="topic-main-link">
-          <span>🧪 Chapter 3: Practice 1</span>
+          <span>🧪 Master Workbench</span>
           <span class="topic-badge-active" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border-color: rgba(168, 85, 247, 0.4);">Active Lab</span>
         </div>
         
         <!-- Sidebar Lab Mode Controls -->
         <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 0.85rem 0 0.45rem 0.5rem; font-weight: 700;">
-          Interactive Practice Units
+          Workbench Labs (Click to Switch):
         </div>
         <ul class="topic-sublist">
           <li class="subtopic-item practice-sidebar-item active" data-lab="tokenizer">
             <a href="javascript:void(0)" onclick="switchPracticeLab('tokenizer')">
-              <span>🥊 Unit 1: Tokenizer Arena</span>
+              <span>🥊 Lab 1: Tokenizer Arena</span>
               <span class="item-badge" style="color: var(--color-corpus);">bench</span>
             </a>
           </li>
           <li class="subtopic-item practice-sidebar-item" data-lab="stemming">
             <a href="javascript:void(0)" onclick="switchPracticeLab('stemming')">
-              <span>✂️ Unit 2: Stemming Slicers</span>
+              <span>✂️ Lab 2: Stemming Slicers</span>
               <span class="item-badge" style="color: var(--color-word);">slicers</span>
             </a>
           </li>
           <li class="subtopic-item practice-sidebar-item" data-lab="stopwords">
             <a href="javascript:void(0)" onclick="switchPracticeLab('stopwords')">
-              <span>🧹 Unit 3: Stopword Filter</span>
+              <span>🧹 Lab 3: Stopword Filter</span>
               <span class="item-badge" style="color: #fb7185;">reduce</span>
             </a>
           </li>
           <li class="subtopic-item practice-sidebar-item" data-lab="lemma">
             <a href="javascript:void(0)" onclick="switchPracticeLab('lemma')">
-              <span>📚 Unit 4: Lemma with POS</span>
+              <span>📚 Lab 4: Lemma with POS</span>
               <span class="item-badge" style="color: var(--color-document);">roots</span>
             </a>
           </li>
           <li class="subtopic-item practice-sidebar-item" data-lab="freqdist">
             <a href="javascript:void(0)" onclick="switchPracticeLab('freqdist')">
-              <span>📊 Unit 5: FreqDist Bars</span>
+              <span>📊 Lab 5: FreqDist Bars</span>
               <span class="item-badge" style="color: var(--color-vocab);">stats</span>
             </a>
           </li>
           <li class="subtopic-item practice-sidebar-item" data-lab="review">
             <a href="javascript:void(0)" onclick="switchPracticeLab('review')">
-              <span>🏆 Unit 6: Review Cleaner</span>
+              <span>🏆 Lab 6: Review Cleaner</span>
               <span class="item-badge" style="color: #c084fc;">nlp-ml</span>
             </a>
           </li>
@@ -209,7 +242,7 @@
               </p>
             </div>
           </div>
-          <div class="canvas-badge" id="practice-lab-badge">Unit 1 Practice</div>
+          <div class="canvas-badge" id="practice-lab-badge">Interactive Lab 01</div>
         </div>
 
         <!-- Presets Selection Bar -->

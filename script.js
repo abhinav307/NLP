@@ -1140,8 +1140,8 @@ const PRACTICE_LAB_CONFIGS = {
     icon: "🥊",
     title: "Tokenizer Arena: The Benchmark Showdown",
     desc: "Comparing word_tokenize, wordpunct_tokenize, and TreebankWordTokenizer on real-world tricky contractions, money, and abbreviations.",
-    badge: "Unit 1 Practice",
-    code: `# Unit 1: Tokenization (Sourced from tokenization Example using NLTK.ipynb)
+    badge: "Workbench Lab 01",
+    code: `# Workbench Lab 01: Tokenization (Sourced from tokenization Example using NLTK.ipynb)
 from nltk.tokenize import sent_tokenize, word_tokenize, wordpunct_tokenize, TreebankWordTokenizer
 
 # 1. Sentence Tokenization (Paragraph ➔ Documents)
@@ -1165,8 +1165,8 @@ print("Treebank:           ", tokenizer.tokenize(corpus))`
     icon: "✂️",
     title: "Stemming Slicers: Porter vs. Snowball vs. Regexp",
     desc: "Visualizing rule-based heuristic suffix slicing. Compare how different stemmers chop suffixes on regular and irregular words.",
-    badge: "Unit 2 Practice",
-    code: `# Unit 2 Practice: Stemming Algorithms Showdown
+    badge: "Workbench Lab 02",
+    code: `# Workbench Lab 02: Stemming Algorithms Showdown
 from nltk.stem import PorterStemmer, SnowballStemmer, RegexpStemmer
 
 porter = PorterStemmer()
@@ -1181,8 +1181,8 @@ for w in words:
     icon: "🧹",
     title: "Stopword Noise Reducer & Compression Meter",
     desc: "Measures dataset compression ratio when filtering non-informative stopwords and punctuation out of raw human text.",
-    badge: "Unit 3 Practice",
-    code: `# Unit 3 Practice: Measuring Stopwords & Noise Reduction
+    badge: "Workbench Lab 03",
+    code: `# Workbench Lab 03: Measuring Stopwords & Noise Reduction
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import string
@@ -1199,8 +1199,8 @@ print("Clean Core Tokens:", clean_tokens)`
     icon: "📚",
     title: "Lemmatization with POS: Dictionary-Accurate Roots",
     desc: "Why WordNetLemmatizer needs Part-of-Speech tags (Verb, Adjective, Noun) to return legitimate dictionary base forms.",
-    badge: "Unit 4 Practice",
-    code: `# Unit 4 Practice: WordNetLemmatizer with Part-of-Speech (POS) Tagging
+    badge: "Workbench Lab 04",
+    code: `# Workbench Lab 04: WordNetLemmatizer with Part-of-Speech (POS) Tagging
 from nltk.stem import WordNetLemmatizer
 
 lemmatizer = WordNetLemmatizer()
@@ -1215,8 +1215,8 @@ print("corpora (noun)      ➔", lemmatizer.lemmatize("corpora", pos='n')) # cor
     icon: "📊",
     title: "Vocabulary Analytics & Frequency Distribution Bars",
     desc: "Interactive horizontal frequency distribution bar chart and Lexical Diversity calculations (Unique Vocab / Total Words).",
-    badge: "Unit 5 Practice",
-    code: `# Unit 5 Practice: Vocabulary Analysis & Frequency Distribution
+    badge: "Workbench Lab 05",
+    code: `# Workbench Lab 05: Vocabulary Analysis & Frequency Distribution
 from nltk.probability import FreqDist
 from nltk.tokenize import word_tokenize
 
@@ -1231,8 +1231,8 @@ print("Lexical Diversity:", f"{len(set(clean_words)) / len(clean_words) * 100:.2
     icon: "🏆",
     title: "Real-World Challenge: Customer Review Cleaner",
     desc: "End-to-end practical cleaning of unstructured user reviews with emojis, contractions, and punctuation into clean ML keywords.",
-    badge: "Unit 6 Practice",
-    code: `# Unit 6 Practice: Messy Unstructured Text Cleaner
+    badge: "Workbench Lab 06",
+    code: `# Workbench Lab 06: Messy Unstructured Text Cleaner
 messy_review = """
 WOWWW!! This NLP software version 3.2 is AMAZINGGG & super-fast! 🚀
 However, it crashed 2 times today on my MacBook... isn't that annoying?
@@ -1338,122 +1338,141 @@ function updatePracticeVisualStage() {
 }
 
 // 1. Tokenizer Arena Renderer
+// =========================================================
+// DEEP VISUAL NLP MICRO-STUDIOS (UNITS 3, 4, 5, 6)
+// =========================================================
+
+// Global interactive states for visual widgets
+let globalActiveTokenizer = 'word_tokenize';
+let globalStemWord = 'running';
+let globalLemmaWord = 'better';
+let globalLemmaPos = 'a';
+
+// 1. TOKENIZER ARENA: Interactive Token Tape & Boundary Cuts
+function switchTapeTokenizer(mode) {
+  globalActiveTokenizer = mode;
+  const stage = document.getElementById('unit3-visual-stage') || document.getElementById('practice-visual-stage');
+  const input = document.getElementById('unit3-input') || document.getElementById('practice-input');
+  if (stage && input) renderTokenizerArena(input.value.trim(), stage);
+}
+
 function renderTokenizerArena(text, container) {
-  // Simulate sent_tokenize (Sentence boundary detection)
+  // Step 1: sent_tokenize simulation
   let sentMatches = text.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g) || [];
   let sentTok = sentMatches.map(s => s.trim()).filter(s => s.length > 0);
+  if (sentTok.length === 0 && text.length > 0) sentTok = [text];
 
-  // Simulate word_tokenize (splits contractions standard NLTK style)
-  let wordTok = text
-    .replace(/n't\b/gi, " n't")
-    .replace(/'s\b/gi, " 's")
-    .replace(/'re\b/gi, " 're")
-    .replace(/'ve\b/gi, " 've")
-    .replace(/'ll\b/gi, " 'll")
-    .replace(/'d\b/gi, " 'd")
-    .match(/\b[\w$]+(?:\.\d+)?\b|n't|'[a-z]+|[.,!?;:()]/gi) || [];
+  // Tokenize with active algorithm
+  let activeTokens = [];
+  let activeLabel = 'word_tokenize (Standard English Contractions)';
+  let activeDesc = "Splits contractions into base + suffix: isn't ➔ ['is', \"n't\"]. Keeps standard punctuation separate.";
 
-  // Simulate wordpunct_tokenize (splits every single punctuation char)
-  let punctTok = text.match(/\w+|[^\w\s]/g) || [];
+  if (globalActiveTokenizer === 'word_tokenize') {
+    activeTokens = text
+      .replace(/n't\b/gi, " n't")
+      .replace(/'s\b/gi, " 's")
+      .replace(/'re\b/gi, " 're")
+      .replace(/'ve\b/gi, " 've")
+      .replace(/'ll\b/gi, " 'll")
+      .replace(/'d\b/gi, " 'd")
+      .match(/\b[\w$]+(?:\.\d+)?\b|n't|'[a-z]+|[.,!?;:()]/gi) || [];
+    activeLabel = 'word_tokenize()';
+    activeDesc = "Smart contraction boundary detection: splits isn't ➔ ['is', \"n't\"], preserves numbers & currency.";
+  } else if (globalActiveTokenizer === 'wordpunct_tokenize') {
+    activeTokens = text.match(/\w+|[^\w\s]/g) || [];
+    activeLabel = 'wordpunct_tokenize()';
+    activeDesc = "Aggressive regex splitter (\\w+|[^\\w\\s]): isolates every single punctuation mark and quote.";
+  } else if (globalActiveTokenizer === 'TreebankWordTokenizer') {
+    activeTokens = text
+      .replace(/n't\b/gi, " n't")
+      .replace(/'([a-z]+)\b/gi, " '$1")
+      .match(/\b[\w$]+(?:\.\d+)?\.?|n't|'[a-z]+|[.,!?;:()]/gi) || [];
+    activeLabel = 'TreebankWordTokenizer()';
+    activeDesc = "Penn Treebank standard: preserves periods on abbreviations and normalizes contraction boundaries.";
+  }
 
-  // Simulate TreebankWordTokenizer (standard Penn Treebank)
-  let tbTok = text
-    .replace(/n't\b/gi, " n't")
-    .replace(/'([a-z]+)\b/gi, " '$1")
-    .match(/\b[\w$]+(?:\.\d+)?\.?|n't|'[a-z]+|[.,!?;:()]/gi) || [];
+  // Token classification helper
+  function classifyToken(tok) {
+    if (/^[.,!?;:()\'\"\-\—\[\]\{\}]+$/.test(tok)) return { cls: 'type-punct', label: 'punct' };
+    if (/^(\$|\€|\£)?\d+(\.\d+)?%?$/.test(tok)) return { cls: 'type-number', label: 'num' };
+    if (/^(n't|'[a-z]+)$/i.test(tok)) return { cls: 'type-contraction', label: 'contract' };
+    return { cls: 'type-word', label: 'word' };
+  }
 
   container.innerHTML = `
-    <!-- Step 1: Sentence Tokenizer (sent_tokenize) -->
-    <div style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.5rem;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+    <!-- Sentence Decomposer Ribbon -->
+    <div style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 14px; padding: 1.25rem; margin-bottom: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
         <span style="font-size: 0.88rem; font-weight: 700; color: var(--color-corpus); display: flex; align-items: center; gap: 0.45rem;">
           <span>📄</span>
-          <span>1. Sentence Tokenizer: sent_tokenize(corpus) ➔ Documents</span>
+          <span>1. Sentence Perforation: sent_tokenize(corpus) ➔ Documents</span>
         </span>
-        <span class="token-box-badge">${sentTok.length} Documents</span>
+        <span class="token-box-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.35);">
+          ${sentTok.length} Documents
+        </span>
       </div>
-      <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
-        Splits unstructured text paragraph into individual sentences (Documents) by fullstops, exclamation marks, and question marks:
-      </p>
-      <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.5rem;">
         ${sentTok.map((s, i) => `
-          <div style="font-size: 0.82rem; background: rgba(0,0,0,0.3); padding: 0.5rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--color-corpus); color: var(--text-main);">
-            <strong style="color: var(--color-corpus); margin-right: 0.5rem;">Document #${i + 1}:</strong> "${escapeHtml(s)}"
+          <div style="display: flex; align-items: center; gap: 0.65rem; background: rgba(0,0,0,0.35); padding: 0.6rem 0.95rem; border-radius: 10px; border-left: 3px solid var(--color-corpus);">
+            <span style="font-size: 0.75rem; font-weight: 800; color: var(--color-corpus); background: rgba(56, 189, 248, 0.12); padding: 0.15rem 0.45rem; border-radius: 4px;">Doc #${i + 1}</span>
+            <span style="font-size: 0.84rem; color: #fff; font-family: 'Inter', sans-serif;">"${escapeHtml(s)}"</span>
           </div>
         `).join('')}
       </div>
     </div>
 
-    <!-- Step 2: Word Tokenizers Comparison Arena -->
-    <div style="margin-bottom: 0.85rem; color: var(--text-muted); font-size: 0.88rem; font-weight: 700; display: flex; align-items: center; gap: 0.45rem;">
-      <span>🏷️</span>
-      <span>2. Word Tokenizers Showdown (Document ➔ Word Tokens):</span>
-    </div>
-    <div class="practice-arena-grid">
+    <!-- Interactive Token Tape with 3-Way Switcher -->
+    <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem;">
       
-      <!-- word_tokenize() -->
-      <div class="token-box-card">
-        <div class="token-box-header">
-          <div class="token-box-title">
+      <!-- Top Switcher Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1rem;">
+        <div>
+          <span style="font-size: 0.9rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 0.4rem;">
             <span>✂️</span>
-            <span>word_tokenize()</span>
-          </div>
-          <span class="token-box-badge">${wordTok.length} Tokens</span>
+            <span>2. The Interactive Token Tape & Boundary Cuts</span>
+          </span>
+          <span style="font-size: 0.75rem; color: var(--text-dim); display: block; margin-top: 0.2rem;">
+            ${activeDesc}
+          </span>
         </div>
-        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
-          Splits contractions like <code>isn't</code> ➔ <code>['is', "n't"]</code>. Standard for general English.
-        </p>
-        <div class="token-list" style="max-height: 220px; overflow-y: auto;">
-          ${wordTok.map((t, i) => `
-            <span class="token-chip" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
-              <span class="token-index">#${i}</span>
-              <span>${escapeHtml(t)}</span>
-            </span>
-          `).join('')}
+
+        <!-- 3-Way Selector Pills -->
+        <div style="display: inline-flex; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 3px; gap: 3px;">
+          <button class="pos-dial-btn ${globalActiveTokenizer === 'word_tokenize' ? 'active' : ''}" onclick="switchTapeTokenizer('word_tokenize')">
+            word_tokenize
+          </button>
+          <button class="pos-dial-btn ${globalActiveTokenizer === 'wordpunct_tokenize' ? 'active' : ''}" onclick="switchTapeTokenizer('wordpunct_tokenize')">
+            wordpunct
+          </button>
+          <button class="pos-dial-btn ${globalActiveTokenizer === 'TreebankWordTokenizer' ? 'active' : ''}" onclick="switchTapeTokenizer('TreebankWordTokenizer')">
+            Treebank
+          </button>
         </div>
       </div>
 
-      <!-- wordpunct_tokenize() -->
-      <div class="token-box-card">
-        <div class="token-box-header">
-          <div class="token-box-title">
-            <span>⚡</span>
-            <span>wordpunct_tokenize()</span>
-          </div>
-          <span class="token-box-badge" style="background: rgba(52, 211, 153, 0.12); color: var(--color-word); border-color: rgba(52, 211, 153, 0.3);">${punctTok.length} Tokens</span>
-        </div>
-        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
-          Separates every punctuation mark individually: <code>it's</code> ➔ <code>['it', "'", 's']</code>.
-        </p>
-        <div class="token-list" style="max-height: 220px; overflow-y: auto;">
-          ${punctTok.map((t, i) => `
-            <span class="token-chip" style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.3); color: var(--color-word);">
-              <span class="token-index">#${i}</span>
-              <span>${escapeHtml(t)}</span>
-            </span>
-          `).join('')}
-        </div>
+      <!-- The Filmstrip Token Tape Track -->
+      <div class="token-tape-track">
+        ${activeTokens.map((tok, i) => {
+          const info = classifyToken(tok);
+          const isContraction = info.cls === 'type-contraction';
+          return `
+            <div class="token-tape-chip ${isContraction ? 'token-diff-glow' : ''}">
+              <span class="token-tape-text">${escapeHtml(tok)}</span>
+              <span class="token-tape-type ${info.cls}">#${i} ${info.label}</span>
+            </div>
+            ${i < activeTokens.length - 1 ? '<span class="token-scissor-cut">✂️</span>' : ''}
+          `;
+        }).join('')}
       </div>
 
-      <!-- TreebankWordTokenizer -->
-      <div class="token-box-card">
-        <div class="token-box-header">
-          <div class="token-box-title">
-            <span>🏛️</span>
-            <span>TreebankTokenizer</span>
-          </div>
-          <span class="token-box-badge" style="background: rgba(168, 85, 247, 0.12); color: #c084fc; border-color: rgba(168, 85, 247, 0.3);">${tbTok.length} Tokens</span>
+      <!-- Boundary Diff Insights Box -->
+      <div style="margin-top: 1.25rem; background: rgba(0,0,0,0.3); border-radius: 10px; padding: 0.85rem 1.1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+          <span style="font-size: 1rem;">🔍</span>
+          <span><strong>Contraction Cut Observation:</strong> <code>isn't</code> ➔ ${globalActiveTokenizer === 'wordpunct_tokenize' ? "<span style='color:#f59e0b;'>['isn', \"'\", 't'] (3 tokens)</span>" : "<span style='color:#38bdf8;'>['is', \"n't\"] (2 tokens)</span>"}</span>
         </div>
-        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
-          Penn Treebank rules: leaves trailing periods on abbreviations, splits standard contractions.
-        </p>
-        <div class="token-list" style="max-height: 220px; overflow-y: auto;">
-          ${tbTok.map((t, i) => `
-            <span class="token-chip" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">
-              <span class="token-index">#${i}</span>
-              <span>${escapeHtml(t)}</span>
-            </span>
-          `).join('')}
+        <div style="font-size: 0.78rem; font-weight: 700; color: #38bdf8;">
+          Total Output: ${activeTokens.length} Tokens
         </div>
       </div>
 
@@ -1461,239 +1480,410 @@ function renderTokenizerArena(text, container) {
   `;
 }
 
-// 2. Stemming Arena Renderer
+// 2. STEMMING ARENA: Suffix Laser Cutter & Guillotine
+function feedLaserWord(word) {
+  globalStemWord = word;
+  const stage = document.getElementById('unit4-visual-stage') || document.getElementById('practice-visual-stage');
+  const input = document.getElementById('unit4-input') || document.getElementById('practice-input');
+  if (stage && input) renderStemmingArena(input.value.trim(), stage);
+}
+
 function renderStemmingArena(text, container) {
   const words = text.match(/\b[A-Za-z]+\b/g) || [];
-  const uniqueWords = Array.from(new Set(words.map(w => w.toLowerCase())));
+  const activeWord = (globalStemWord || words[0] || 'running').toLowerCase();
 
-  // Emulate Porter, Snowball, and Regexp
-  const comparisons = uniqueWords.slice(0, 14).map(w => {
-    // Porter heuristics
-    let porter = w;
-    if (w === 'congratulations') porter = 'congratul';
-    else if (w === 'sitting') porter = 'sit';
-    else if (w === 'fairly') porter = 'fairli';
-    else if (w === 'sportingly') porter = 'sportingli';
-    else if (w === 'historical') porter = 'histor';
-    else if (porter.endsWith('ing') && porter.length > 4) porter = porter.slice(0, -3);
-    else if (porter.endsWith('ies') && porter.length > 4) porter = porter.slice(0, -3) + 'i';
-    else if (porter.endsWith('ly') && porter.length > 4) porter = porter.slice(0, -2);
-    else if (porter.endsWith('ed') && porter.length > 4) porter = porter.slice(0, -2);
-    else if (porter.endsWith('s') && !porter.endsWith('ss') && porter.length > 3) porter = porter.slice(0, -1);
+  // Heuristic Suffix Slicing for active word
+  let stemBase = activeWord;
+  let suffix = '';
+  let isShielded = false;
+  let warningNote = '';
 
-    // Snowball heuristics (Porter2 improvements)
-    let snowball = porter;
-    if (w === 'fairly') snowball = 'fair';
-    else if (w === 'easily') snowball = 'easili';
-    else if (w === 'sportingly') snowball = 'sport';
-    else if (w === 'historical') snowball = 'histori';
-
-    // Regexp (Rule: 'ing$|s$|e$|able$', min=4)
-    let regex = w;
-    if (w.length >= 4) {
-      if (w.endsWith('ing')) regex = w.slice(0, -3);
-      else if (w.endsWith('able')) regex = w.slice(0, -4);
-      else if (w.endsWith('s')) regex = w.slice(0, -1);
-      else if (w.endsWith('e')) regex = w.slice(0, -1);
+  // Regexp rule: 'ing$|s$|e$|able$', min=4
+  if (activeWord.length < 4) {
+    isShielded = true;
+    stemBase = activeWord;
+    suffix = '(none)';
+  } else {
+    if (activeWord.endsWith('ing')) {
+      stemBase = activeWord.slice(0, -3);
+      suffix = 'ing';
+      if (activeWord === 'sing') warningNote = "⚠️ Over-stemmed to 's' 😒 (Notebook edge case)";
+    } else if (activeWord.endsWith('able')) {
+      stemBase = activeWord.slice(0, -4);
+      suffix = 'able';
+      if (activeWord === 'table') warningNote = "⚠️ Over-stemmed to 't' 😒 (Notebook edge case)";
+    } else if (activeWord.endsWith('ies')) {
+      stemBase = activeWord.slice(0, -3) + 'i';
+      suffix = 'ies ➔ i';
+    } else if (activeWord.endsWith('ly')) {
+      stemBase = activeWord.slice(0, -2);
+      suffix = 'ly';
+    } else if (activeWord.endsWith('s') && !activeWord.endsWith('ss')) {
+      stemBase = activeWord.slice(0, -1);
+      suffix = 's';
+    } else if (activeWord.endsWith('ed')) {
+      stemBase = activeWord.slice(0, -2);
+      suffix = 'ed';
     }
+  }
 
-    let diffTag = (porter !== snowball) ? ' <span style="font-size:0.7rem; color:#38bdf8; font-weight:700;">(Snowball wins)</span>' : '';
-    let emojiTag = '';
-    if (w === 'congratulations' || w === 'sing' || w === 'table' || w === 'love') emojiTag = ' 😒';
-    if (w === 'sitting') emojiTag = ' 😘';
+  // Porter & Snowball simulations
+  let porter = activeWord;
+  let snowball = activeWord;
+  if (activeWord === 'congratulations') { porter = 'congratul'; snowball = 'congratul'; }
+  else if (activeWord === 'sitting') { porter = 'sit'; snowball = 'sit'; }
+  else if (activeWord === 'fairly') { porter = 'fairli'; snowball = 'fair'; }
+  else if (activeWord === 'sportingly') { porter = 'sportingli'; snowball = 'sport'; }
+  else if (activeWord === 'historical') { porter = 'histor'; snowball = 'histori'; }
+  else {
+    porter = stemBase;
+    snowball = stemBase;
+  }
 
-    return { raw: w, porter, snowball, regex, diffTag, emojiTag };
-  });
+  // User preset chips
+  const presets = [
+    { w: 'running', icon: '🏃' },
+    { w: 'sitting', icon: '🪑', note: '😘 Clean' },
+    { w: 'congratulations', icon: '🎓', note: '😒 Over' },
+    { w: 'fairly', icon: '⚖️', note: 'Snowball!' },
+    { w: 'table', icon: '🪑', note: '😒 t' },
+    { w: 'sing', icon: '🎤', note: '😒 s' },
+    { w: 'see', icon: '👁️', note: '🛡️ min=4' },
+    { w: 'historical', icon: '📜' }
+  ];
 
   container.innerHTML = `
-    <!-- Top Highlights Banner -->
-    <div style="background: rgba(52, 211, 153, 0.05); border: 1px solid rgba(52, 211, 153, 0.2); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.5rem;">
-      <div style="font-size: 0.88rem; font-weight: 700; color: var(--color-word); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-        <span>✂️</span>
-        <span>Stemmer Types & Edge Cases (Sourced from Stemming And its Types notebook)</span>
+    <!-- Suffix Laser Cutter Specimen Deck -->
+    <div class="laser-chamber">
+      <div class="laser-line"></div>
+      
+      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-word); font-weight: 800; margin-bottom: 0.5rem;">
+        ⚡ Interactive Suffix Guillotine (Laser Cutter)
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.85rem; font-size: 0.78rem; color: var(--text-muted); line-height: 1.45;">
-        <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--color-corpus);">
-          <strong style="color: var(--color-corpus);">1. PorterStemmer:</strong><br>
-          Rule-based suffix chops. Works on <code>sitting ➔ sit</code> 😘, but over-stems <code>congratulations ➔ congratul</code> 😒.
+
+      <!-- Large Word Slicing Visualization -->
+      <div class="word-split-display">
+        <span class="stem-root-chunk">${escapeHtml(stemBase)}</span>
+        ${suffix && suffix !== '(none)' ? `
+          <span class="stem-cut-line"></span>
+          <span class="stem-suffix-chunk">-${escapeHtml(suffix)}</span>
+        ` : ''}
+      </div>
+
+      <!-- Status Indicator Badges -->
+      <div>
+        ${isShielded ? `
+          <span class="shield-badge">
+            <span>🛡️ SHIELDED BY min=4 RULE!</span>
+            <span>Length: ${activeWord.length} Chars (Cannot Strip)</span>
+          </span>
+        ` : warningNote ? `
+          <span class="warning-badge">
+            <span>${warningNote}</span>
+          </span>
+        ` : `
+          <span style="font-size: 0.82rem; color: #34d399; font-weight: 700;">
+            ✂️ Suffix Sliced Cleanly: Root Stem = "${escapeHtml(stemBase)}"
+          </span>
+        `}
+      </div>
+
+      <!-- Letter Length Ruler -->
+      <div style="margin-top: 1.25rem;">
+        <span style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); font-weight: 700;">
+          Letter-by-Letter Length Ruler (min=4 Guard):
+        </span>
+        <div class="length-ruler">
+          ${activeWord.split('').map((ch, idx) => `
+            <div class="ruler-tick ${idx < 4 ? 'protected' : ''}">
+              <span style="font-size: 0.65rem; color: var(--text-dim);">${idx + 1}</span>
+              <span>${ch}</span>
+            </div>
+          `).join('')}
         </div>
-        <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid #c084fc;">
-          <strong style="color: #c084fc;">2. RegexpStemmer (min=4):</strong><br>
-          Custom regex <code>ing$|s$|e$|able$</code>. Protects <code>see</code> (len 3), but chops <code>love ➔ lov</code> 😒 and <code>table ➔ t</code> 😒.
-        </div>
-        <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--color-word);">
-          <strong style="color: var(--color-word);">3. Snowball (Porter2):</strong><br>
-          Fixes Porter's flaws: <code>fairly ➔ fair</code> (Porter: <code>fairli</code>), <code>sportingly ➔ sport</code>.
-        </div>
+      </div>
+
+      <!-- Quick Word Selector Chips from Notebook -->
+      <div style="margin-top: 1.25rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;">
+        ${presets.map(p => `
+          <button 
+            class="pos-dial-btn ${activeWord === p.w ? 'active' : ''}" 
+            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);" 
+            onclick="feedLaserWord('${p.w}')"
+          >
+            <span>${p.icon} ${p.w}</span>
+            ${p.note ? `<span style="font-size: 0.7rem; opacity: 0.85;">(${p.note})</span>` : ''}
+          </button>
+        `).join('')}
       </div>
     </div>
 
-    <!-- Live Comparison Table -->
-    <div style="margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.88rem; font-weight: 700;">
-      🔬 Live Word Suffix Slicing Comparison:
-    </div>
-    <div style="overflow-x: auto;">
-      <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
-        <thead>
-          <tr style="border-bottom: 2px solid rgba(255, 255, 255, 0.1); color: var(--text-dim); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em;">
-            <th style="padding: 0.75rem 1rem;">Target Word</th>
-            <th style="padding: 0.75rem 1rem; color: var(--color-corpus);">PorterStemmer</th>
-            <th style="padding: 0.75rem 1rem; color: var(--color-word);">SnowballStemmer (Porter2)</th>
-            <th style="padding: 0.75rem 1rem; color: #c084fc;">RegexpStemmer (min=4)</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${comparisons.map(c => `
-            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
-              <td style="padding: 0.65rem 1rem; font-weight: 700; color: #fff;">${escapeHtml(c.raw)}${c.emojiTag}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-corpus);">${escapeHtml(c.porter)}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-word);">${escapeHtml(c.snowball)}${c.diffTag}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #c084fc;">${escapeHtml(c.regex)}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
+    <!-- 3-Way Algorithm Comparison Channels -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+      
+      <!-- Porter -->
+      <div style="background: rgba(0,0,0,0.35); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 1.1rem;">
+        <div style="font-size: 0.75rem; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 0.4rem;">
+          1. PorterStemmer
+        </div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem;">
+          ${escapeHtml(porter)}
+        </div>
+        <div style="font-size: 0.74rem; color: var(--text-dim);">
+          Classic heuristic suffix stripping. Fast but crude.
+        </div>
+      </div>
+
+      <!-- Snowball -->
+      <div style="background: rgba(0,0,0,0.35); border: 1px solid rgba(52, 211, 153, 0.2); border-radius: 12px; padding: 1.1rem;">
+        <div style="font-size: 0.75rem; font-weight: 800; color: #34d399; text-transform: uppercase; margin-bottom: 0.4rem;">
+          2. SnowballStemmer (Porter2)
+        </div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem;">
+          ${escapeHtml(snowball)} ${snowball !== porter ? '<span style="font-size:0.75rem; color:#34d399;">✨ Upgrade</span>' : ''}
+        </div>
+        <div style="font-size: 0.74rem; color: var(--text-dim);">
+          Improved linguistic rules: fixes fairly ➔ fair.
+        </div>
+      </div>
+
+      <!-- Regexp -->
+      <div style="background: rgba(0,0,0,0.35); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 12px; padding: 1.1rem;">
+        <div style="font-size: 0.75rem; font-weight: 800; color: #c084fc; text-transform: uppercase; margin-bottom: 0.4rem;">
+          3. RegexpStemmer (min=4)
+        </div>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem;">
+          ${escapeHtml(stemBase)}
+        </div>
+        <div style="font-size: 0.74rem; color: var(--text-dim);">
+          Rule: ing$|s$|e$|able$. Length < 4 protected.
+        </div>
+      </div>
+
     </div>
   `;
 }
 
-// 3. Stopwords Dashboard Renderer
+// 3. STOPWORDS ARENA: Particle Sieve & Noise Centrifuge
 function renderStopwordsDashboard(text, container) {
   const rawTokens = text.match(/\b[A-Za-z0-9'-]+\b|[^\s\w]/g) || [];
   const total = rawTokens.length;
 
   const stopList = [];
   const keptList = [];
-  const punctList = [];
 
   rawTokens.forEach(tok => {
     const low = tok.toLowerCase();
-    if (/^[.,\/#!$%\^&\*;:{}=\-_`~()?'"“”‘’]+$/.test(tok)) {
-      punctList.push(tok);
-    } else if (NLTK_STOPWORDS.has(low)) {
+    if (NLTK_STOPWORDS.has(low)) {
       stopList.push(tok);
-    } else {
+    } else if (!/^[.,\/#!$%\^&\*;:{}=\-_`~()?'"“”‘’]+$/.test(tok)) {
       keptList.push(tok);
     }
   });
 
-  const noiseCount = stopList.length + punctList.length;
+  const noiseCount = stopList.length;
   const reductionPct = total > 0 ? ((noiseCount / total) * 100).toFixed(1) : '0.0';
+  const circumference = 2 * Math.PI * 54;
+  const dashOffset = circumference - (reductionPct / 100) * circumference;
 
   container.innerHTML = `
-    <!-- Reduction Dashboard Stats -->
-    <div class="reduction-dashboard">
-      <div class="metric-stat-box">
-        <span class="metric-stat-value" style="color: var(--color-corpus);">${total}</span>
-        <span class="metric-stat-label">Total Raw Tokens</span>
-      </div>
-      <div class="metric-stat-box">
-        <span class="metric-stat-value" style="color: #fb7185;">${stopList.length}</span>
-        <span class="metric-stat-label">Stopwords Filtered</span>
-      </div>
-      <div class="metric-stat-box">
-        <span class="metric-stat-value" style="color: var(--color-word);">${keptList.length}</span>
-        <span class="metric-stat-label">Meaningful Words</span>
-      </div>
-      <div class="metric-stat-box">
-        <span class="metric-stat-value" style="color: #f59e0b;">${reductionPct}%</span>
-        <span class="metric-stat-label">Noise Reduction Rate</span>
-        <div class="reduction-progress-bar">
-          <div class="reduction-progress-fill" style="width: ${reductionPct}%;"></div>
+    <div class="sieve-funnel-card">
+      
+      <!-- Top Radial Gauge & Noise Mass Metrics -->
+      <div style="display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 1.5rem;">
+        
+        <!-- Circular Radial Gauge -->
+        <div class="circular-gauge-box">
+          <svg>
+            <circle class="gauge-circle-bg" cx="70" cy="70" r="54"></circle>
+            <circle class="gauge-circle-val" cx="70" cy="70" r="54" style="stroke-dasharray: ${circumference}; stroke-dashoffset: ${dashOffset};"></circle>
+          </svg>
+          <div class="gauge-val-text">
+            <span>${reductionPct}%</span>
+            <div style="font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase;">Noise Filtered</div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Chips breakdown -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
-      <div class="token-box-card">
-        <div class="token-box-header">
-          <span class="token-box-title" style="color: #fb7185;">🛑 Removed Stopwords (${stopList.length})</span>
+        <!-- Metric Mass Cards -->
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #38bdf8; border-radius: 8px; padding: 0.75rem 1.1rem;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: #fff;">${total}</div>
+            <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">Raw Token Stream</div>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #fb7185; border-radius: 8px; padding: 0.75rem 1.1rem;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: #fb7185;">${stopList.length}</div>
+            <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">Stopwords Incinerated</div>
+          </div>
+
+          <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #34d399; border-radius: 8px; padding: 0.75rem 1.1rem;">
+            <div style="font-size: 1.4rem; font-weight: 800; color: #34d399;">${keptList.length}</div>
+            <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">Clean Signal Features</div>
+          </div>
         </div>
-        <div class="token-list" style="max-height: 180px; overflow-y: auto;">
-          ${stopList.map(s => `<span class="token-chip" style="background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.25); color: #fb7185;">${escapeHtml(s)}</span>`).join('') || '<span style="color:var(--text-dim); font-size:0.8rem;">No stopwords found</span>'}
-        </div>
+
       </div>
 
-      <div class="token-box-card">
-        <div class="token-box-header">
-          <span class="token-box-title" style="color: var(--color-word);">✨ Preserved Core Content (${keptList.length})</span>
+      <!-- The Sieve Particle Chambers -->
+      <div class="funnel-chamber">
+        
+        <!-- Waste Trap -->
+        <div class="waste-trap">
+          <div style="font-size: 0.8rem; font-weight: 800; color: #fb7185; text-transform: uppercase; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>🗑️</span>
+            <span>Incinerated Stopword Particles (${stopList.length})</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 180px; overflow-y: auto;">
+            ${stopList.map(s => `
+              <span class="token-chip" style="background: rgba(251, 113, 133, 0.12); color: #fb7185; border-color: rgba(251, 113, 133, 0.3);">
+                ${escapeHtml(s)}
+              </span>
+            `).join('') || '<span style="color:var(--text-dim); font-size:0.75rem;">No stopwords detected</span>'}
+          </div>
         </div>
-        <div class="token-list" style="max-height: 180px; overflow-y: auto;">
-          ${keptList.map(k => `<span class="token-chip" style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.25); color: var(--color-word);">#${escapeHtml(k)}</span>`).join('') || '<span style="color:var(--text-dim); font-size:0.8rem;">No words kept</span>'}
+
+        <!-- Visual Funnel Center Divider -->
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-dim); font-size: 0.8rem; padding: 0.5rem;">
+          <span>🔻</span>
+          <span>Sieve</span>
+          <span>Filter</span>
         </div>
+
+        <!-- Signal Tray -->
+        <div class="signal-tray">
+          <div style="font-size: 0.8rem; font-weight: 800; color: #34d399; text-transform: uppercase; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>✨</span>
+            <span>Retained Information Tray (${keptList.length})</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; max-height: 180px; overflow-y: auto;">
+            ${keptList.map(k => `
+              <span class="token-chip" style="background: rgba(52, 211, 153, 0.12); color: #34d399; border-color: rgba(52, 211, 153, 0.3);">
+                #${escapeHtml(k)}
+              </span>
+            `).join('') || '<span style="color:var(--text-dim); font-size:0.75rem;">No words kept</span>'}
+          </div>
+        </div>
+
       </div>
+
     </div>
   `;
 }
 
-// 4. Lemmatizer Matrix Renderer
+// 4. LEMMATIZATION ARENA: 4-Way POS Morphing Chamber
+function morphPos(pos) {
+  globalLemmaPos = pos;
+  const stage = document.getElementById('unit6-visual-stage') || document.getElementById('practice-visual-stage');
+  const input = document.getElementById('unit6-input') || document.getElementById('practice-input');
+  if (stage && input) renderLemmatizerMatrix(input.value.trim(), stage);
+}
+
+function feedLemmaWord(word) {
+  globalLemmaWord = word;
+  const stage = document.getElementById('unit6-visual-stage') || document.getElementById('practice-visual-stage');
+  const input = document.getElementById('unit6-input') || document.getElementById('practice-input');
+  if (stage && input) renderLemmatizerMatrix(input.value.trim(), stage);
+}
+
 function renderLemmatizerMatrix(text, container) {
-  const dictionaryExamples = [
-    { word: 'going', posN: 'going', posV: 'go', posA: 'going', posR: 'going', note: 'Verb pos="v" restores infinitive "go"' },
-    { word: 'goes', posN: 'go', posV: 'go', posA: 'goes', posR: 'goes', note: 'Irregular third-person conjugation' },
-    { word: 'better', posN: 'better', posV: 'better', posA: 'good', posR: 'well', note: 'Adjective pos="a" ➔ "good", Adverb pos="r" ➔ "well"' },
-    { word: 'wolves', posN: 'wolf', posV: 'wolves', posA: 'wolves', posR: 'wolves', note: 'Noun pos="n" handles irregular plural ➔ "wolf"' },
-    { word: 'flies', posN: 'fly', posV: 'fly', posA: 'flies', posR: 'flies', note: 'Both Noun and Verb resolve cleanly to "fly"' },
-    { word: 'running', posN: 'running', posV: 'run', posA: 'running', posR: 'running', note: 'Verb pos="v" strips gerund ➔ "run"' },
-    { word: 'studies', posN: 'study', posV: 'study', posA: 'studies', posR: 'studies', note: 'Noun and Verb both resolve to "study"' },
-    { word: 'happier', posN: 'happier', posV: 'happier', posA: 'happy', posR: 'happier', note: 'Adjective pos="a" comparative ➔ "happy"' },
-    { word: 'corpora', posN: 'corpus', posV: 'corpora', posA: 'corpora', posR: 'corpora', note: 'Latin plural noun pos="n" ➔ "corpus"' }
-  ];
+  const dictionaryExamples = {
+    'better': { n: 'better', v: 'better', a: 'good', r: 'well', note: 'Adjective pos="a" ➔ "good", Adverb pos="r" ➔ "well"' },
+    'going': { n: 'going', v: 'go', a: 'going', r: 'going', note: 'Verb pos="v" restores infinitive "go"' },
+    'goes': { n: 'go', v: 'go', a: 'goes', r: 'goes', note: 'Third-person singular verb ➔ "go"' },
+    'wolves': { n: 'wolf', v: 'wolves', a: 'wolves', r: 'wolves', note: 'Irregular plural noun ➔ "wolf"' },
+    'flies': { n: 'fly', v: 'fly', a: 'flies', r: 'flies', note: 'Noun & Verb both resolve cleanly to "fly"' },
+    'running': { n: 'running', v: 'run', a: 'running', r: 'running', note: 'Verb pos="v" strips gerund ➔ "run"' },
+    'studies': { n: 'study', v: 'study', a: 'studies', r: 'studies', note: 'Noun & Verb resolve to "study"' },
+    'happier': { n: 'happier', v: 'happier', a: 'happy', r: 'happier', note: 'Adjective pos="a" comparative ➔ "happy"' },
+    'corpora': { n: 'corpus', v: 'corpora', a: 'corpora', r: 'corpora', note: 'Latin plural noun ➔ "corpus"' }
+  };
+
+  const activeWord = (globalLemmaWord || 'better').toLowerCase();
+  const entry = dictionaryExamples[activeWord] || { n: activeWord, v: activeWord, a: activeWord, r: activeWord, note: 'Standard dictionary lookup' };
+  const currentResult = entry[globalLemmaPos] || activeWord;
+  const isChanged = currentResult !== activeWord;
+
+  const presets = ['better', 'going', 'wolves', 'flies', 'running', 'studies', 'happier', 'corpora'];
 
   container.innerHTML = `
-    <!-- POS Use Cases & Guide Banner -->
-    <div style="background: rgba(168, 85, 247, 0.05); border: 1px solid rgba(168, 85, 247, 0.2); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.5rem;">
-      <div style="font-size: 0.88rem; font-weight: 700; color: #c084fc; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-        <span>📚</span>
-        <span>WordNet Lemmatizer & Part-of-Speech (POS) Matrix (Sourced from Lemmatization notebook)</span>
+    <!-- 4-Way POS Morphing Specimen Chamber -->
+    <div class="morphing-specimen-chamber">
+      
+      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #c084fc; font-weight: 800; margin-bottom: 0.5rem;">
+        🔬 4-Way Part-of-Speech Morphing Chamber
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; font-size: 0.78rem; color: var(--text-muted); line-height: 1.45;">
-        <div style="background: rgba(0,0,0,0.25); padding: 0.6rem 0.8rem; border-radius: 8px; border-left: 3px solid #38bdf8;">
-          <strong style="color: #38bdf8;">Primary Use Cases:</strong><br>
-          Q&A Systems, Conversational Chatbots, Text Summarization.
-        </div>
-        <div style="background: rgba(0,0,0,0.25); padding: 0.6rem 0.8rem; border-radius: 8px; border-left: 3px solid var(--color-word);">
-          <strong style="color: var(--color-word);">The 4 Core POS Tags:</strong><br>
-          <code>pos='n'</code> (Noun) &bull; <code>pos='v'</code> (Verb)<br>
-          <code>pos='a'</code> (Adjective) &bull; <code>pos='r'</code> (Adverb)
-        </div>
-        <div style="background: rgba(0,0,0,0.25); padding: 0.6rem 0.8rem; border-radius: 8px; border-left: 3px solid #fb7185;">
-          <strong style="color: #fb7185;">Default Behavior:</strong><br>
-          Without POS, WordNet defaults to <strong>Noun (pos='n')</strong>!
-        </div>
+
+      <!-- Large Morphed Typography Display -->
+      <div class="morphing-word-target" id="pos-morph-target">
+        ${escapeHtml(currentResult)}
       </div>
+
+      <div>
+        <span class="wordnet-verified-stamp">
+          <span>✅ Valid WordNet Lexicon Lemma</span>
+          <span>(Input: "${escapeHtml(activeWord)}" ➔ POS: pos='${globalLemmaPos}')</span>
+        </span>
+      </div>
+
+      <!-- 4-Button POS Dial Controller -->
+      <div class="pos-dial-bar">
+        <button class="pos-dial-btn ${globalLemmaPos === 'n' ? 'active' : ''}" onclick="morphPos('n')">
+          🔵 Noun ('n')
+        </button>
+        <button class="pos-dial-btn ${globalLemmaPos === 'v' ? 'active' : ''}" onclick="morphPos('v')">
+          🟢 Verb ('v')
+        </button>
+        <button class="pos-dial-btn ${globalLemmaPos === 'a' ? 'active' : ''}" onclick="morphPos('a')">
+          🟣 Adjective ('a')
+        </button>
+        <button class="pos-dial-btn ${globalLemmaPos === 'r' ? 'active' : ''}" onclick="morphPos('r')">
+          🟡 Adverb ('r')
+        </button>
+      </div>
+
+      <!-- Notebook Word Specimen Chips -->
+      <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;">
+        ${presets.map(w => `
+          <button 
+            class="pos-dial-btn ${activeWord === w ? 'active' : ''}" 
+            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);" 
+            onclick="feedLemmaWord('${w}')"
+          >
+            ${w}
+          </button>
+        `).join('')}
+      </div>
+
+      <!-- Morph Linguistic Note -->
+      <div style="margin-top: 1.25rem; font-size: 0.78rem; color: var(--text-dim);">
+        💡 ${entry.note}
+      </div>
+
     </div>
 
-    <!-- Live POS Comparison Table -->
-    <div style="margin-bottom: 0.75rem; color: var(--text-muted); font-size: 0.88rem; font-weight: 700;">
-      🔬 Multi-POS Lemmatization Matrix on User Practice Words:
-    </div>
-    <div style="overflow-x: auto;">
-      <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
-        <thead>
-          <tr style="border-bottom: 2px solid rgba(255, 255, 255, 0.1); color: var(--text-dim); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em;">
-            <th style="padding: 0.75rem 1rem;">Word</th>
-            <th style="padding: 0.75rem 1rem; color: var(--color-corpus);">Noun (pos='n')</th>
-            <th style="padding: 0.75rem 1rem; color: var(--color-word);">Verb (pos='v')</th>
-            <th style="padding: 0.75rem 1rem; color: #fb7185;">Adjective (pos='a')</th>
-            <th style="padding: 0.75rem 1rem; color: #f59e0b;">Adverb (pos='r')</th>
-            <th style="padding: 0.75rem 1rem; color: var(--text-dim);">Linguistic Benefit</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${dictionaryExamples.map(d => `
-            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
-              <td style="padding: 0.65rem 1rem; font-weight: 700; color: #fff;">${d.word}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-corpus);">${d.posN}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--color-word);">${d.posV}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #fb7185;">${d.posA}</td>
-              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #f59e0b;">${d.posR}</td>
-              <td style="padding: 0.65rem 1rem; color: var(--text-muted); font-size: 0.8rem;">${d.note}</td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
+    <!-- Stemming vs Lemmatization Face-Off -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+      <div style="background: rgba(0,0,0,0.35); border: 1px solid rgba(251, 113, 133, 0.25); border-radius: 12px; padding: 1.25rem;">
+        <div style="font-size: 0.8rem; font-weight: 800; color: #fb7185; margin-bottom: 0.4rem;">
+          ❌ Crude Stemmer (Suffix Stripper)
+        </div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+          • <code>congratulations</code> ➔ <code>congratul</code> (Not a real word!)<br>
+          • <code>better</code> ➔ <code>better</code> (Misses root 'good')<br>
+          • <code>was</code> ➔ <code>wa</code> (Disastrous over-stem)
+        </div>
+      </div>
+
+      <div style="background: rgba(0,0,0,0.35); border: 1px solid rgba(52, 211, 153, 0.25); border-radius: 12px; padding: 1.25rem;">
+        <div style="font-size: 0.8rem; font-weight: 800; color: #34d399; margin-bottom: 0.4rem;">
+          ✅ WordNet Lemmatizer (Lexical Dict)
+        </div>
+        <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+          • <code>congratulations</code> ➔ <code>congratulation</code> (Valid dictionary noun)<br>
+          • <code>better (pos='a')</code> ➔ <code>good</code> (Understands adjectives)<br>
+          • <code>was (pos='v')</code> ➔ <code>be</code> (Restores base verb)
+        </div>
+      </div>
     </div>
   `;
 }
@@ -1861,7 +2051,8 @@ function updateUnit5Visuals() {
 function loadUnit5Preset(key) {
   const inputEl = document.getElementById('unit5-input');
   if (!inputEl) return;
-  if (key === 'review') inputEl.value = "WOWWW!! This NLP software version 3.2 is AMAZINGGG & super-fast! However, it crashed 2 times today on my MacBook... isn't that annoying? Can't wait for bug fixes.";
+  if (key === 'kalam') inputEl.value = "I have three visions for India! In 3000 years of our history, people from all over the world have come and invaded us, captured our lands, conquered our minds. Yet, we have not done this to any other nation! We respect the freedom of others! My second vision for India's development: for fifty years we have been a developing nation. It is time we see ourselves as a developed nation! We are among the top five nations of the world in terms of GDP. I have a third vision: India must stand up to the world! Because unless India stands up to the world, no one will respect us. Strength respects strength!";
+  else if (key === 'review') inputEl.value = "WOWWW!! This NLP software version 3.2 is AMAZINGGG & super-fast! However, it crashed 2 times today on my MacBook... isn't that annoying? Can't wait for bug fixes.";
   else if (key === 'science') inputEl.value = "Natural language processing is an essential subfield of artificial intelligence that empowers computers to parse, analyze, and comprehend human languages.";
   else if (key === 'corpus') inputEl.value = "Hello! Welcome to Natural Language Processing (NLP) in Python. It's fascinating how computers learn to understand human languages, isn't it? In 2026, AI models are analyzing millions of texts—from emails to books—every single second. Running, ran, and runs all share the same root word, while words like \"better\" and \"good\" show how lemmatization works!";
   updateUnit5Visuals();
