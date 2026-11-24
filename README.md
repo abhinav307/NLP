@@ -29,6 +29,25 @@ Comprehensive documentation, code examples, and use cases for:
 
 ---
 
+### 🧪 Module 03: Practice 1 — Hands-On NLP Practical Lab
+Direct visual companion to `NLP practice/NLP learning.ipynb`:
+- **Unit 1: Tokenizer Arena:** Benchmark `word_tokenize`, `wordpunct_tokenize`, and `TreebankWordTokenizer` on contractions, money, and abbreviations.
+- **Unit 2: Stemming Slicers:** Compare `PorterStemmer`, `SnowballStemmer`, and `RegexpStemmer` side-by-side.
+- **Unit 3: Stopword Noise Reducer:** Real-time data compression and noise reduction percentage meter.
+- **Unit 4: Lemmatizer with POS Tagging:** WordNet morphological dictionary lookups with Verb, Adjective, and Noun tags.
+- **Unit 5: Frequency Distribution & Vocabulary:** Interactive horizontal frequency distribution bars and Lexical Diversity calculation.
+- **Unit 6: Real-World Text Cleaner:** Practical production cleaning of messy customer reviews into clean machine learning features.
+
+---
+
+## 📓 Jupyter Notebooks (`NLP practice/`)
+- `NLP practice/NLP learning.ipynb`: Interactive Jupyter practice notebook with Units 1 through 6 and pre-computed visual ASCII outputs.
+- `NLP practice/4-tokenization Example using NLTK.ipynb`: Tokenization and Stemming walkthroughs.
+- `NLP practice/5-Stemming and Lemmatization using NLTK.ipynb`: Dedicated Stemming and Lemmatization experiments.
+
+
+---
+
 ## 💻 How to Run Locally
 
 No build step or server required! Simply clone and open `index.html`:

@@ -1090,4 +1090,601 @@ document.addEventListener('DOMContentLoaded', () => {
   initDocumentDemo();
   initVocabDemo();
   initWordDemo();
+
+  // Initialize Practice 1 Lab if present
+  if (document.getElementById('practice-input')) {
+    const practiceInput = document.getElementById('practice-input');
+    practiceInput.addEventListener('input', updatePracticeVisualStage);
+    switchPracticeLab('tokenizer');
+  }
 });
+
+/* =========================================================
+   PRACTICE 1: INTERACTIVE NLP LAB LOGIC
+   ========================================================= */
+
+const PRACTICE_PRESETS = {
+  tricky: "Dr. Smith said: 'NLP isn't easy in 2026, but it's 100% worth it at $49.99/mo!' Can't wait.",
+  abbrev: "The U.S.A. and U.K. are developing Ph.D. level AI models. Isn't that fantastic?!",
+  stemwords: "The programmer was running, easily studying algorithms, and making better programs.",
+  review: "WOWWW!! This NLP software version 3.2 is AMAZINGGG & super-fast! 🚀 However, it crashed 2 times today on my MacBook... isn't that annoying? Can't wait for bug fixes. Still, I'm giving it 4.5/5 stars because of customer support!",
+  notebook: "Hello! Welcome to Natural Language Processing (NLP) in Python. It's fascinating how computers learn to understand human languages, isn't it? In 2026, AI models are analyzing millions of texts—from emails to books—every single second. Running, ran, and runs all share the same root word, while words like \"better\" and \"good\" show how lemmatization works!"
+};
+
+const PRACTICE_LAB_CONFIGS = {
+  tokenizer: {
+    icon: "🥊",
+    title: "Tokenizer Arena: The Benchmark Showdown",
+    desc: "Comparing word_tokenize, wordpunct_tokenize, and TreebankWordTokenizer on real-world tricky contractions, money, and abbreviations.",
+    badge: "Unit 1 Practice",
+    code: `# Unit 1 Practice: Benchmark Tokenizers on Tricky Edge Cases
+from nltk.tokenize import sent_tokenize, word_tokenize, wordpunct_tokenize, TreebankWordTokenizer
+
+sample_text = "Dr. Smith said: 'NLP isn't easy in 2026, but it's 100% worth it at $49.99/mo!' Can't wait."
+
+tb = TreebankWordTokenizer()
+print("word_tokenize:      ", word_tokenize(sample_text))
+print("wordpunct_tokenize: ", wordpunct_tokenize(sample_text))
+print("TreebankTokenizer:  ", tb.tokenize(sample_text))`
+  },
+  stemming: {
+    icon: "✂️",
+    title: "Stemming Slicers: Porter vs. Snowball vs. Regexp",
+    desc: "Visualizing rule-based heuristic suffix slicing. Compare how different stemmers chop suffixes on regular and irregular words.",
+    badge: "Unit 2 Practice",
+    code: `# Unit 2 Practice: Stemming Algorithms Showdown
+from nltk.stem import PorterStemmer, SnowballStemmer, RegexpStemmer
+
+porter = PorterStemmer()
+snowball = SnowballStemmer('english')
+regexp = RegexpStemmer('ing$|s$|ed$|ly$|ation$', min=4)
+
+words = ["running", "runs", "ran", "studies", "fairly", "easily", "congratulations"]
+for w in words:
+    print(f"{w:15} | Porter: {porter.stem(w):10} | Snowball: {snowball.stem(w):10} | Regex: {regexp.stem(w):10}")`
+  },
+  stopwords: {
+    icon: "🧹",
+    title: "Stopword Noise Reducer & Compression Meter",
+    desc: "Measures dataset compression ratio when filtering non-informative stopwords and punctuation out of raw human text.",
+    badge: "Unit 3 Practice",
+    code: `# Unit 3 Practice: Measuring Stopwords & Noise Reduction
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import string
+
+nltk_stopwords = set(stopwords.words('english'))
+tokens = word_tokenize(corpus)
+clean_tokens = [w for w in tokens if w.lower() not in nltk_stopwords and w not in string.punctuation]
+
+reduction_pct = ((len(tokens) - len(clean_tokens)) / len(tokens)) * 100
+print(f"Noise Reduction Rate: {reduction_pct:.2f}%")
+print("Clean Core Tokens:", clean_tokens)`
+  },
+  lemma: {
+    icon: "📚",
+    title: "Lemmatization with POS: Dictionary-Accurate Roots",
+    desc: "Why WordNetLemmatizer needs Part-of-Speech tags (Verb, Adjective, Noun) to return legitimate dictionary base forms.",
+    badge: "Unit 4 Practice",
+    code: `# Unit 4 Practice: WordNetLemmatizer with Part-of-Speech (POS) Tagging
+from nltk.stem import WordNetLemmatizer
+
+lemmatizer = WordNetLemmatizer()
+
+print("running (verb)      ➔", lemmatizer.lemmatize("running", pos='v')) # run
+print("better (adjective)  ➔", lemmatizer.lemmatize("better", pos='a'))  # good
+print("leaves (noun)       ➔", lemmatizer.lemmatize("leaves", pos='n'))  # leaf
+print("leaves (verb)       ➔", lemmatizer.lemmatize("leaves", pos='v'))  # leave
+print("corpora (noun)      ➔", lemmatizer.lemmatize("corpora", pos='n')) # corpus`
+  },
+  freqdist: {
+    icon: "📊",
+    title: "Vocabulary Analytics & Frequency Distribution Bars",
+    desc: "Interactive horizontal frequency distribution bar chart and Lexical Diversity calculations (Unique Vocab / Total Words).",
+    badge: "Unit 5 Practice",
+    code: `# Unit 5 Practice: Vocabulary Analysis & Frequency Distribution
+from nltk.probability import FreqDist
+from nltk.tokenize import word_tokenize
+
+clean_words = [w.lower() for w in word_tokenize(corpus) if w.isalnum()]
+freq = FreqDist(clean_words)
+
+print("Top 5 Words:", freq.most_common(5))
+print("Vocabulary Size:", len(set(clean_words)))
+print("Lexical Diversity:", f"{len(set(clean_words)) / len(clean_words) * 100:.2f}%")`
+  },
+  review: {
+    icon: "🏆",
+    title: "Real-World Challenge: Customer Review Cleaner",
+    desc: "End-to-end practical cleaning of unstructured user reviews with emojis, contractions, and punctuation into clean ML keywords.",
+    badge: "Unit 6 Practice",
+    code: `# Unit 6 Practice: Messy Unstructured Text Cleaner
+messy_review = """
+WOWWW!! This NLP software version 3.2 is AMAZINGGG & super-fast! 🚀
+However, it crashed 2 times today on my MacBook... isn't that annoying?
+Can't wait for bug fixes. Still, I'm giving it 4.5/5 stars because of customer support!
+"""
+# Complete pipeline extracts clean sentiment keywords
+clean_keywords = [lemmatizer.lemmatize(w.lower(), pos='v') for w in word_tokenize(messy_review) if w.isalnum() and w.lower() not in nltk_stopwords]
+print("Extracted Keywords for Sentiment:", clean_keywords)`
+  }
+};
+
+let currentPracticeLab = 'tokenizer';
+
+function switchPracticeLab(labKey) {
+  if (!PRACTICE_LAB_CONFIGS[labKey]) return;
+  currentPracticeLab = labKey;
+
+  // 1. Update Segmented Pills
+  document.querySelectorAll('.practice-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lab') === labKey);
+  });
+
+  // 2. Update Sidebar Items
+  document.querySelectorAll('.practice-sidebar-item').forEach(item => {
+    item.classList.toggle('active', item.getAttribute('data-lab') === labKey);
+  });
+
+  // 3. Update Canvas Header & Code
+  const cfg = PRACTICE_LAB_CONFIGS[labKey];
+  const iconEl = document.getElementById('practice-lab-icon');
+  const titleEl = document.getElementById('practice-lab-title');
+  const descEl = document.getElementById('practice-lab-desc');
+  const badgeEl = document.getElementById('practice-lab-badge');
+  const codeEl = document.getElementById('practice-python-code');
+
+  if (iconEl) iconEl.textContent = cfg.icon;
+  if (titleEl) titleEl.textContent = cfg.title;
+  if (descEl) descEl.textContent = cfg.desc;
+  if (badgeEl) badgeEl.textContent = cfg.badge;
+  if (codeEl) codeEl.textContent = cfg.code;
+
+  // 4. Update Visual Stage
+  updatePracticeVisualStage();
+}
+
+function loadPracticePreset(presetKey) {
+  const inputEl = document.getElementById('practice-input');
+  if (inputEl && PRACTICE_PRESETS[presetKey]) {
+    inputEl.value = PRACTICE_PRESETS[presetKey];
+    updatePracticeVisualStage();
+  }
+}
+
+function copyPracticeCode() {
+  const codeEl = document.getElementById('practice-python-code');
+  const labelEl = document.getElementById('copy-practice-label');
+  if (!codeEl) return;
+
+  navigator.clipboard.writeText(codeEl.textContent).then(() => {
+    if (labelEl) {
+      const orig = labelEl.textContent;
+      labelEl.textContent = '✅ Copied to Clipboard!';
+      setTimeout(() => {
+        labelEl.textContent = orig;
+      }, 2000);
+    }
+  });
+}
+
+function updatePracticeVisualStage() {
+  const inputEl = document.getElementById('practice-input');
+  const stageEl = document.getElementById('practice-visual-stage');
+  if (!inputEl || !stageEl) return;
+
+  const text = inputEl.value.trim();
+  if (!text) {
+    stageEl.innerHTML = `<div style="text-align: center; color: var(--text-dim); padding: 2rem;">Please enter or select text above to see live results.</div>`;
+    return;
+  }
+
+  switch (currentPracticeLab) {
+    case 'tokenizer':
+      renderTokenizerArena(text, stageEl);
+      break;
+    case 'stemming':
+      renderStemmingArena(text, stageEl);
+      break;
+    case 'stopwords':
+      renderStopwordsDashboard(text, stageEl);
+      break;
+    case 'lemma':
+      renderLemmatizerMatrix(text, stageEl);
+      break;
+    case 'freqdist':
+      renderFreqDistBars(text, stageEl);
+      break;
+    case 'review':
+      renderReviewCleaner(text, stageEl);
+      break;
+    default:
+      renderTokenizerArena(text, stageEl);
+  }
+}
+
+// 1. Tokenizer Arena Renderer
+function renderTokenizerArena(text, container) {
+  // Simulate word_tokenize (splits contractions standard NLTK style)
+  let wordTok = text
+    .replace(/n't\b/gi, " n't")
+    .replace(/'s\b/gi, " 's")
+    .replace(/'re\b/gi, " 're")
+    .replace(/'ve\b/gi, " 've")
+    .replace(/'ll\b/gi, " 'll")
+    .replace(/'d\b/gi, " 'd")
+    .match(/\b[\w$]+(?:\.\d+)?\b|n't|'[a-z]+|[.,!?;:()]/gi) || [];
+
+  // Simulate wordpunct_tokenize (splits every single punctuation char)
+  let punctTok = text.match(/\w+|[^\w\s]/g) || [];
+
+  // Simulate TreebankWordTokenizer (standard Penn Treebank)
+  let tbTok = text
+    .replace(/n't\b/gi, " n't")
+    .replace(/'([a-z]+)\b/gi, " '$1")
+    .match(/\b[\w$]+(?:\.\d+)?\.?|n't|'[a-z]+|[.,!?;:()]/gi) || [];
+
+  container.innerHTML = `
+    <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
+      Live side-by-side comparison of 3 tokenizers on the exact same string:
+    </div>
+    <div class="practice-arena-grid">
+      
+      <!-- word_tokenize() -->
+      <div class="token-box-card">
+        <div class="token-box-header">
+          <div class="token-box-title">
+            <span>✂️</span>
+            <span>word_tokenize()</span>
+          </div>
+          <span class="token-box-badge">${wordTok.length} Tokens</span>
+        </div>
+        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
+          Splits contractions like <code>isn't</code> ➔ <code>['is', "n't"]</code>. Standard for general English.
+        </p>
+        <div class="token-list" style="max-height: 220px; overflow-y: auto;">
+          ${wordTok.map((t, i) => `
+            <span class="token-chip" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
+              <span class="token-index">#${i}</span>
+              <span>${escapeHtml(t)}</span>
+            </span>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- wordpunct_tokenize() -->
+      <div class="token-box-card">
+        <div class="token-box-header">
+          <div class="token-box-title">
+            <span>⚡</span>
+            <span>wordpunct_tokenize()</span>
+          </div>
+          <span class="token-box-badge" style="background: rgba(52, 211, 153, 0.12); color: var(--color-word); border-color: rgba(52, 211, 153, 0.3);">${punctTok.length} Tokens</span>
+        </div>
+        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
+          Separates every punctuation mark individually: <code>it's</code> ➔ <code>['it', "'", 's']</code>.
+        </p>
+        <div class="token-list" style="max-height: 220px; overflow-y: auto;">
+          ${punctTok.map((t, i) => `
+            <span class="token-chip" style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.3); color: var(--color-word);">
+              <span class="token-index">#${i}</span>
+              <span>${escapeHtml(t)}</span>
+            </span>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- TreebankWordTokenizer -->
+      <div class="token-box-card">
+        <div class="token-box-header">
+          <div class="token-box-title">
+            <span>🏛️</span>
+            <span>TreebankTokenizer</span>
+          </div>
+          <span class="token-box-badge" style="background: rgba(168, 85, 247, 0.12); color: #c084fc; border-color: rgba(168, 85, 247, 0.3);">${tbTok.length} Tokens</span>
+        </div>
+        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
+          Penn Treebank rules: leaves trailing periods on abbreviations, splits standard contractions.
+        </p>
+        <div class="token-list" style="max-height: 220px; overflow-y: auto;">
+          ${tbTok.map((t, i) => `
+            <span class="token-chip" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">
+              <span class="token-index">#${i}</span>
+              <span>${escapeHtml(t)}</span>
+            </span>
+          `).join('')}
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+// 2. Stemming Arena Renderer
+function renderStemmingArena(text, container) {
+  const words = text.match(/\b[A-Za-z]+\b/g) || [];
+  const uniqueWords = Array.from(new Set(words.map(w => w.toLowerCase())));
+
+  // Emulate Porter, Snowball, and Regexp
+  const comparisons = uniqueWords.slice(0, 12).map(w => {
+    // Porter heuristics
+    let porter = w;
+    if (porter.endsWith('ing') && porter.length > 4) porter = porter.slice(0, -3);
+    else if (porter.endsWith('ies') && porter.length > 4) porter = porter.slice(0, -3) + 'i';
+    else if (porter.endsWith('ly') && porter.length > 4) porter = porter.slice(0, -2);
+    else if (porter.endsWith('ed') && porter.length > 4) porter = porter.slice(0, -2);
+    else if (porter.endsWith('s') && !porter.endsWith('ss') && porter.length > 3) porter = porter.slice(0, -1);
+
+    // Snowball heuristics (Porter2 handles fairly -> fair, easily -> easi)
+    let snowball = porter;
+    if (w === 'fairly') snowball = 'fair';
+    if (w === 'easily') snowball = 'easili';
+
+    // Regexp (only strips ing$, s$, ed$, ly$)
+    let regex = w.replace(/(ing|s|ed|ly)$/i, '');
+    if (regex.length < 3) regex = w;
+
+    return { raw: w, porter, snowball, regex };
+  });
+
+  container.innerHTML = `
+    <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
+      Showing heuristic suffix chops for unique words in your input:
+    </div>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 2px solid rgba(255, 255, 255, 0.1); color: var(--text-dim); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em;">
+            <th style="padding: 0.75rem 1rem;">Raw Word</th>
+            <th style="padding: 0.75rem 1rem; color: var(--color-corpus);">PorterStemmer</th>
+            <th style="padding: 0.75rem 1rem; color: var(--color-word);">SnowballStemmer (Porter2)</th>
+            <th style="padding: 0.75rem 1rem; color: #c084fc;">RegexpStemmer</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${comparisons.map(c => `
+            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
+              <td style="padding: 0.65rem 1rem; font-weight: 700; color: #fff;">${escapeHtml(c.raw)}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-corpus);">${escapeHtml(c.porter)}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: var(--color-word);">${escapeHtml(c.snowball)}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #c084fc;">${escapeHtml(c.regex)}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// 3. Stopwords Dashboard Renderer
+function renderStopwordsDashboard(text, container) {
+  const rawTokens = text.match(/\b[A-Za-z0-9'-]+\b|[^\s\w]/g) || [];
+  const total = rawTokens.length;
+
+  const stopList = [];
+  const keptList = [];
+  const punctList = [];
+
+  rawTokens.forEach(tok => {
+    const low = tok.toLowerCase();
+    if (/^[.,\/#!$%\^&\*;:{}=\-_`~()?'"“”‘’]+$/.test(tok)) {
+      punctList.push(tok);
+    } else if (NLTK_STOPWORDS.has(low)) {
+      stopList.push(tok);
+    } else {
+      keptList.push(tok);
+    }
+  });
+
+  const noiseCount = stopList.length + punctList.length;
+  const reductionPct = total > 0 ? ((noiseCount / total) * 100).toFixed(1) : '0.0';
+
+  container.innerHTML = `
+    <!-- Reduction Dashboard Stats -->
+    <div class="reduction-dashboard">
+      <div class="metric-stat-box">
+        <span class="metric-stat-value" style="color: var(--color-corpus);">${total}</span>
+        <span class="metric-stat-label">Total Raw Tokens</span>
+      </div>
+      <div class="metric-stat-box">
+        <span class="metric-stat-value" style="color: #fb7185;">${stopList.length}</span>
+        <span class="metric-stat-label">Stopwords Filtered</span>
+      </div>
+      <div class="metric-stat-box">
+        <span class="metric-stat-value" style="color: var(--color-word);">${keptList.length}</span>
+        <span class="metric-stat-label">Meaningful Words</span>
+      </div>
+      <div class="metric-stat-box">
+        <span class="metric-stat-value" style="color: #f59e0b;">${reductionPct}%</span>
+        <span class="metric-stat-label">Noise Reduction Rate</span>
+        <div class="reduction-progress-bar">
+          <div class="reduction-progress-fill" style="width: ${reductionPct}%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chips breakdown -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+      <div class="token-box-card">
+        <div class="token-box-header">
+          <span class="token-box-title" style="color: #fb7185;">🛑 Removed Stopwords (${stopList.length})</span>
+        </div>
+        <div class="token-list" style="max-height: 180px; overflow-y: auto;">
+          ${stopList.map(s => `<span class="token-chip" style="background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.25); color: #fb7185;">${escapeHtml(s)}</span>`).join('') || '<span style="color:var(--text-dim); font-size:0.8rem;">No stopwords found</span>'}
+        </div>
+      </div>
+
+      <div class="token-box-card">
+        <div class="token-box-header">
+          <span class="token-box-title" style="color: var(--color-word);">✨ Preserved Core Content (${keptList.length})</span>
+        </div>
+        <div class="token-list" style="max-height: 180px; overflow-y: auto;">
+          ${keptList.map(k => `<span class="token-chip" style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.25); color: var(--color-word);">#${escapeHtml(k)}</span>`).join('') || '<span style="color:var(--text-dim); font-size:0.8rem;">No words kept</span>'}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 4. Lemmatizer Matrix Renderer
+function renderLemmatizerMatrix(text, container) {
+  const dictionaryExamples = [
+    { word: 'running', pos: 'v (Verb)', lemma: 'run', note: 'Accurately restores base verb' },
+    { word: 'better', pos: 'a (Adjective)', lemma: 'good', note: 'Irregular comparative ➔ base root' },
+    { word: 'worst', pos: 'a (Adjective)', lemma: 'bad', note: 'Irregular superlative ➔ base root' },
+    { word: 'studies', pos: 'v (Verb)', lemma: 'study', note: 'Third-person singular ➔ base form' },
+    { word: 'studies', pos: 'n (Noun)', lemma: 'study', note: 'Plural noun ➔ singular root' },
+    { word: 'corpora', pos: 'n (Noun)', lemma: 'corpus', note: 'Latin plural ➔ authentic singular lemma' },
+    { word: 'leaves', pos: 'n (Noun)', lemma: 'leaf', note: 'Plural noun ➔ singular leaf' },
+    { word: 'leaves', pos: 'v (Verb)', lemma: 'leave', note: 'Verb ➔ infinitive leave' }
+  ];
+
+  container.innerHTML = `
+    <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
+      Unlike Stemming's naive suffix chopping, <strong>WordNetLemmatizer</strong> queries an authentic English morphological database with POS:
+    </div>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+        <thead>
+          <tr style="border-bottom: 2px solid rgba(255, 255, 255, 0.1); color: var(--text-dim); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em;">
+            <th style="padding: 0.75rem 1rem;">Target Word</th>
+            <th style="padding: 0.75rem 1rem; color: #c084fc;">Supplied POS Tag</th>
+            <th style="padding: 0.75rem 1rem; color: var(--color-word);">Lemmatized Base (WordNet)</th>
+            <th style="padding: 0.75rem 1rem; color: var(--text-dim);">Linguistic Benefit</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${dictionaryExamples.map(d => `
+            <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
+              <td style="padding: 0.65rem 1rem; font-weight: 700; color: #fff;">${d.word}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; color: #c084fc;">${d.pos}</td>
+              <td style="padding: 0.65rem 1rem; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--color-word);">${d.lemma} ✅</td>
+              <td style="padding: 0.65rem 1rem; color: var(--text-muted); font-size: 0.8rem;">${d.note}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+// 5. Frequency Distribution Bars Renderer
+function renderFreqDistBars(text, container) {
+  const words = (text.match(/\b[A-Za-z0-9'-]+\b/g) || [])
+    .map(w => w.toLowerCase())
+    .filter(w => !NLTK_STOPWORDS.has(w) && w.length > 1);
+
+  const freqMap = new Map();
+  words.forEach(w => freqMap.set(w, (freqMap.get(w) || 0) + 1));
+
+  const sorted = Array.from(freqMap.entries()).sort((a, b) => b[1] - a[1]);
+  const totalTokens = words.length;
+  const uniqueVocab = sorted.length;
+  const lexicalDiv = totalTokens > 0 ? ((uniqueVocab / totalTokens) * 100).toFixed(1) : '0.0';
+  const maxFreq = sorted.length > 0 ? sorted[0][1] : 1;
+
+  container.innerHTML = `
+    <!-- Vocabulary Metrics -->
+    <div class="reduction-dashboard" style="margin-bottom: 1.5rem;">
+      <div class="metric-stat-box">
+        <span class="metric-stat-value" style="color: var(--color-corpus);">${totalTokens}</span>
+        <span class="metric-stat-label">Meaningful Tokens</span>
+      </div>
+      <div class="metric-stat-box">
+        <span class="metric-stat-value" style="color: var(--color-vocab);">${uniqueVocab}</span>
+        <span class="metric-stat-label">Unique Vocabulary</span>
+      </div>
+      <div class="metric-stat-box">
+        <span class="metric-stat-value" style="color: var(--color-word);">${lexicalDiv}%</span>
+        <span class="metric-stat-label">Lexical Diversity</span>
+      </div>
+    </div>
+
+    <!-- Frequency Bars -->
+    <div class="token-box-card">
+      <div class="token-box-header">
+        <span class="token-box-title" style="color: var(--color-vocab);">📊 Top Word Frequencies (ASCII Bar Chart)</span>
+        <span class="token-box-badge" style="background: rgba(245, 158, 11, 0.12); color: var(--color-vocab); border-color: rgba(245, 158, 11, 0.3);">Top ${Math.min(8, sorted.length)}</span>
+      </div>
+      <div style="margin-top: 0.5rem;">
+        ${sorted.slice(0, 8).map(([w, cnt]) => {
+          const pct = Math.max(8, (cnt / maxFreq) * 100);
+          return `
+            <div class="practice-bar-row">
+              <span class="practice-bar-word">${escapeHtml(w)}</span>
+              <div class="practice-bar-track">
+                <div class="practice-bar-fill" style="width: ${pct}%;"></div>
+              </div>
+              <span class="practice-bar-count">${cnt}</span>
+            </div>
+          `;
+        }).join('') || '<div style="color:var(--text-dim); padding:1rem; text-align:center;">No frequent words detected</div>'}
+      </div>
+    </div>
+  `;
+}
+
+// 6. Review Cleaner Renderer
+function renderReviewCleaner(text, container) {
+  const rawTokens = text.match(/\b[A-Za-z0-9'-]+\b|[^\s\w]/g) || [];
+  
+  // Clean tokens: lowercase, no punctuation, no stopwords
+  const cleanTokens = rawTokens
+    .map(w => w.toLowerCase())
+    .filter(w => !NLTK_STOPWORDS.has(w) && /^[A-Za-z0-9]+$/.test(w));
+
+  // Lemmatized keywords
+  const keywords = cleanTokens.map(w => {
+    if (w.endsWith('ing') && w.length > 4) return w.slice(0, -3);
+    if (w.endsWith('ed') && w.length > 4) return w.slice(0, -2);
+    if (w.endsWith('s') && !w.endsWith('ss') && w.length > 3) return w.slice(0, -1);
+    return w;
+  });
+
+  const uniqueKeywords = Array.from(new Set(keywords));
+
+  container.innerHTML = `
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+      
+      <!-- Raw Text -->
+      <div class="token-box-card">
+        <div class="token-box-header">
+          <span class="token-box-title" style="color: #fb7185;">🔍 Unstructured Raw Review</span>
+          <span class="token-box-badge" style="background: rgba(251, 113, 133, 0.1); color: #fb7185;">${rawTokens.length} Tokens</span>
+        </div>
+        <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.85rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; font-family: 'JetBrains Mono', monospace;">
+          ${escapeHtml(text)}
+        </div>
+      </div>
+
+      <!-- Clean Keywords Extracted -->
+      <div class="token-box-card">
+        <div class="token-box-header">
+          <span class="token-box-title" style="color: #c084fc;">✨ Clean Extracted Signals</span>
+          <span class="token-box-badge" style="background: rgba(168, 85, 247, 0.12); color: #c084fc;">${uniqueKeywords.length} Topics</span>
+        </div>
+        <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
+          Low-value noise stripped, words lowercased and lemmatized for Machine Learning sentiment classifier:
+        </p>
+        <div class="token-list">
+          ${uniqueKeywords.map(k => `
+            <span class="token-chip" style="background: rgba(168, 85, 247, 0.12); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">
+              ★ ${escapeHtml(k)}
+            </span>
+          `).join('')}
+        </div>
+      </div>
+
+    </div>
+  `;
+}
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice 1: Hands-On NLP Lab - Start NLP</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Global Navbar (Apple Glass Style) -->
+  <header class="top-navbar">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">📚</div>
+      <span>Start NLP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="study.html" class="nav-link">🏛️ NLP Pillars</a></li>
+      <li><a href="nltk.html" class="nav-link">🐍 NLTK Studio</a></li>
+      <li><a href="practice.html" class="nav-link active">🧪 Practice 1</a></li>
+    </ul>
+    <a href="nltk.html" class="nav-cta-btn" style="background: rgba(255,255,255,0.08); box-shadow: none;">
+      <span>← NLTK Studio</span>
+    </a>
+  </header>
+
+  <!-- Upper Sub-headings Bar: Quick Click-to-Jump -->
+  <nav class="upper-subheadings-wrapper" aria-label="Practice 1 Quick Navigation">
+    <div class="upper-subheadings-title">⚡ Practice 1 Interactive Labs (Click to Jump):</div>
+    <div class="upper-subheadings-bar">
+      <button class="subheading-btn btn-corpus" onclick="switchPracticeLab('tokenizer')">
+        <span>🥊 1. Tokenizer Arena</span>
+      </button>
+
+      <button class="subheading-btn btn-word" onclick="switchPracticeLab('stemming')">
+        <span>✂️ 2. Stemming Slicers</span>
+      </button>
+
+      <button class="subheading-btn" style="background: rgba(251, 113, 133, 0.15); color: #fb7185; border-color: rgba(251, 113, 133, 0.3);" onclick="switchPracticeLab('stopwords')">
+        <span>🧹 3. Stopwords Filter</span>
+      </button>
+
+      <button class="subheading-btn btn-document" onclick="switchPracticeLab('lemma')">
+        <span>📚 4. Lemmatize + POS</span>
+      </button>
+
+      <button class="subheading-btn btn-vocab" onclick="switchPracticeLab('freqdist')">
+        <span>📊 5. FreqDist Bars</span>
+      </button>
+
+      <button class="subheading-btn" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border-color: rgba(168, 85, 247, 0.3);" onclick="switchPracticeLab('review')">
+        <span>🏆 6. Review Cleaner</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Multi-page Layout with Left Sidebar -->
+  <div class="study-layout">
+    
+    <!-- Left Sidebar: Content Control for Practice 1 -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">NLP Learning Modules</div>
+      
+      <!-- Module 1 Link -->
+      <div class="topic-card-box" style="margin-bottom: 0.85rem;">
+        <a href="study.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🏛️ Topic 1: NLP Pillars</span>
+          <span style="font-size: 0.75rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Module 2 Link -->
+      <div class="topic-card-box" style="margin-bottom: 0.85rem;">
+        <a href="nltk.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🐍 Topic 2: NLTK Studio</span>
+          <span style="font-size: 0.75rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Chapter 3: Practice 1 (Active) -->
+      <div class="topic-card-box">
+        <div class="topic-main-link">
+          <span>🧪 Chapter 3: Practice 1</span>
+          <span class="topic-badge-active" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border-color: rgba(168, 85, 247, 0.4);">Active Lab</span>
+        </div>
+        
+        <!-- Sidebar Lab Mode Controls -->
+        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 0.85rem 0 0.45rem 0.5rem; font-weight: 700;">
+          Interactive Practice Units
+        </div>
+        <ul class="topic-sublist">
+          <li class="subtopic-item practice-sidebar-item active" data-lab="tokenizer">
+            <a href="javascript:void(0)" onclick="switchPracticeLab('tokenizer')">
+              <span>🥊 Unit 1: Tokenizer Arena</span>
+              <span class="item-badge" style="color: var(--color-corpus);">bench</span>
+            </a>
+          </li>
+          <li class="subtopic-item practice-sidebar-item" data-lab="stemming">
+            <a href="javascript:void(0)" onclick="switchPracticeLab('stemming')">
+              <span>✂️ Unit 2: Stemming Slicers</span>
+              <span class="item-badge" style="color: var(--color-word);">slicers</span>
+            </a>
+          </li>
+          <li class="subtopic-item practice-sidebar-item" data-lab="stopwords">
+            <a href="javascript:void(0)" onclick="switchPracticeLab('stopwords')">
+              <span>🧹 Unit 3: Stopword Filter</span>
+              <span class="item-badge" style="color: #fb7185;">reduce</span>
+            </a>
+          </li>
+          <li class="subtopic-item practice-sidebar-item" data-lab="lemma">
+            <a href="javascript:void(0)" onclick="switchPracticeLab('lemma')">
+              <span>📚 Unit 4: Lemma with POS</span>
+              <span class="item-badge" style="color: var(--color-document);">roots</span>
+            </a>
+          </li>
+          <li class="subtopic-item practice-sidebar-item" data-lab="freqdist">
+            <a href="javascript:void(0)" onclick="switchPracticeLab('freqdist')">
+              <span>📊 Unit 5: FreqDist Bars</span>
+              <span class="item-badge" style="color: var(--color-vocab);">stats</span>
+            </a>
+          </li>
+          <li class="subtopic-item practice-sidebar-item" data-lab="review">
+            <a href="javascript:void(0)" onclick="switchPracticeLab('review')">
+              <span>🏆 Unit 6: Review Cleaner</span>
+              <span class="item-badge" style="color: #c084fc;">nlp-ml</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Notebook Source Box -->
+      <div class="sidebar-category" style="margin-top: 1.5rem;">Notebook Source</div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.85rem; margin-top: 0.5rem; font-size: 0.8rem;">
+        <div style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span>📓</span>
+          <span>NLP learning.ipynb</span>
+        </div>
+        <div style="color: var(--text-dim); line-height: 1.4; font-size: 0.75rem;">
+          Synchronized directly with <strong>NLP practice/NLP learning.ipynb</strong>. All code runs identically in Python 3.12!
+        </div>
+      </div>
+
+      <div class="sidebar-footer-note">
+        <strong>⚡ Live Interactive Lab</strong>
+        <p style="margin-top: 0.35rem; line-height: 1.4;">
+          Select any unit from the sidebar to instantly test edge cases and view transformations.
+        </p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="study-content" style="padding: 2.25rem 2.5rem;">
+      
+      <!-- Hero Header -->
+      <header style="margin-bottom: 2rem;">
+        <div class="hero-badge" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">
+          <span>🧪 Chapter 3 • Hands-On Practical Lab</span>
+        </div>
+        <h1 class="hero-title" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">
+          Practice 1: <span>NLP Practical Lab</span>
+        </h1>
+        <p class="hero-subtitle" style="max-width: 780px;">
+          Direct visual companion to <code>NLP learning.ipynb</code>. Test tricky sentences, benchmark tokenizers side-by-side, slice suffixes, eliminate noise, and visualize vocabulary frequencies live!
+        </p>
+      </header>
+
+      <!-- Segmented Mode Selector (Apple Glass Style) -->
+      <div class="apple-segment-wrapper" style="margin-bottom: 1.75rem;">
+        <div class="apple-segment-control" role="tablist">
+          <button class="apple-segment-pill practice-pill active" data-lab="tokenizer" onclick="switchPracticeLab('tokenizer')">
+            <span>🥊 Tokenizer Arena</span>
+          </button>
+          <button class="apple-segment-pill practice-pill" data-lab="stemming" onclick="switchPracticeLab('stemming')">
+            <span>✂️ Stemming Slicers</span>
+          </button>
+          <button class="apple-segment-pill practice-pill" data-lab="stopwords" onclick="switchPracticeLab('stopwords')">
+            <span>🧹 Stopword Reducer</span>
+          </button>
+          <button class="apple-segment-pill practice-pill" data-lab="lemma" onclick="switchPracticeLab('lemma')">
+            <span>📚 Lemmatize (POS)</span>
+          </button>
+          <button class="apple-segment-pill practice-pill" data-lab="freqdist" onclick="switchPracticeLab('freqdist')">
+            <span>📊 FreqDist Bars</span>
+          </button>
+          <button class="apple-segment-pill practice-pill" data-lab="review" onclick="switchPracticeLab('review')">
+            <span>🏆 Review Cleaner</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Playground Container -->
+      <section class="apple-visual-canvas">
+        
+        <!-- Canvas Top Bar -->
+        <div class="canvas-header">
+          <div class="canvas-title-group">
+            <span class="canvas-icon" id="practice-lab-icon">🥊</span>
+            <div>
+              <h2 class="canvas-title" id="practice-lab-title">Tokenizer Arena: The Benchmark Showdown</h2>
+              <p class="canvas-desc" id="practice-lab-desc">
+                Comparing word_tokenize, wordpunct_tokenize, and TreebankWordTokenizer on real-world tricky contractions, money, and abbreviations.
+              </p>
+            </div>
+          </div>
+          <div class="canvas-badge" id="practice-lab-badge">Unit 1 Practice</div>
+        </div>
+
+        <!-- Presets Selection Bar -->
+        <div style="margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim);">
+            ⚡ Quick Test Presets:
+          </span>
+          <button class="preset-pill-btn" onclick="loadPracticePreset('tricky')">
+            Contractions ($49.99 & isn't)
+          </button>
+          <button class="preset-pill-btn" onclick="loadPracticePreset('abbrev')">
+            Abbreviations (Dr. Smith & U.S.A.)
+          </button>
+          <button class="preset-pill-btn" onclick="loadPracticePreset('stemwords')">
+            Suffixes (running, leaves, better)
+          </button>
+          <button class="preset-pill-btn" onclick="loadPracticePreset('review')">
+            Messy Review (WOWW!! 🚀 4.5/5)
+          </button>
+          <button class="preset-pill-btn" onclick="loadPracticePreset('notebook')">
+            Notebook Corpus (From Cell 2)
+          </button>
+        </div>
+
+        <!-- Input Box -->
+        <div class="canvas-input-wrapper" style="margin-top: 1.25rem;">
+          <label class="canvas-input-label" for="practice-input">
+            <span>Edit or enter test text below:</span>
+            <span class="live-pulse-indicator">● Live Reactive</span>
+          </label>
+          <textarea 
+            id="practice-input" 
+            class="canvas-textarea" 
+            rows="3" 
+            spellcheck="false"
+          >Dr. Smith said: 'NLP isn't easy in 2026, but it's 100% worth it at $49.99/mo!' Can't wait.</textarea>
+        </div>
+
+        <!-- Dynamic Output Stage -->
+        <div id="practice-visual-stage" style="margin-top: 1.75rem;">
+          <!-- Dynamically populated by updatePracticeVisualStage() -->
+        </div>
+
+      </section>
+
+      <!-- Code Companion Drawer (Direct from NLP learning.ipynb) -->
+      <section class="apple-code-drawer" style="margin-top: 2rem;">
+        <div class="code-drawer-header">
+          <div class="code-header-left">
+            <span class="code-lang-tag">Python 3.12 NLTK</span>
+            <span class="code-source-tag">Source: NLP learning.ipynb</span>
+          </div>
+          <button class="copy-code-btn" onclick="copyPracticeCode()">
+            <span id="copy-practice-label">📋 Copy Python Code</span>
+          </button>
+        </div>
+        <pre class="code-pre"><code id="practice-python-code" class="code-block"># Python code from notebook will appear here</code></pre>
+      </section>
+
+      <!-- Practice 1 Learning Roadmap Matrix -->
+      <section style="margin-top: 3rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📋</span>
+          <span>Practice 1 Cheat Sheet & Algorithm Comparison</span>
+        </h3>
+        <div class="apple-directory-grid">
+          
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: var(--color-corpus); border-color: var(--color-corpus-border);">Tokenization</span>
+              <span class="dir-mod">Unit 1</span>
+            </div>
+            <h4 class="dir-title">Tokenizer Arena</h4>
+            <p class="dir-desc">
+              <code>word_tokenize</code> handles natural text; <code>wordpunct_tokenize</code> isolates punctuation; <code>TreebankWordTokenizer</code> handles standard Penn Treebank contractions.
+            </p>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: var(--color-word); border-color: var(--color-word-border);">Stemming</span>
+              <span class="dir-mod">Unit 2</span>
+            </div>
+            <h4 class="dir-title">Stemming Slicers</h4>
+            <p class="dir-desc">
+              Rule-based heuristic cuts (<code>PorterStemmer</code>, <code>SnowballStemmer</code>, <code>RegexpStemmer</code>). Blazing fast for indexing, but may produce non-dictionary stems.
+            </p>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: #fb7185; border-color: rgba(251, 113, 133, 0.3);">Noise Filter</span>
+              <span class="dir-mod">Unit 3</span>
+            </div>
+            <h4 class="dir-title">Stopwords Reduction</h4>
+            <p class="dir-desc">
+              Filters ~40-50% non-informative words (<code>the</code>, <code>is</code>, <code>in</code>), cutting model dimensionality while preserving core topical signals.
+            </p>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: var(--color-document); border-color: var(--color-document-border);">Lemmatizer</span>
+              <span class="dir-mod">Unit 4</span>
+            </div>
+            <h4 class="dir-title">POS-Aware Roots</h4>
+            <p class="dir-desc">
+              Dictionary lookups with WordNet. Passing <code>pos='v'</code> (verb) turns <em>running</em> ➔ <em>run</em>, while <code>pos='a'</code> turns <em>better</em> ➔ <em>good</em>.
+            </p>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: var(--color-vocab); border-color: var(--color-vocab-border);">Vocabulary</span>
+              <span class="dir-mod">Unit 5</span>
+            </div>
+            <h4 class="dir-title">FreqDist & Stats</h4>
+            <p class="dir-desc">
+              Computes token frequencies and Lexical Diversity (<code>Unique Vocab / Total Tokens</code>). The foundation for BoW and TF-IDF vectors.
+            </p>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: #c084fc; border-color: rgba(168, 85, 247, 0.4);">Application</span>
+              <span class="dir-mod">Unit 6</span>
+            </div>
+            <h4 class="dir-title">Review Cleaner</h4>
+            <p class="dir-desc">
+              Practical production pipeline: cleans unstructured reviews with emojis and slang into clean topic features ready for sentiment classification.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Bottom Next Navigation -->
+      <footer style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <a href="nltk.html" class="portal-card-btn btn-pillars" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>← Back to NLTK Studio</span>
+        </a>
+        <a href="study.html" class="portal-card-btn btn-nltk" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>Explore NLP Pillars 🏛️</span>
+          <span>➔</span>
+        </a>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
