@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 5: Stopwords Preprocessing - Start NLP</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Global Navbar -->
+  <header class="top-navbar">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">📚</div>
+      <span>Start NLP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="study.html" class="nav-link">🏛️ Unit 1</a></li>
+      <li><a href="nltk.html" class="nav-link">🐍 Unit 2</a></li>
+      <li><a href="tokenization.html" class="nav-link">✂️ Unit 3</a></li>
+      <li><a href="stemming.html" class="nav-link">🌱 Unit 4</a></li>
+      <li><a href="stopwords.html" class="nav-link active">🛑 Unit 5</a></li>
+      <li><a href="lemmatization.html" class="nav-link">📚 Unit 6</a></li>
+    </ul>
+    <a href="lemmatization.html" class="nav-cta-btn">
+      <span>Next: Unit 6 (Lemmatization) 📚</span>
+      <span>➔</span>
+    </a>
+  </header>
+
+  <!-- Upper Sub-headings Bar: Quick Click-to-Jump -->
+  <nav class="upper-subheadings-wrapper" aria-label="Unit 5 Subtopics">
+    <div class="upper-subheadings-title">⚡ Unit 5 Stopwords Subtopics (Click to Jump):</div>
+    <div class="upper-subheadings-bar">
+      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('section-what-stopwords')">
+        <span>🛑 1. What are Stopwords?</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Dimensionality)</span>
+      </button>
+
+      <button class="subheading-btn" style="background: rgba(251, 113, 133, 0.15); color: #fb7185; border-color: rgba(251, 113, 133, 0.3);" onclick="scrollToSubtopic('section-reduction-dashboard')">
+        <span>📊 2. Live Noise Meter</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Reduction Ratio)</span>
+      </button>
+
+      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('section-chip-breakdown')">
+        <span>✨ 3. Preserved vs Filtered</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Visual Chips)</span>
+      </button>
+
+      <button class="subheading-btn btn-document" onclick="scrollToSubtopic('section-code')">
+        <span>💻 4. Python Implementation</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(NLTK Code)</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Layout: Sidebar + Main Content -->
+  <div class="study-layout">
+    
+    <!-- Unified 6-Unit Left Sidebar -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">Course Units (6 Total)</div>
+      
+      <!-- Unit 1 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="study.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🏛️ Unit 1: NLP Pillars</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 2 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="nltk.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🐍 Unit 2: NLTK Studio</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 3 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="tokenization.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>✂️ Unit 3: Tokenization</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 4 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="stemming.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🌱 Unit 4: Stemming & Types</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 5 (ACTIVE) -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <div class="topic-main-link">
+          <span>🛑 Unit 5: Stopwords Filter</span>
+          <span class="topic-badge-active" style="background: rgba(251, 113, 133, 0.2); color: #fb7185; border-color: rgba(251, 113, 133, 0.4);">Active</span>
+        </div>
+        <ul class="topic-sublist">
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-what-stopwords')">
+              <span>• Why Filter Stopwords?</span>
+              <span style="color:#fb7185; font-size:0.72rem;">Theory</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-reduction-dashboard')">
+              <span>• Live Reduction Meter</span>
+              <span style="color:var(--color-corpus); font-size:0.72rem;">Ratio</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-chip-breakdown')">
+              <span>• Dropped vs Kept Chips</span>
+              <span style="color:var(--color-word); font-size:0.72rem;">Chips</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-code')">
+              <span>• Python Code Guide</span>
+              <span style="color:var(--color-document); font-size:0.72rem;">Code</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Unit 6 -->
+      <div class="topic-card-box" style="margin-bottom: 1.25rem;">
+        <a href="lemmatization.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>📚 Unit 6: Lemmatization</span>
+          <span style="font-size: 0.72rem; color: var(--color-document);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Notebook Source Badge -->
+      <div class="sidebar-category">Notebook Source</div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.85rem; font-size: 0.78rem;">
+        <div style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span>📓</span>
+          <span style="font-size: 0.72rem;">Text Preprocessing-Stopwords with NLTK.ipynb</span>
+        </div>
+        <div style="color: var(--text-dim); line-height: 1.4; font-size: 0.72rem;">
+          Interactive noise reduction laboratory running client-side instant NLP without altering your files.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="study-content" style="padding: 2.25rem 2.5rem;">
+      
+      <!-- Hero Header -->
+      <header style="margin-bottom: 2rem;">
+        <div class="hero-badge" style="background: rgba(251, 113, 133, 0.1); border-color: rgba(251, 113, 133, 0.3); color: #fb7185;">
+          <span>🛑 Unit 05 • Text Preprocessing & Dimensionality Reduction</span>
+        </div>
+        <h1 class="hero-title" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">
+          Unit 5: <span>Stopwords Filtering</span>
+        </h1>
+        <p class="hero-subtitle" style="max-width: 780px;">
+          Sourced from <code>Text Preprocessing-Stopwords with NLTK.ipynb</code>. Eliminate non-informative grammatical glue words like <em>the, is, at, which</em> to reduce text size by ~40-50% while magnifying the core topical meaning!
+        </p>
+      </header>
+
+      <!-- Interactive Playground Canvas -->
+      <section class="apple-visual-canvas" id="section-reduction-dashboard">
+        
+        <div class="canvas-header">
+          <div class="canvas-title-group">
+            <span class="canvas-icon">🧹</span>
+            <div>
+              <h2 class="canvas-title">Stopwords Noise Reducer Live Dashboard</h2>
+              <p class="canvas-desc">
+                Measures dataset compression ratio when filtering non-informative stopwords and punctuation out of raw human text.
+              </p>
+            </div>
+          </div>
+          <div class="canvas-badge">Unit 5 Live Meter</div>
+        </div>
+
+        <!-- Presets Selection Bar -->
+        <div style="margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim);">
+            ⚡ Quick Presets:
+          </span>
+          <button class="preset-pill-btn" onclick="loadUnit5Preset('review')">
+            Customer Review (High Noise)
+          </button>
+          <button class="preset-pill-btn" onclick="loadUnit5Preset('science')">
+            AI Technology Article
+          </button>
+          <button class="preset-pill-btn" onclick="loadUnit5Preset('corpus')">
+            Notebook Corpus (From Cell 2)
+          </button>
+        </div>
+
+        <!-- Input Box -->
+        <div class="canvas-input-wrapper" style="margin-top: 1.25rem;">
+          <label class="canvas-input-label" for="unit5-input">
+            <span>Enter text to measure noise reduction:</span>
+            <span class="live-pulse-indicator">● Live Reactive</span>
+          </label>
+          <textarea 
+            id="unit5-input" 
+            class="canvas-textarea" 
+            rows="3" 
+            spellcheck="false"
+          >Hello! Welcome to Natural Language Processing (NLP) in Python. It's fascinating how computers learn to understand human languages, isn't it? In 2026, AI models are analyzing millions of texts—from emails to books—every single second. Running, ran, and runs all share the same root word, while words like "better" and "good" show how lemmatization works!</textarea>
+        </div>
+
+        <!-- Live Output Stage -->
+        <div id="unit5-visual-stage" style="margin-top: 1.75rem;">
+          <!-- Dynamically populated by updateUnit5Visuals() -->
+        </div>
+
+      </section>
+
+      <!-- Educational Breakdown -->
+      <section style="margin-top: 3rem;" id="section-what-stopwords">
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📖</span>
+          <span>Why Stopwords Removal is Critical in NLP</span>
+        </h3>
+
+        <div class="apple-directory-grid">
+          
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: #fb7185; border-color: rgba(251, 113, 133, 0.3);">Noise Reduction</span>
+              <span class="dir-mod">Signal-to-Noise</span>
+            </div>
+            <h4 class="dir-title">40–50% Data Compression</h4>
+            <p class="dir-desc">
+              Words like <code>the</code>, <code>is</code>, <code>in</code>, <code>to</code>, <code>a</code> account for roughly half of all word counts in English prose. Removing them significantly cuts training time and memory footprint.
+            </p>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: var(--color-corpus); border-color: var(--color-corpus-border);">Corpus Lexicon</span>
+              <span class="dir-mod">179 Stopwords</span>
+            </div>
+            <h4 class="dir-title">Curated NLTK Corpus</h4>
+            <p class="dir-desc">
+              NLTK includes 179 curated English stopwords in <code>nltk.corpus.stopwords</code>. Always lowercase tokens before checking membership against the stopword set!
+            </p>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: var(--color-word); border-color: var(--color-word-border);">Machine Learning</span>
+              <span class="dir-mod">BoW & TF-IDF</span>
+            </div>
+            <h4 class="dir-title">Prevents Skewed Features</h4>
+            <p class="dir-desc">
+              If stopwords aren't removed, basic frequency models will treat <code>the</code> as the most important word in every document. Removing them allows real keywords to dominate!
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Python Code Implementation -->
+        <div class="apple-code-drawer" id="section-code" style="margin-top: 2rem;">
+          <div class="code-drawer-header">
+            <div class="code-header-left">
+              <span class="code-lang-tag">Python 3.12 NLTK</span>
+              <span class="code-source-tag">Source: Text Preprocessing-Stopwords with NLTK.ipynb</span>
+            </div>
+            <button class="copy-code-btn" onclick="copyCodeSnippet('code-stopwords-snippet', this)">
+              <span>📋 Copy Python Code</span>
+            </button>
+          </div>
+          <pre class="code-pre"><code id="code-stopwords-snippet" class="code-block">import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import string
+
+# 1. Download stopwords corpus if needed
+nltk.download('stopwords')
+
+# 2. Load set of English stopwords
+stop_words = set(stopwords.words('english'))
+
+# 3. Filter raw tokens
+tokens = word_tokenize(corpus)
+clean_tokens = [w for w in tokens if w.lower() not in stop_words and w not in string.punctuation]
+
+print("Total Raw Tokens: ", len(tokens))
+print("Filtered Tokens:  ", len(clean_tokens))
+print("Noise Reduction:  ", f"{((len(tokens) - len(clean_tokens)) / len(tokens)) * 100:.2f}%")</code></pre>
+        </div>
+
+      </section>
+
+      <!-- Bottom Next Navigation -->
+      <footer style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <a href="stemming.html" class="portal-card-btn btn-pillars" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>← Back to Unit 4 (Stemming)</span>
+        </a>
+        <a href="lemmatization.html" class="portal-card-btn btn-nltk" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>Proceed to Unit 6: Lemmatization 📚</span>
+          <span>➔</span>
+        </a>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

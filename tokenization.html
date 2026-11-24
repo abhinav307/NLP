@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 3: Tokenization Practice - Start NLP</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Global Navbar -->
+  <header class="top-navbar">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">📚</div>
+      <span>Start NLP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="study.html" class="nav-link">🏛️ Unit 1</a></li>
+      <li><a href="nltk.html" class="nav-link">🐍 Unit 2</a></li>
+      <li><a href="tokenization.html" class="nav-link active">✂️ Unit 3</a></li>
+      <li><a href="stemming.html" class="nav-link">🌱 Unit 4</a></li>
+      <li><a href="stopwords.html" class="nav-link">🛑 Unit 5</a></li>
+      <li><a href="lemmatization.html" class="nav-link">📚 Unit 6</a></li>
+    </ul>
+    <a href="stemming.html" class="nav-cta-btn">
+      <span>Next: Unit 4 (Stemming) 🌱</span>
+      <span>➔</span>
+    </a>
+  </header>
+
+  <!-- Upper Sub-headings Bar: Quick Click-to-Jump -->
+  <nav class="upper-subheadings-wrapper" aria-label="Unit 3 Subtopics">
+    <div class="upper-subheadings-title">⚡ Unit 3 Tokenization Subtopics (Click to Jump):</div>
+    <div class="upper-subheadings-bar">
+      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('section-sent-tokenize')">
+        <span>📄 1. sent_tokenize</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Paragraph ➔ Sentences)</span>
+      </button>
+
+      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('section-word-tokenize')">
+        <span>✂️ 2. word_tokenize</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Sentence ➔ Words)</span>
+      </button>
+
+      <button class="subheading-btn" style="background: rgba(52, 211, 153, 0.15); color: var(--color-word); border-color: rgba(52, 211, 153, 0.3);" onclick="scrollToSubtopic('section-wordpunct')">
+        <span>⚡ 3. wordpunct_tokenize</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Splits Punctuation)</span>
+      </button>
+
+      <button class="subheading-btn btn-document" onclick="scrollToSubtopic('section-treebank')">
+        <span>🏛️ 4. TreebankWordTokenizer</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Penn Treebank)</span>
+      </button>
+
+      <button class="subheading-btn btn-vocab" onclick="scrollToSubtopic('section-arena')">
+        <span>🥊 5. 3-Way Arena</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Side-by-Side)</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Layout: Sidebar + Main Content -->
+  <div class="study-layout">
+    
+    <!-- Unified 6-Unit Left Sidebar -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">Course Units (6 Total)</div>
+      
+      <!-- Unit 1 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="study.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🏛️ Unit 1: NLP Pillars</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 2 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="nltk.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🐍 Unit 2: NLTK Studio</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 3 (ACTIVE) -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <div class="topic-main-link">
+          <span>✂️ Unit 3: Tokenization</span>
+          <span class="topic-badge-active">Active</span>
+        </div>
+        <ul class="topic-sublist">
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-sent-tokenize')">
+              <span>• sent_tokenize()</span>
+              <span style="color:var(--color-corpus); font-size:0.72rem;">Documents</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-word-tokenize')">
+              <span>• word_tokenize()</span>
+              <span style="color:var(--color-word); font-size:0.72rem;">Words</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-wordpunct')">
+              <span>• wordpunct_tokenize()</span>
+              <span style="color:#34d399; font-size:0.72rem;">Quotes/Punct</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-treebank')">
+              <span>• TreebankTokenizer</span>
+              <span style="color:var(--color-document); font-size:0.72rem;">Treebank</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-arena')">
+              <span>• 3-Way Showdown Arena</span>
+              <span style="color:var(--color-vocab); font-size:0.72rem;">Live Test</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Unit 4 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="stemming.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🌱 Unit 4: Stemming & Types</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 5 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="stopwords.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🛑 Unit 5: Stopwords Filter</span>
+          <span style="font-size: 0.72rem; color: #fb7185;">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 6 -->
+      <div class="topic-card-box" style="margin-bottom: 1.25rem;">
+        <a href="lemmatization.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>📚 Unit 6: Lemmatization</span>
+          <span style="font-size: 0.72rem; color: var(--color-document);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Notebook Source Badge -->
+      <div class="sidebar-category">Notebook Source</div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.85rem; font-size: 0.78rem;">
+        <div style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span>📓</span>
+          <span style="font-size: 0.72rem;">tokenization Example using NLTK.ipynb</span>
+        </div>
+        <div style="color: var(--text-dim); line-height: 1.4; font-size: 0.72rem;">
+          Analyzed from your notebook. Interactive playground runs client-side instant NLP without altering your files.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="study-content" style="padding: 2.25rem 2.5rem;">
+      
+      <!-- Hero Header -->
+      <header style="margin-bottom: 2rem;">
+        <div class="hero-badge" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
+          <span>✂️ Unit 03 • Practical Tokenization Lab</span>
+        </div>
+        <h1 class="hero-title" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">
+          Unit 3: <span>Tokenization Practice</span>
+        </h1>
+        <p class="hero-subtitle" style="max-width: 780px;">
+          Sourced directly from <code>tokenization Example using NLTK.ipynb</code>. Explore how text decomposes from paragraphs into sentences (Documents) and from sentences into word tokens with different tokenization rules.
+        </p>
+      </header>
+
+      <!-- Interactive Playground Canvas -->
+      <section class="apple-visual-canvas" id="section-arena">
+        
+        <div class="canvas-header">
+          <div class="canvas-title-group">
+            <span class="canvas-icon">🥊</span>
+            <div>
+              <h2 class="canvas-title">Tokenization Interactive Live Arena</h2>
+              <p class="canvas-desc">
+                Test tricky contractions, currency, punctuation, and abbreviations across all 4 NLTK tokenizers in real-time.
+              </p>
+            </div>
+          </div>
+          <div class="canvas-badge">Interactive Test Bench</div>
+        </div>
+
+        <!-- Presets Selection Bar -->
+        <div style="margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim);">
+            ⚡ Quick Presets:
+          </span>
+          <button class="preset-pill-btn" onclick="loadUnit3Preset('contractions')">
+            Contractions ($49.99 & isn't)
+          </button>
+          <button class="preset-pill-btn" onclick="loadUnit3Preset('abbrev')">
+            Abbreviations (Dr. Smith & U.S.A.)
+          </button>
+          <button class="preset-pill-btn" onclick="loadUnit3Preset('corpus')">
+            Notebook Corpus (From Cell 2)
+          </button>
+        </div>
+
+        <!-- Input Box -->
+        <div class="canvas-input-wrapper" style="margin-top: 1.25rem;">
+          <label class="canvas-input-label" for="unit3-input">
+            <span>Type or edit custom text below:</span>
+            <span class="live-pulse-indicator">● Live Reactive</span>
+          </label>
+          <textarea 
+            id="unit3-input" 
+            class="canvas-textarea" 
+            rows="3" 
+            spellcheck="false"
+          >Hello! Welcome to Natural Language Processing (NLP) in Python. It's fascinating how computers learn to understand human languages, isn't it? In 2026, AI models are analyzing millions of texts—from emails to books—every single second. Running, ran, and runs all share the same root word, while words like "better" and "good" show how lemmatization works!</textarea>
+        </div>
+
+        <!-- Live Output Stage -->
+        <div id="unit3-visual-stage" style="margin-top: 1.75rem;">
+          <!-- Dynamically populated by updateUnit3Visuals() -->
+        </div>
+
+      </section>
+
+      <!-- Step-by-Step Educational Cards -->
+      <section style="margin-top: 3rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📖</span>
+          <span>Core Functions Breakdown (From Notebook)</span>
+        </h3>
+
+        <!-- 1. sent_tokenize -->
+        <div class="apple-dir-card" id="section-sent-tokenize" style="margin-bottom: 1.5rem;">
+          <div class="dir-card-header">
+            <span class="dir-pill" style="color: var(--color-corpus); border-color: var(--color-corpus-border);">Step 1: Sentence Tokenizer</span>
+            <span class="dir-mod">sent_tokenize()</span>
+          </div>
+          <h4 class="dir-title">Paragraph ➔ Documents (Sentences)</h4>
+          <p class="dir-desc">
+            Slices an unstructured paragraph container into individual standalone sentence strings using pretrained sentence boundary detection models.
+          </p>
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #38bdf8; margin-top: 0.75rem;">
+            from nltk.tokenize import sent_tokenize<br>
+            documents = sent_tokenize(corpus)<br>
+            for sentence in documents:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print(sentence)
+          </div>
+        </div>
+
+        <!-- 2. word_tokenize -->
+        <div class="apple-dir-card" id="section-word-tokenize" style="margin-bottom: 1.5rem;">
+          <div class="dir-card-header">
+            <span class="dir-pill" style="color: var(--color-word); border-color: var(--color-word-border);">Step 2: Word Tokenizer</span>
+            <span class="dir-mod">word_tokenize()</span>
+          </div>
+          <h4 class="dir-title">Document ➔ Words (Standard English Rules)</h4>
+          <p class="dir-desc">
+            Standard NLTK word boundary tokenizer. Correctly treats common English contractions by separating the negation or possession suffix: <code>isn't</code> ➔ <code>['is', "n't"]</code>, <code>it's</code> ➔ <code>['it', "'s"]</code>.
+          </p>
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #34d399; margin-top: 0.75rem;">
+            from nltk.tokenize import word_tokenize<br>
+            for sentence in documents:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print(word_tokenize(sentence))
+          </div>
+        </div>
+
+        <!-- 3. wordpunct_tokenize -->
+        <div class="apple-dir-card" id="section-wordpunct" style="margin-bottom: 1.5rem;">
+          <div class="dir-card-header">
+            <span class="dir-pill" style="color: #34d399; border-color: rgba(52, 211, 153, 0.3);">Step 3: Punctuation Separator</span>
+            <span class="dir-mod">wordpunct_tokenize()</span>
+          </div>
+          <h4 class="dir-title">Separates Every Quote & Symbol Individually</h4>
+          <p class="dir-desc">
+            Uses regex <code>\w+|[^\w\s]+</code> to separate words from all punctuation characters. Notice: <code>it's</code> is split into 3 distinct tokens: <code>['it', "'", 's']</code>!
+          </p>
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #34d399; margin-top: 0.75rem;">
+            from nltk.tokenize import wordpunct_tokenize<br>
+            for sentence in documents:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print(wordpunct_tokenize(sentence))
+          </div>
+        </div>
+
+        <!-- 4. TreebankWordTokenizer -->
+        <div class="apple-dir-card" id="section-treebank" style="margin-bottom: 1.5rem;">
+          <div class="dir-card-header">
+            <span class="dir-pill" style="color: var(--color-document); border-color: var(--color-document-border);">Step 4: Penn Treebank Standard</span>
+            <span class="dir-mod">TreebankWordTokenizer()</span>
+          </div>
+          <h4 class="dir-title">Preserves Periods on Abbreviations & Standard Treebank Rules</h4>
+          <p class="dir-desc">
+            Conforms to the classic Penn Treebank tokenization standard. It treats words with fullstops as whole tokens (e.g. <code>Python.</code> or <code>U.S.A.</code>) and normalizes quotes.
+          </p>
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #c084fc; margin-top: 0.75rem;">
+            from nltk.tokenize import TreebankWordTokenizer<br>
+            tokenizer = TreebankWordTokenizer()<br>
+            tokenizer.tokenize(corpus)
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Bottom Next Navigation -->
+      <footer style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <a href="nltk.html" class="portal-card-btn btn-pillars" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>← Back to Unit 2 (NLTK Studio)</span>
+        </a>
+        <a href="stemming.html" class="portal-card-btn btn-nltk" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>Proceed to Unit 4: Stemming & Types 🌱</span>
+          <span>➔</span>
+        </a>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

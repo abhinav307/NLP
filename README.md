@@ -4,46 +4,57 @@ An interactive, visual, study-based platform for mastering fundamental Natural L
 
 ---
 
-## 🚀 Features & Modules
+## 🚀 Curriculum: 6 Complete Visual Units
 
-### 🏛️ Module 01: NLP Pillars (The 4 Core Foundations)
+### 🏛️ Unit 01: NLP Pillars (`study.html`)
+The 4 core foundations of NLP:
 - **Corpus = Paragraph:** The complete container holding all sentences.
-- **Document = Sentence:** Individual standalone communication units.
-- **Word = Token:** Discrete atomic tokens parsed and counted.
-- **Vocabulary = Unique Word:** The deduplicated distinct word set.
-- **Interactive Visual Conversion Pipeline:** Watch text convert stage-by-stage:
-  $$\text{Corpus (Paragraph)} \to \text{Document (Sentences)} \to \text{Word (Tokens)} \to \text{Vocabulary (Unique)}$$
+- **Document = Sentence:** Standalone communicative clauses.
+- **Word = Token:** Discrete atomic words.
+- **Vocabulary = Unique Word:** The deduplicated distinct vocabulary set.
+- **Live 4-Stage Conversion Pipeline:** Watch text convert stage-by-stage visually.
+
+### 🐍 Unit 02: NLTK Visual Studio (`nltk.html`)
+- Interactive NLTK Master Architecture & Tree Diagram.
+- Real-time client-side NLTK Simulator in-browser.
+- Quick Directory of core NLTK classes and functions.
+
+### ✂️ Unit 03: Tokenization Practice (`tokenization.html`)
+- Sourced from `tokenization Example using NLTK.ipynb`.
+- **sent_tokenize():** Paragraph ➔ Documents (Sentences).
+- **word_tokenize():** Sentence ➔ Words with contraction handling.
+- **wordpunct_tokenize():** Punctuation-based isolation.
+- **TreebankWordTokenizer():** Penn Treebank rules & trailing period handling.
+- **3-Way Benchmark Arena:** Side-by-side comparative live playground.
+
+### 🌱 Unit 04: Stemming & Its Types (`stemming.html`)
+- Sourced from `Stemming And its Types- Text Processing.ipynb`.
+- **PorterStemmer:** Rule-based suffix stripping (`sitting` 😘 vs. `congratulations` 😒).
+- **RegexpStemmer (`ing$|s$|e$|able$`, min=4):** Custom regex rules & edge cases (`table` ➔ `t` 😒, `sing` ➔ `s` 😒).
+- **SnowballStemmer (Porter2):** Improved English handling (`fairly` ➔ `fair`, `sportingly` ➔ `sport`).
+- **Live 3-Way Suffix Slicer Table:** Side-by-side comparison on 32 notebook words.
+
+### 🛑 Unit 05: Stopwords Preprocessing (`stopwords.html`)
+- Sourced from `Text Preprocessing-Stopwords with NLTK.ipynb`.
+- **Live Noise Reduction Dashboard:** Total raw tokens, stopwords filtered, and compression meter (~48% noise reduction).
+- **Preserved vs Filtered Chips:** Visual red/green word tags.
+- Multi-language stopword corpora exploration.
+
+### 📚 Unit 06: Lemmatization Processing (`lemmatization.html`)
+- Sourced from `Lemmatization- Text Processing.ipynb`.
+- **WordNetLemmatizer:** Authentic morphological dictionary roots.
+- **The 4 POS Tags:** Noun (`'n'`), Verb (`'v'`), Adjective (`'a'`), Adverb (`'r'`).
+- Multi-POS live matrix on irregular words (`going`, `better`, `wolves`, `flies`).
+- Real-world use cases: Q&A Systems, Conversational Chatbots, Text Summarization.
 
 ---
 
-### 🐍 Module 02: Python NLTK Library Masterclass
-Comprehensive documentation, code examples, and use cases for:
-- **Installation & Setup:** `pip install nltk` and `nltk.download()` best practices.
-- **Tokenization:** `word_tokenize()`, `sent_tokenize()`, and `RegexpTokenizer`.
-- **Corpora & Datasets:** `nltk.corpus` (Gutenberg, Brown, etc.).
-- **Stopwords Removal:** `nltk.corpus.stopwords.words('english')`.
-- **Stemming & Lemmatization:** `PorterStemmer` vs. `WordNetLemmatizer`.
-- **Frequency Distribution:** `FreqDist(tokens)` with vocabulary analysis.
-- **POS Tagging & NER:** `pos_tag()` and `ne_chunk()`.
-- **In-Browser Interactive NLTK Simulator:** Test NLTK operations live in client-side JavaScript.
-
----
-
-### 🧪 Module 03: Practice 1 — Hands-On NLP Practical Lab
-Direct visual companion to `NLP practice/NLP learning.ipynb`:
-- **Unit 1: Tokenizer Arena:** Benchmark `word_tokenize`, `wordpunct_tokenize`, and `TreebankWordTokenizer` on contractions, money, and abbreviations.
-- **Unit 2: Stemming Slicers:** Compare `PorterStemmer`, `SnowballStemmer`, and `RegexpStemmer` side-by-side.
-- **Unit 3: Stopword Noise Reducer:** Real-time data compression and noise reduction percentage meter.
-- **Unit 4: Lemmatizer with POS Tagging:** WordNet morphological dictionary lookups with Verb, Adjective, and Noun tags.
-- **Unit 5: Frequency Distribution & Vocabulary:** Interactive horizontal frequency distribution bars and Lexical Diversity calculation.
-- **Unit 6: Real-World Text Cleaner:** Practical production cleaning of messy customer reviews into clean machine learning features.
-
----
-
-## 📓 Jupyter Notebooks (`NLP practice/`)
-- `NLP practice/NLP learning.ipynb`: Interactive Jupyter practice notebook with Units 1 through 6 and pre-computed visual ASCII outputs.
-- `NLP practice/4-tokenization Example using NLTK.ipynb`: Tokenization and Stemming walkthroughs.
-- `NLP practice/5-Stemming and Lemmatization using NLTK.ipynb`: Dedicated Stemming and Lemmatization experiments.
+## 📓 User Notebook Practice Sources (`NLP practice/`)
+- `tokenization Example using NLTK.ipynb`: Tokenization practice source.
+- `Stemming And its Types- Text Processing.ipynb`: Stemming experiments source.
+- `Text Preprocessing-Stopwords with NLTK.ipynb`: Stopwords practice source.
+- `Lemmatization- Text Processing.ipynb`: WordNet Lemmatization source.
+*(Note: All `.ipynb` files are strictly read-only practice sources and remain untouched)*
 
 
 ---

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 4: Stemming & Its Types - Start NLP</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Global Navbar -->
+  <header class="top-navbar">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">📚</div>
+      <span>Start NLP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="study.html" class="nav-link">🏛️ Unit 1</a></li>
+      <li><a href="nltk.html" class="nav-link">🐍 Unit 2</a></li>
+      <li><a href="tokenization.html" class="nav-link">✂️ Unit 3</a></li>
+      <li><a href="stemming.html" class="nav-link active">🌱 Unit 4</a></li>
+      <li><a href="stopwords.html" class="nav-link">🛑 Unit 5</a></li>
+      <li><a href="lemmatization.html" class="nav-link">📚 Unit 6</a></li>
+    </ul>
+    <a href="stopwords.html" class="nav-cta-btn">
+      <span>Next: Unit 5 (Stopwords) 🛑</span>
+      <span>➔</span>
+    </a>
+  </header>
+
+  <!-- Upper Sub-headings Bar: Quick Click-to-Jump -->
+  <nav class="upper-subheadings-wrapper" aria-label="Unit 4 Subtopics">
+    <div class="upper-subheadings-title">⚡ Unit 4 Stemming Subtopics (Click to Jump):</div>
+    <div class="upper-subheadings-bar">
+      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('section-porter')">
+        <span>🌱 1. PorterStemmer</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Heuristic Suffix Slicing)</span>
+      </button>
+
+      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('section-regexp')">
+        <span>🛠️ 2. RegexpStemmer</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Custom Rules & min=4)</span>
+      </button>
+
+      <button class="subheading-btn" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);" onclick="scrollToSubtopic('section-snowball')">
+        <span>❄️ 3. SnowballStemmer</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Porter2 Improvements)</span>
+      </button>
+
+      <button class="subheading-btn btn-vocab" onclick="scrollToSubtopic('section-comparison-arena')">
+        <span>🔬 4. Live Suffix Arena</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Side-by-Side Slicer)</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Layout: Sidebar + Main Content -->
+  <div class="study-layout">
+    
+    <!-- Unified 6-Unit Left Sidebar -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">Course Units (6 Total)</div>
+      
+      <!-- Unit 1 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="study.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🏛️ Unit 1: NLP Pillars</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 2 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="nltk.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🐍 Unit 2: NLTK Studio</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 3 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="tokenization.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>✂️ Unit 3: Tokenization</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 4 (ACTIVE) -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <div class="topic-main-link">
+          <span>🌱 Unit 4: Stemming & Types</span>
+          <span class="topic-badge-active" style="background: rgba(52, 211, 153, 0.2); color: var(--color-word); border-color: rgba(52, 211, 153, 0.4);">Active</span>
+        </div>
+        <ul class="topic-sublist">
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-porter')">
+              <span>• PorterStemmer</span>
+              <span style="color:var(--color-corpus); font-size:0.72rem;">Heuristic</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-regexp')">
+              <span>• RegexpStemmer</span>
+              <span style="color:#c084fc; font-size:0.72rem;">Regex/min=4</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-snowball')">
+              <span>• SnowballStemmer</span>
+              <span style="color:var(--color-word); font-size:0.72rem;">Porter2</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-comparison-arena')">
+              <span>• Live Suffix Arena</span>
+              <span style="color:var(--color-vocab); font-size:0.72rem;">Live Test</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Unit 5 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="stopwords.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🛑 Unit 5: Stopwords Filter</span>
+          <span style="font-size: 0.72rem; color: #fb7185;">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 6 -->
+      <div class="topic-card-box" style="margin-bottom: 1.25rem;">
+        <a href="lemmatization.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>📚 Unit 6: Lemmatization</span>
+          <span style="font-size: 0.72rem; color: var(--color-document);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Notebook Source Badge -->
+      <div class="sidebar-category">Notebook Source</div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.85rem; font-size: 0.78rem;">
+        <div style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span>📓</span>
+          <span style="font-size: 0.72rem;">Stemming And its Types- Text Processing.ipynb</span>
+        </div>
+        <div style="color: var(--text-dim); line-height: 1.4; font-size: 0.72rem;">
+          Analyzed from your notebook. Interactive playground evaluates suffix stripping client-side without altering your files.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="study-content" style="padding: 2.25rem 2.5rem;">
+      
+      <!-- Hero Header -->
+      <header style="margin-bottom: 2rem;">
+        <div class="hero-badge" style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.3); color: #34d399;">
+          <span>🌱 Unit 04 • Text Processing & Suffix Stripping</span>
+        </div>
+        <h1 class="hero-title" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">
+          Unit 4: <span>Stemming & Its Types</span>
+        </h1>
+        <p class="hero-subtitle" style="max-width: 780px;">
+          Sourced directly from <code>Stemming And its Types- Text Processing.ipynb</code>. Explore rule-based heuristic suffix slicing, compare PorterStemmer vs SnowballStemmer vs RegexpStemmer, and inspect edge cases where stemmers over-stem or succeed!
+        </p>
+      </header>
+
+      <!-- Interactive Playground Canvas -->
+      <section class="apple-visual-canvas" id="section-comparison-arena">
+        
+        <div class="canvas-header">
+          <div class="canvas-title-group">
+            <span class="canvas-icon">✂️</span>
+            <div>
+              <h2 class="canvas-title">Stemming Slicers Live Arena</h2>
+              <p class="canvas-desc">
+                Live suffix stripping simulator. Enter any words below or select presets from your notebook.
+              </p>
+            </div>
+          </div>
+          <div class="canvas-badge">Unit 4 Live Simulator</div>
+        </div>
+
+        <!-- Presets Selection Bar -->
+        <div style="margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim);">
+            ⚡ Quick Word Banks:
+          </span>
+          <button class="preset-pill-btn" onclick="loadUnit4Preset('notebook')">
+            Notebook Word Bank (32 words)
+          </button>
+          <button class="preset-pill-btn" onclick="loadUnit4Preset('edgecases')">
+            Edge Cases (sitting, congratulations, sing, table)
+          </button>
+          <button class="preset-pill-btn" onclick="loadUnit4Preset('improvements')">
+            Snowball Improvements (fairly, sportingly, historical)
+          </button>
+        </div>
+
+        <!-- Input Box -->
+        <div class="canvas-input-wrapper" style="margin-top: 1.25rem;">
+          <label class="canvas-input-label" for="unit4-input">
+            <span>Enter space-separated or comma-separated words to stem:</span>
+            <span class="live-pulse-indicator">● Live Reactive</span>
+          </label>
+          <textarea 
+            id="unit4-input" 
+            class="canvas-textarea" 
+            rows="3" 
+            spellcheck="false"
+          >running runs ran runner easily fairly studies studying happy happier generously organization programming better wolves flies historical sitting congratulations</textarea>
+        </div>
+
+        <!-- Live Output Stage -->
+        <div id="unit4-visual-stage" style="margin-top: 1.75rem;">
+          <!-- Dynamically populated by updateUnit4Visuals() -->
+        </div>
+
+      </section>
+
+      <!-- Step-by-Step Educational Cards -->
+      <section style="margin-top: 3rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📖</span>
+          <span>Stemmer Types Deep Dive (From Your Notebook)</span>
+        </h3>
+
+        <!-- 1. PorterStemmer -->
+        <div class="apple-dir-card" id="section-porter" style="margin-bottom: 1.5rem;">
+          <div class="dir-card-header">
+            <span class="dir-pill" style="color: var(--color-corpus); border-color: var(--color-corpus-border);">Type 1: Heuristic Algorithm</span>
+            <span class="dir-mod">PorterStemmer</span>
+          </div>
+          <h4 class="dir-title">Classic 1980 Rule-Based Suffix Stripping</h4>
+          <p class="dir-desc">
+            Uses a sequence of hand-crafted cascading rules to chop off common English suffixes (<code>-ing</code>, <code>-ed</code>, <code>-ly</code>, <code>-es</code>, <code>-s</code>).
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.75rem; font-size: 0.8rem;">
+            <div style="background: rgba(52, 211, 153, 0.1); border-left: 3px solid #34d399; padding: 0.65rem 0.85rem; border-radius: 6px;">
+              <strong style="color: #34d399;">Where it succeeds:</strong><br>
+              <code>stemming.stem('sitting')</code> ➔ <code>'sit'</code> 😘
+            </div>
+            <div style="background: rgba(251, 113, 133, 0.1); border-left: 3px solid #fb7185; padding: 0.65rem 0.85rem; border-radius: 6px;">
+              <strong style="color: #fb7185;">Where it over-stems:</strong><br>
+              <code>stemming.stem('congratulations')</code> ➔ <code>'congratul'</code> 😒
+            </div>
+          </div>
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #38bdf8; margin-top: 0.75rem;">
+            from nltk.stem import PorterStemmer<br>
+            stemming = PorterStemmer()<br>
+            for i in words:<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;print(i + " -----> " + stemming.stem(i))
+          </div>
+        </div>
+
+        <!-- 2. RegexpStemmer -->
+        <div class="apple-dir-card" id="section-regexp" style="margin-bottom: 1.5rem;">
+          <div class="dir-card-header">
+            <span class="dir-pill" style="color: #c084fc; border-color: rgba(168, 85, 247, 0.4);">Type 2: Customizable Regex</span>
+            <span class="dir-mod">RegexpStemmer(pattern, min=4)</span>
+          </div>
+          <h4 class="dir-title">User-Defined Regex Rules with Length Guard (min=4)</h4>
+          <p class="dir-desc">
+            Allows full custom control over what suffixes to strip using regular expressions like <code>'ing$|s$|e$|able$'</code>. The <code>min=4</code> parameter prevents chopping short words.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem; margin-top: 0.75rem; font-size: 0.8rem;">
+            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 6px; border-left: 3px solid #34d399;">
+              <strong style="color: #34d399;">Clean Stripping:</strong><br>
+              <code>eating</code> ➔ <code>'eat'</code><br>
+              <code>cats</code> ➔ <code>'cat'</code><br>
+              <code>readable</code> ➔ <code>'read'</code>
+            </div>
+            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 6px; border-left: 3px solid #38bdf8;">
+              <strong style="color: #38bdf8;">min=4 Threshold:</strong><br>
+              <code>see</code> (len 3) ➔ <code>'see'</code> (protected)<br>
+              <code>runs</code> (len 4) ➔ <code>'run'</code>
+            </div>
+            <div style="background: rgba(0,0,0,0.25); padding: 0.65rem 0.85rem; border-radius: 6px; border-left: 3px solid #fb7185;">
+              <strong style="color: #fb7185;">Edge Cases:</strong><br>
+              <code>love</code> ➔ <code>'lov'</code> 😒<br>
+              <code>table</code> ➔ <code>'t'</code> 😒<br>
+              <code>sing</code> ➔ <code>'s'</code> 😒
+            </div>
+          </div>
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #c084fc; margin-top: 0.75rem;">
+            from nltk.stem import RegexpStemmer<br>
+            rex_stemmer = RegexpStemmer('ing$|s$|e$|able$', min=4)<br>
+            print(rex_stemmer.stem('eating'))   # 'eat'<br>
+            print(rex_stemmer.stem('readable')) # 'read'
+          </div>
+        </div>
+
+        <!-- 3. SnowballStemmer -->
+        <div class="apple-dir-card" id="section-snowball" style="margin-bottom: 1.5rem;">
+          <div class="dir-card-header">
+            <span class="dir-pill" style="color: var(--color-word); border-color: var(--color-word-border);">Type 3: Modern Algorithm</span>
+            <span class="dir-mod">SnowballStemmer ('english')</span>
+          </div>
+          <h4 class="dir-title">Porter2: Faster, Modern & Multi-Language</h4>
+          <p class="dir-desc">
+            Developed by Martin Porter to address known flaws in the original 1980 algorithm. Handles English irregularities better and supports 15+ languages.
+          </p>
+          <div style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 0.85rem; font-size: 0.8rem; margin-top: 0.75rem;">
+            <strong style="color: var(--color-corpus);">Where Snowball wins over Porter:</strong>
+            <ul style="margin: 0.4rem 0 0 1.25rem; line-height: 1.6; color: var(--text-muted);">
+              <li><code>fairly</code> ➔ Porter: <code>'fairli'</code> vs. <strong>Snowball: <code>'fair'</code></strong> ✅</li>
+              <li><code>sportingly</code> ➔ Porter: <code>'sportingli'</code> vs. <strong>Snowball: <code>'sport'</code></strong> ✅</li>
+              <li><code>historical</code> ➔ Porter: <code>'histor'</code> vs. <strong>Snowball: <code>'histori'</code></strong> ✅</li>
+            </ul>
+          </div>
+          <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.85rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: #34d399; margin-top: 0.75rem;">
+            from nltk.stem import SnowballStemmer<br>
+            snow_ball = SnowballStemmer('english')<br>
+            print(snow_ball.stem("fairly"))     # 'fair'<br>
+            print(snow_ball.stem("sportingly")) # 'sport'
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Bottom Next Navigation -->
+      <footer style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <a href="tokenization.html" class="portal-card-btn btn-pillars" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>← Back to Unit 3 (Tokenization)</span>
+        </a>
+        <a href="stopwords.html" class="portal-card-btn btn-nltk" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>Proceed to Unit 5: Stopwords 🛑</span>
+          <span>➔</span>
+        </a>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

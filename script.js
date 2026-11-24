@@ -1097,6 +1097,30 @@ document.addEventListener('DOMContentLoaded', () => {
     practiceInput.addEventListener('input', updatePracticeVisualStage);
     switchPracticeLab('tokenizer');
   }
+
+  // Initialize Unit 3 (Tokenization)
+  if (document.getElementById('unit3-input')) {
+    document.getElementById('unit3-input').addEventListener('input', updateUnit3Visuals);
+    updateUnit3Visuals();
+  }
+
+  // Initialize Unit 4 (Stemming)
+  if (document.getElementById('unit4-input')) {
+    document.getElementById('unit4-input').addEventListener('input', updateUnit4Visuals);
+    updateUnit4Visuals();
+  }
+
+  // Initialize Unit 5 (Stopwords)
+  if (document.getElementById('unit5-input')) {
+    document.getElementById('unit5-input').addEventListener('input', updateUnit5Visuals);
+    updateUnit5Visuals();
+  }
+
+  // Initialize Unit 6 (Lemmatization)
+  if (document.getElementById('unit6-input')) {
+    document.getElementById('unit6-input').addEventListener('input', updateUnit6Visuals);
+    updateUnit6Visuals();
+  }
 });
 
 /* =========================================================
@@ -1792,5 +1816,82 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+/* =========================================================
+   INDIVIDUAL UNIT HANDLERS (Units 3, 4, 5, 6)
+   ========================================================= */
+
+// Unit 3 (Tokenization)
+function updateUnit3Visuals() {
+  const inputEl = document.getElementById('unit3-input');
+  const stageEl = document.getElementById('unit3-visual-stage');
+  if (inputEl && stageEl) renderTokenizerArena(inputEl.value.trim(), stageEl);
+}
+function loadUnit3Preset(key) {
+  const inputEl = document.getElementById('unit3-input');
+  if (!inputEl) return;
+  if (key === 'contractions') inputEl.value = "Dr. Smith said: 'NLP isn't easy in 2026, but it's 100% worth it at $49.99/mo!' Can't wait.";
+  else if (key === 'abbrev') inputEl.value = "The U.S.A. and U.K. are developing Ph.D. level AI models. Isn't that fantastic?!";
+  else if (key === 'corpus') inputEl.value = "Hello! Welcome to Natural Language Processing (NLP) in Python. It's fascinating how computers learn to understand human languages, isn't it? In 2026, AI models are analyzing millions of texts—from emails to books—every single second. Running, ran, and runs all share the same root word, while words like \"better\" and \"good\" show how lemmatization works!";
+  updateUnit3Visuals();
+}
+
+// Unit 4 (Stemming)
+function updateUnit4Visuals() {
+  const inputEl = document.getElementById('unit4-input');
+  const stageEl = document.getElementById('unit4-visual-stage');
+  if (inputEl && stageEl) renderStemmingArena(inputEl.value.trim(), stageEl);
+}
+function loadUnit4Preset(key) {
+  const inputEl = document.getElementById('unit4-input');
+  if (!inputEl) return;
+  if (key === 'notebook') inputEl.value = "running runs ran runner easily fairly studies studying happy happier generously organization programming better wolves flies historical sitting congratulations";
+  else if (key === 'edgecases') inputEl.value = "sitting congratulations sing table love running cats readable see";
+  else if (key === 'improvements') inputEl.value = "fairly sportingly historical studied youngerly";
+  updateUnit4Visuals();
+}
+
+// Unit 5 (Stopwords)
+function updateUnit5Visuals() {
+  const inputEl = document.getElementById('unit5-input');
+  const stageEl = document.getElementById('unit5-visual-stage');
+  if (inputEl && stageEl) renderStopwordsDashboard(inputEl.value.trim(), stageEl);
+}
+function loadUnit5Preset(key) {
+  const inputEl = document.getElementById('unit5-input');
+  if (!inputEl) return;
+  if (key === 'review') inputEl.value = "WOWWW!! This NLP software version 3.2 is AMAZINGGG & super-fast! However, it crashed 2 times today on my MacBook... isn't that annoying? Can't wait for bug fixes.";
+  else if (key === 'science') inputEl.value = "Natural language processing is an essential subfield of artificial intelligence that empowers computers to parse, analyze, and comprehend human languages.";
+  else if (key === 'corpus') inputEl.value = "Hello! Welcome to Natural Language Processing (NLP) in Python. It's fascinating how computers learn to understand human languages, isn't it? In 2026, AI models are analyzing millions of texts—from emails to books—every single second. Running, ran, and runs all share the same root word, while words like \"better\" and \"good\" show how lemmatization works!";
+  updateUnit5Visuals();
+}
+
+// Unit 6 (Lemmatization)
+function updateUnit6Visuals() {
+  const inputEl = document.getElementById('unit6-input');
+  const stageEl = document.getElementById('unit6-visual-stage');
+  if (inputEl && stageEl) renderLemmatizerMatrix(inputEl.value.trim(), stageEl);
+}
+function loadUnit6Preset(key) {
+  const inputEl = document.getElementById('unit6-input');
+  if (!inputEl) return;
+  if (key === 'notebook') inputEl.value = "going goes running runs ran runner easily fairly studies studying studied happy happier generously organization programming better best good wolves flies historical";
+  else if (key === 'verbs') inputEl.value = "going goes running runs ran studied flying programs";
+  else if (key === 'adjectives') inputEl.value = "better best happier happy general historical worst";
+  updateUnit6Visuals();
+}
+
+// Global Copy Code Helper
+function copyCodeSnippet(codeId, btnEl) {
+  const codeEl = document.getElementById(codeId);
+  if (!codeEl) return;
+  navigator.clipboard.writeText(codeEl.textContent).then(() => {
+    if (btnEl) {
+      const orig = btnEl.innerHTML;
+      btnEl.innerHTML = "<span>✅ Copied to Clipboard!</span>";
+      setTimeout(() => { btnEl.innerHTML = orig; }, 2000);
+    }
+  });
 }
 

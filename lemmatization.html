@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit 6: Lemmatization Processing - Start NLP</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Global Navbar -->
+  <header class="top-navbar">
+    <a href="index.html" class="brand-logo">
+      <div class="brand-icon">📚</div>
+      <span>Start NLP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="study.html" class="nav-link">🏛️ Unit 1</a></li>
+      <li><a href="nltk.html" class="nav-link">🐍 Unit 2</a></li>
+      <li><a href="tokenization.html" class="nav-link">✂️ Unit 3</a></li>
+      <li><a href="stemming.html" class="nav-link">🌱 Unit 4</a></li>
+      <li><a href="stopwords.html" class="nav-link">🛑 Unit 5</a></li>
+      <li><a href="lemmatization.html" class="nav-link active">📚 Unit 6</a></li>
+    </ul>
+    <a href="index.html" class="nav-cta-btn">
+      <span>Course Completed! 🎉</span>
+      <span>★</span>
+    </a>
+  </header>
+
+  <!-- Upper Sub-headings Bar: Quick Click-to-Jump -->
+  <nav class="upper-subheadings-wrapper" aria-label="Unit 6 Subtopics">
+    <div class="upper-subheadings-title">⚡ Unit 6 Lemmatization Subtopics (Click to Jump):</div>
+    <div class="upper-subheadings-bar">
+      <button class="subheading-btn btn-corpus" onclick="scrollToSubtopic('section-why-lemma')">
+        <span>📚 1. WordNet vs Stemming</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Real Words)</span>
+      </button>
+
+      <button class="subheading-btn btn-word" onclick="scrollToSubtopic('section-pos-tags')">
+        <span>🏷️ 2. The 4 POS Tags</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(n, v, a, r)</span>
+      </button>
+
+      <button class="subheading-btn btn-document" onclick="scrollToSubtopic('section-use-cases')">
+        <span>💡 3. Key Use Cases</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Q&A, Chatbots)</span>
+      </button>
+
+      <button class="subheading-btn btn-vocab" onclick="scrollToSubtopic('section-pos-arena')">
+        <span>🔬 4. Live Multi-POS Matrix</span>
+        <span style="font-size:0.75rem; opacity:0.8;">(Interactive Table)</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Layout: Sidebar + Main Content -->
+  <div class="study-layout">
+    
+    <!-- Unified 6-Unit Left Sidebar -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">Course Units (6 Total)</div>
+      
+      <!-- Unit 1 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="study.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🏛️ Unit 1: NLP Pillars</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 2 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="nltk.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🐍 Unit 2: NLTK Studio</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 3 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="tokenization.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>✂️ Unit 3: Tokenization</span>
+          <span style="font-size: 0.72rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 4 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="stemming.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🌱 Unit 4: Stemming & Types</span>
+          <span style="font-size: 0.72rem; color: var(--color-word);">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 5 -->
+      <div class="topic-card-box" style="margin-bottom: 0.65rem;">
+        <a href="stopwords.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🛑 Unit 5: Stopwords Filter</span>
+          <span style="font-size: 0.72rem; color: #fb7185;">View ➔</span>
+        </a>
+      </div>
+
+      <!-- Unit 6 (ACTIVE) -->
+      <div class="topic-card-box" style="margin-bottom: 1.25rem;">
+        <div class="topic-main-link">
+          <span>📚 Unit 6: Lemmatization</span>
+          <span class="topic-badge-active" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border-color: rgba(168, 85, 247, 0.4);">Active</span>
+        </div>
+        <ul class="topic-sublist">
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-why-lemma')">
+              <span>• WordNet vs Stemming</span>
+              <span style="color:var(--color-document); font-size:0.72rem;">Theory</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-pos-tags')">
+              <span>• The 4 POS Tags</span>
+              <span style="color:#c084fc; font-size:0.72rem;">n, v, a, r</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-use-cases')">
+              <span>• Chatbots & Q&A</span>
+              <span style="color:var(--color-corpus); font-size:0.72rem;">Use Cases</span>
+            </a>
+          </li>
+          <li class="subtopic-item">
+            <a href="javascript:void(0)" onclick="scrollToSubtopic('section-pos-arena')">
+              <span>• Multi-POS Live Matrix</span>
+              <span style="color:var(--color-word); font-size:0.72rem;">Interactive</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Notebook Source Badge -->
+      <div class="sidebar-category">Notebook Source</div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.85rem; font-size: 0.78rem;">
+        <div style="color: var(--text-main); font-weight: 600; margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.4rem;">
+          <span>📓</span>
+          <span style="font-size: 0.72rem;">Lemmatization- Text Processing.ipynb</span>
+        </div>
+        <div style="color: var(--text-dim); line-height: 1.4; font-size: 0.72rem;">
+          Interactive lemmatization laboratory running client-side instant NLP without altering your files.
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="study-content" style="padding: 2.25rem 2.5rem;">
+      
+      <!-- Hero Header -->
+      <header style="margin-bottom: 2rem;">
+        <div class="hero-badge" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: #c084fc;">
+          <span>📚 Unit 06 • Morphological Lemmatization & POS</span>
+        </div>
+        <h1 class="hero-title" style="margin-top: 0.75rem; margin-bottom: 0.75rem;">
+          Unit 6: <span>Lemmatization Text Processing</span>
+        </h1>
+        <p class="hero-subtitle" style="max-width: 780px;">
+          Sourced directly from <code>Lemmatization- Text Processing.ipynb</code>. Unlike Stemming's crude suffix chopping, <strong>WordNetLemmatizer</strong> uses context and part of speech to return valid, legitimate dictionary root forms!
+        </p>
+      </header>
+
+      <!-- Key Use Cases Alert Box (From User's Notebook) -->
+      <section style="margin-bottom: 2rem;" id="section-use-cases">
+        <div style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 14px; padding: 1.25rem 1.5rem;">
+          <h3 style="font-size: 1rem; font-weight: 700; color: #c084fc; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>💡</span>
+            <span>Why Lemmatization? Primary Real-World Use Cases (From Notebook)</span>
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+            <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 1rem; border-radius: 8px; border-left: 3px solid #38bdf8;">
+              <strong style="color: #38bdf8; font-size: 0.9rem;">1. Question & Answering (Q&A)</strong>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem; line-height: 1.4;">
+                Matches user queries like <em>"Where was he running?"</em> to facts containing <em>"he runs"</em> by resolving both to the lemma <code>run</code>.
+              </p>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 1rem; border-radius: 8px; border-left: 3px solid #34d399;">
+              <strong style="color: #34d399; font-size: 0.9rem;">2. Conversational Chatbots</strong>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem; line-height: 1.4;">
+                Understands customer intent regardless of grammatical tense, pluralization, or irregular comparative forms (<code>better ➔ good</code>).
+              </p>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 0.85rem 1rem; border-radius: 8px; border-left: 3px solid #fb7185;">
+              <strong style="color: #fb7185; font-size: 0.9rem;">3. Text Summarization</strong>
+              <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.25rem; line-height: 1.4;">
+                Deduplicates diverse sentence clauses so frequency algorithms accurately tally genuine conceptual weight without distortion.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Playground Canvas -->
+      <section class="apple-visual-canvas" id="section-pos-arena">
+        
+        <div class="canvas-header">
+          <div class="canvas-title-group">
+            <span class="canvas-icon">🔬</span>
+            <div>
+              <h2 class="canvas-title">Multi-POS Lemmatization Matrix Arena</h2>
+              <p class="canvas-desc">
+                Observe how the same word transforms under different Part-of-Speech tags (Noun, Verb, Adjective, Adverb).
+              </p>
+            </div>
+          </div>
+          <div class="canvas-badge">Unit 6 Live Matrix</div>
+        </div>
+
+        <!-- Presets Selection Bar -->
+        <div style="margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-dim);">
+            ⚡ Quick Word Banks:
+          </span>
+          <button class="preset-pill-btn" onclick="loadUnit6Preset('notebook')">
+            Notebook 32 Words (running, flies, better...)
+          </button>
+          <button class="preset-pill-btn" onclick="loadUnit6Preset('verbs')">
+            Verbs & Irregulars (going, goes, ran, studied)
+          </button>
+          <button class="preset-pill-btn" onclick="loadUnit6Preset('adjectives')">
+            Adjectives & Adverbs (better, happier, best)
+          </button>
+        </div>
+
+        <!-- Input Box -->
+        <div class="canvas-input-wrapper" style="margin-top: 1.25rem;">
+          <label class="canvas-input-label" for="unit6-input">
+            <span>Enter space-separated words to evaluate with WordNetLemmatizer:</span>
+            <span class="live-pulse-indicator">● Live Reactive</span>
+          </label>
+          <textarea 
+            id="unit6-input" 
+            class="canvas-textarea" 
+            rows="3" 
+            spellcheck="false"
+          >going goes running runs ran runner easily fairly studies studying studied happy happier generously organization programming better best good wolves flies historical</textarea>
+        </div>
+
+        <!-- Live Output Stage -->
+        <div id="unit6-visual-stage" style="margin-top: 1.75rem;">
+          <!-- Dynamically populated by updateUnit6Visuals() -->
+        </div>
+
+      </section>
+
+      <!-- Educational Breakdown -->
+      <section style="margin-top: 3rem;" id="section-pos-tags">
+        <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>📖</span>
+          <span>The 4 Core Part-of-Speech (POS) Tags in NLTK</span>
+        </h3>
+
+        <div class="apple-directory-grid">
+          
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: var(--color-corpus); border-color: var(--color-corpus-border);">POS Code: 'n'</span>
+              <span class="dir-mod">Default Tag</span>
+            </div>
+            <h4 class="dir-title">Noun (n)</h4>
+            <p class="dir-desc">
+              Handles pluralization and irregular plurals. If no POS argument is passed, WordNet defaults to Noun!
+            </p>
+            <div style="font-size: 0.78rem; color: var(--color-corpus); font-family: 'JetBrains Mono', monospace; margin-top: 0.5rem;">
+              lemmatize("wolves", pos='n') ➔ "wolf"<br>
+              lemmatize("corpora", pos='n') ➔ "corpus"
+            </div>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: var(--color-word); border-color: var(--color-word-border);">POS Code: 'v'</span>
+              <span class="dir-mod">Action Roots</span>
+            </div>
+            <h4 class="dir-title">Verb (v)</h4>
+            <p class="dir-desc">
+              Restores inflected past tense, gerunds, and third-person conjugations into base infinitives.
+            </p>
+            <div style="font-size: 0.78rem; color: var(--color-word); font-family: 'JetBrains Mono', monospace; margin-top: 0.5rem;">
+              lemmatize("going", pos='v') ➔ "go"<br>
+              lemmatize("goes", pos='v') ➔ "go"<br>
+              lemmatize("ran", pos='v') ➔ "run"
+            </div>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: #fb7185; border-color: rgba(251, 113, 133, 0.3);">POS Code: 'a'</span>
+              <span class="dir-mod">Descriptors</span>
+            </div>
+            <h4 class="dir-title">Adjective (a)</h4>
+            <p class="dir-desc">
+              Reduces comparative and superlative adjective degrees to their positive base root.
+            </p>
+            <div style="font-size: 0.78rem; color: #fb7185; font-family: 'JetBrains Mono', monospace; margin-top: 0.5rem;">
+              lemmatize("better", pos='a') ➔ "good"<br>
+              lemmatize("happier", pos='a') ➔ "happy"<br>
+              lemmatize("worst", pos='a') ➔ "bad"
+            </div>
+          </div>
+
+          <div class="apple-dir-card">
+            <div class="dir-card-header">
+              <span class="dir-pill" style="color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">POS Code: 'r'</span>
+              <span class="dir-mod">Modifiers</span>
+            </div>
+            <h4 class="dir-title">Adverb (r)</h4>
+            <p class="dir-desc">
+              Handles irregular adverbs like <em>better</em> in an adverbial context, converting to <code>well</code>.
+            </p>
+            <div style="font-size: 0.78rem; color: #f59e0b; font-family: 'JetBrains Mono', monospace; margin-top: 0.5rem;">
+              lemmatize("better", pos='r') ➔ "well"<br>
+              lemmatize("fairly", pos='r') ➔ "fairly"
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Python Code Drawer -->
+        <div class="apple-code-drawer" style="margin-top: 2rem;">
+          <div class="code-drawer-header">
+            <div class="code-header-left">
+              <span class="code-lang-tag">Python 3.12 NLTK</span>
+              <span class="code-source-tag">Source: Lemmatization- Text Processing.ipynb</span>
+            </div>
+            <button class="copy-code-btn" onclick="copyCodeSnippet('code-lemma-snippet', this)">
+              <span>📋 Copy Python Code</span>
+            </button>
+          </div>
+          <pre class="code-pre"><code id="code-lemma-snippet" class="code-block">from nltk.stem import WordNetLemmatizer
+
+lemmatizer = WordNetLemmatizer()
+
+# Demonstration of POS Tags on "going":
+print("going (noun)      ----->", lemmatizer.lemmatize("going", pos='n')) # going
+print("going (verb)      ----->", lemmatizer.lemmatize("going", pos='v')) # go
+print("going (adjective) ----->", lemmatizer.lemmatize("going", pos='a')) # going
+print("going (adverb)    ----->", lemmatizer.lemmatize("going", pos='r')) # going
+
+# Irregular forms:
+print("goes   (verb)     ----->", lemmatizer.lemmatize("goes", pos='v'))   # go
+print("better (adjective)----->", lemmatizer.lemmatize("better", pos='a')) # good
+print("better (adverb)   ----->", lemmatizer.lemmatize("better", pos='r')) # well
+print("wolves (noun)     ----->", lemmatizer.lemmatize("wolves", pos='n')) # wolf</code></pre>
+        </div>
+
+      </section>
+
+      <!-- Bottom Next Navigation -->
+      <footer style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <a href="stopwords.html" class="portal-card-btn btn-pillars" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>← Back to Unit 5 (Stopwords)</span>
+        </a>
+        <a href="index.html" class="portal-card-btn btn-nltk" style="margin: 0; width: auto; padding: 0.85rem 1.5rem;">
+          <span>Complete Course Overview (Home) 🏛️</span>
+          <span>➔</span>
+        </a>
+      </footer>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
