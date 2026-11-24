@@ -629,6 +629,31 @@ a {
   background: rgba(56, 189, 248, 0.15);
 }
 
+.sidebar-mode-item.active a {
+  font-weight: 700;
+  color: #fff;
+}
+.sidebar-mode-item[data-mode="token"].active a {
+  background: rgba(56, 189, 248, 0.15);
+  border-left: 3px solid var(--color-corpus);
+}
+.sidebar-mode-item[data-mode="stopwords"].active a {
+  background: rgba(244, 63, 94, 0.15);
+  border-left: 3px solid #fb7185;
+}
+.sidebar-mode-item[data-mode="stem"].active a {
+  background: rgba(52, 211, 153, 0.15);
+  border-left: 3px solid var(--color-word);
+}
+.sidebar-mode-item[data-mode="lemma"].active a {
+  background: rgba(192, 132, 252, 0.15);
+  border-left: 3px solid var(--color-document);
+}
+.sidebar-mode-item[data-mode="freq"].active a {
+  background: rgba(251, 191, 36, 0.15);
+  border-left: 3px solid var(--color-vocab);
+}
+
 .sidebar-footer-note {
   margin-top: auto;
   padding-top: 1.25rem;

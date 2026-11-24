@@ -27,216 +27,300 @@
     </a>
   </header>
 
-  <!-- Main Content Layout (Clean, Centered, Apple Aesthetic) -->
-  <main class="study-content" style="max-width: 1160px; margin: 0 auto; padding: 2.5rem 2rem;">
+  <!-- Multi-page Layout with Left Sidebar -->
+  <div class="study-layout">
     
-    <!-- Hero Header -->
-    <header style="text-align: center; margin-bottom: 2.5rem;">
-      <div class="hero-badge" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
-        <span>✨ Interactive NLP Studio</span>
-      </div>
-      <h1 style="font-size: 3.2rem; font-weight: 800; letter-spacing: -0.03em; margin: 0.5rem 0 1rem 0;">
-        NLTK <span style="background: linear-gradient(135deg, #38bdf8, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Visual Studio</span>
-      </h1>
-      <p style="color: var(--text-muted); font-size: 1.15rem; max-width: 680px; margin: 0 auto;">
-        See how human text transforms in Python — visual, interactive, zero walls of text. Click any mode below to see it live.
-      </p>
-    </header>
-
-    <!-- Quick Apple Install Strip -->
-    <div class="apple-install-banner">
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <span style="font-size: 1.2rem;">📦</span>
-        <div>
-          <strong style="font-size: 0.95rem; color: #fff;">Quick Setup</strong>
-          <span style="display: block; font-size: 0.8rem; color: var(--text-dim);">One-line terminal installation for Python</span>
-        </div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
-        <code class="install-command-chip">pip install nltk</code>
-        <code class="install-command-chip">nltk.download('punkt')</code>
-      </div>
-    </div>
-
-    <!-- =========================================================
-         THE CORE ATTRACTION: APPLE-STYLE VISUAL STUDIO
-         ========================================================= -->
-    <section class="apple-studio-wrapper">
+    <!-- Left Sidebar: Content Control & Mode Switching -->
+    <aside class="study-sidebar">
+      <div class="sidebar-category">NLP Topics</div>
       
-      <!-- Segmented Pill Selector (Apple Style) -->
-      <nav class="apple-segmented-control" aria-label="NLTK Visual Tools">
-        <button class="apple-segment-pill active pill-token" data-mode="token" onclick="switchAppleMode('token')">
-          <span>✂️ Tokenize</span>
-        </button>
-        <button class="apple-segment-pill" data-mode="stopwords" onclick="switchAppleMode('stopwords')">
-          <span>🛑 Stopwords</span>
-        </button>
-        <button class="apple-segment-pill" data-mode="stem" onclick="switchAppleMode('stem')">
-          <span>🌱 Stemming</span>
-        </button>
-        <button class="apple-segment-pill" data-mode="lemma" onclick="switchAppleMode('lemma')">
-          <span>📚 Lemmatize</span>
-        </button>
-        <button class="apple-segment-pill" data-mode="freq" onclick="switchAppleMode('freq')">
-          <span>📊 FreqDist</span>
-        </button>
-      </nav>
+      <!-- Topic 1: NLP Pillars Link -->
+      <div class="topic-card-box" style="margin-bottom: 1.25rem;">
+        <a href="study.html" class="topic-main-link" style="color: var(--text-muted);">
+          <span>🏛️ Topic 1: NLP Pillars</span>
+          <span style="font-size: 0.75rem; color: var(--color-corpus);">View ➔</span>
+        </a>
+      </div>
 
-      <!-- The Main Interactive Studio Stage Card -->
-      <div class="apple-studio-card">
+      <!-- Topic 2: NLTK Visual Studio (Active) -->
+      <div class="topic-card-box">
+        <div class="topic-main-link">
+          <span>🐍 Topic 2: NLTK Studio</span>
+          <span class="topic-badge-active">Active</span>
+        </div>
         
-        <!-- Studio Header -->
-        <div class="studio-top-bar">
-          <div class="studio-mode-title" id="apple-studio-title" style="color: #fff;">
-            ✂️ Visual Tokenizer
-          </div>
-          <span class="studio-rule-badge" id="apple-studio-badge" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">
-            Paragraph ➔ Sentences ➔ Words
-          </span>
+        <!-- Sidebar Mode Controls -->
+        <div style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 0.85rem 0 0.45rem 0.5rem; font-weight: 700;">
+          Content Controls
         </div>
+        <ul class="topic-sublist">
+          <li class="subtopic-item sidebar-mode-item active" data-mode="token">
+            <a href="javascript:void(0)" onclick="switchAppleMode('token')">
+              <span>✂️ 1. Tokenize</span>
+              <span class="item-badge" style="color: var(--color-corpus);">sent/word</span>
+            </a>
+          </li>
+          <li class="subtopic-item sidebar-mode-item" data-mode="stopwords">
+            <a href="javascript:void(0)" onclick="switchAppleMode('stopwords')">
+              <span>🛑 2. Stopwords</span>
+              <span class="item-badge" style="color: #fb7185;">filter</span>
+            </a>
+          </li>
+          <li class="subtopic-item sidebar-mode-item" data-mode="stem">
+            <a href="javascript:void(0)" onclick="switchAppleMode('stem')">
+              <span>🌱 3. Stemming</span>
+              <span class="item-badge" style="color: var(--color-word);">slicer</span>
+            </a>
+          </li>
+          <li class="subtopic-item sidebar-mode-item" data-mode="lemma">
+            <a href="javascript:void(0)" onclick="switchAppleMode('lemma')">
+              <span>📚 4. Lemmatize</span>
+              <span class="item-badge" style="color: var(--color-document);">roots</span>
+            </a>
+          </li>
+          <li class="subtopic-item sidebar-mode-item" data-mode="freq">
+            <a href="javascript:void(0)" onclick="switchAppleMode('freq')">
+              <span>📊 5. FreqDist</span>
+              <span class="item-badge" style="color: var(--color-vocab);">bars</span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-        <!-- Live Reactive Input Field -->
-        <div class="apple-input-container">
-          <div class="apple-input-label">
-            <span id="apple-studio-label">Input text to break into sentences and tokens:</span>
-            <span style="color: #38bdf8; font-size: 0.8rem; font-weight: 700;">⚡ Live Reactive</span>
-          </div>
-          <textarea 
-            id="apple-studio-input" 
-            class="apple-textarea" 
-            placeholder="Type your text here..."
-          >Natural Language Processing with NLTK is fascinating! Computers learn to understand human languages easily.</textarea>
+      <!-- Quick Section Jump Links -->
+      <div class="sidebar-category" style="margin-top: 1.5rem;">Quick Access</div>
+      <ul class="topic-sublist" style="border-left: none; padding-left: 0;">
+        <li class="subtopic-item">
+          <a href="javascript:void(0)" onclick="scrollToSubtopic('quick-setup-banner')">
+            <span>📦 Setup & Install</span>
+          </a>
+        </li>
+        <li class="subtopic-item">
+          <a href="javascript:void(0)" onclick="scrollToSubtopic('nltk-quick-directory')">
+            <span>🏛️ Library Directory</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer-note">
+        <strong>⚡ Sidebar Control</strong>
+        <p style="margin-top: 0.35rem; line-height: 1.4;">
+          Select any tool on the left to switch and control the visual transformation stage live.
+        </p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area: Visual Studio -->
+    <main class="study-content" style="padding: 2.25rem 2.5rem;">
+      
+      <!-- Hero Header -->
+      <header style="margin-bottom: 2rem;">
+        <div class="hero-badge" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8;">
+          <span>✨ Interactive NLP Studio</span>
         </div>
+        <h1 style="font-size: 2.7rem; font-weight: 800; letter-spacing: -0.03em; margin: 0.35rem 0 0.5rem 0;">
+          NLTK <span style="background: linear-gradient(135deg, #38bdf8, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Visual Studio</span>
+        </h1>
+        <p style="color: var(--text-muted); font-size: 1.05rem;">
+          Control content from the left sidebar or click the segmented buttons to see live transformations.
+        </p>
+      </header>
 
-        <!-- Visual Transformation Stage (Before ➔ After) -->
-        <div class="visual-transformation-canvas">
-          <div class="canvas-step-title">
-            <span>✨ Live Visual Output:</span>
-          </div>
-          <div id="apple-canvas-content">
-            <!-- Dynamically populated by JS with visual chips, cards, and bar charts -->
+      <!-- Quick Apple Install Strip -->
+      <div class="apple-install-banner" id="quick-setup-banner">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="font-size: 1.2rem;">📦</span>
+          <div>
+            <strong style="font-size: 0.95rem; color: #fff;">Quick Setup</strong>
+            <span style="display: block; font-size: 0.8rem; color: var(--text-dim);">One-line terminal installation for Python</span>
           </div>
         </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+          <code class="install-command-chip">pip install nltk</code>
+          <code class="install-command-chip">nltk.download('punkt')</code>
+        </div>
+      </div>
 
-        <!-- Apple Minimalist Code Drawer -->
-        <div class="apple-code-drawer">
-          <div class="code-drawer-header">
-            <span>🐍 Python Code (Run in your script or notebook):</span>
-            <button id="apple-copy-btn" class="copy-pill-btn" onclick="copyAppleCode()">Copy Code</button>
+      <!-- =========================================================
+           THE CORE ATTRACTION: APPLE-STYLE VISUAL STUDIO
+           ========================================================= -->
+      <section class="apple-studio-wrapper">
+        
+        <!-- Segmented Pill Selector (Apple Style) -->
+        <nav class="apple-segmented-control" aria-label="NLTK Visual Tools">
+          <button class="apple-segment-pill active pill-token" data-mode="token" onclick="switchAppleMode('token')">
+            <span>✂️ Tokenize</span>
+          </button>
+          <button class="apple-segment-pill" data-mode="stopwords" onclick="switchAppleMode('stopwords')">
+            <span>🛑 Stopwords</span>
+          </button>
+          <button class="apple-segment-pill" data-mode="stem" onclick="switchAppleMode('stem')">
+            <span>🌱 Stemming</span>
+          </button>
+          <button class="apple-segment-pill" data-mode="lemma" onclick="switchAppleMode('lemma')">
+            <span>📚 Lemmatize</span>
+          </button>
+          <button class="apple-segment-pill" data-mode="freq" onclick="switchAppleMode('freq')">
+            <span>📊 FreqDist</span>
+          </button>
+        </nav>
+
+        <!-- The Main Interactive Studio Stage Card -->
+        <div class="apple-studio-card">
+          
+          <!-- Studio Header -->
+          <div class="studio-top-bar">
+            <div class="studio-mode-title" id="apple-studio-title" style="color: #fff;">
+              ✂️ Visual Tokenizer
+            </div>
+            <span class="studio-rule-badge" id="apple-studio-badge" style="background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);">
+              Paragraph ➔ Sentences ➔ Words
+            </span>
           </div>
-          <pre id="apple-code-snippet" class="minimal-python-code">from nltk.tokenize import sent_tokenize, word_tokenize
+
+          <!-- Live Reactive Input Field -->
+          <div class="apple-input-container">
+            <div class="apple-input-label">
+              <span id="apple-studio-label">Input text to break into sentences and tokens:</span>
+              <span style="color: #38bdf8; font-size: 0.8rem; font-weight: 700;">⚡ Live Reactive</span>
+            </div>
+            <textarea 
+              id="apple-studio-input" 
+              class="apple-textarea" 
+              placeholder="Type your text here..."
+            >Natural Language Processing with NLTK is fascinating! Computers learn to understand human languages easily.</textarea>
+          </div>
+
+          <!-- Visual Transformation Stage (Before ➔ After) -->
+          <div class="visual-transformation-canvas">
+            <div class="canvas-step-title">
+              <span>✨ Live Visual Output:</span>
+            </div>
+            <div id="apple-canvas-content">
+              <!-- Dynamically populated by JS with visual chips, cards, and bar charts -->
+            </div>
+          </div>
+
+          <!-- Apple Minimalist Code Drawer -->
+          <div class="apple-code-drawer">
+            <div class="code-drawer-header">
+              <span>🐍 Python Code (Run in your script or notebook):</span>
+              <button id="apple-copy-btn" class="copy-pill-btn" onclick="copyAppleCode()">Copy Code</button>
+            </div>
+            <pre id="apple-code-snippet" class="minimal-python-code">from nltk.tokenize import sent_tokenize, word_tokenize
 
 sentences = sent_tokenize(text)
 words = [word_tokenize(s) for s in sentences]</pre>
+          </div>
+
         </div>
 
-      </div>
+      </section>
 
-    </section>
-
-    <!-- =========================================================
-         INTERACTIVE NLTK ARCHITECTURE DIRECTORY (APPLE GRID)
-         ========================================================= -->
-    <section style="margin-bottom: 4rem;">
-      <div style="text-align: center; margin-bottom: 2rem;">
-        <h2 style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em;">
-          🏛️ NLTK Library Quick Directory
-        </h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">
-          Click any tool below to load its interactive visualizer directly in the studio above:
-        </p>
-      </div>
-
-      <div class="tree-branches-grid">
-        
-        <!-- Module 1: Tokenize -->
-        <div class="tree-branch-card" style="border-top: 3px solid var(--color-corpus); cursor: pointer;" onclick="switchAppleMode('token')">
-          <div class="branch-header">
-            <span class="branch-name" style="color: var(--color-corpus);">✂️ nltk.tokenize</span>
-            <span class="branch-role">Tokenization</span>
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
-            Breaks continuous text into structured sentences and word token chips.
+      <!-- =========================================================
+           INTERACTIVE NLTK ARCHITECTURE DIRECTORY (APPLE GRID)
+           ========================================================= -->
+      <section id="nltk-quick-directory" style="margin-bottom: 3.5rem;">
+        <div style="margin-bottom: 1.5rem;">
+          <h2 style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em;">
+            🏛️ NLTK Library Quick Directory
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">
+            Click any module below to activate that tool in the visual studio above:
           </p>
-          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-            <span class="token-chip" style="font-size:0.75rem;">word_tokenize()</span>
-            <span class="token-chip" style="font-size:0.75rem;">sent_tokenize()</span>
-          </div>
         </div>
 
-        <!-- Module 2: Stopwords -->
-        <div class="tree-branch-card" style="border-top: 3px solid #fb7185; cursor: pointer;" onclick="switchAppleMode('stopwords')">
-          <div class="branch-header">
-            <span class="branch-name" style="color: #fb7185;">🛑 nltk.corpus.stopwords</span>
-            <span class="branch-role">Noise Removal</span>
+        <div class="tree-branches-grid">
+          
+          <!-- Module 1: Tokenize -->
+          <div class="tree-branch-card" style="border-top: 3px solid var(--color-corpus); cursor: pointer;" onclick="switchAppleMode('token')">
+            <div class="branch-header">
+              <span class="branch-name" style="color: var(--color-corpus);">✂️ nltk.tokenize</span>
+              <span class="branch-role">Tokenization</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+              Breaks continuous text into structured sentences and word token chips.
+            </p>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <span class="token-chip" style="font-size:0.75rem;">word_tokenize()</span>
+              <span class="token-chip" style="font-size:0.75rem;">sent_tokenize()</span>
+            </div>
           </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
-            Eliminates high-frequency filler words (is, the, with) to focus on key concepts.
-          </p>
-          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-            <span class="token-chip" style="font-size:0.75rem; border-color:#fb7185; color:#fb7185;">stopwords.words('english')</span>
+
+          <!-- Module 2: Stopwords -->
+          <div class="tree-branch-card" style="border-top: 3px solid #fb7185; cursor: pointer;" onclick="switchAppleMode('stopwords')">
+            <div class="branch-header">
+              <span class="branch-name" style="color: #fb7185;">🛑 nltk.corpus.stopwords</span>
+              <span class="branch-role">Noise Removal</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+              Eliminates high-frequency filler words (is, the, with) to focus on key concepts.
+            </p>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <span class="token-chip" style="font-size:0.75rem; border-color:#fb7185; color:#fb7185;">stopwords.words('english')</span>
+            </div>
           </div>
+
+          <!-- Module 3: Stem -->
+          <div class="tree-branch-card" style="border-top: 3px solid var(--color-word); cursor: pointer;" onclick="switchAppleMode('stem')">
+            <div class="branch-header">
+              <span class="branch-name" style="color: var(--color-word);">🌱 nltk.stem</span>
+              <span class="branch-role">Stemming</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+              Chops off prefixes and suffixes using rule-based heuristics (Porter & Snowball).
+            </p>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <span class="token-chip" style="font-size:0.75rem;">PorterStemmer</span>
+              <span class="token-chip" style="font-size:0.75rem;">SnowballStemmer</span>
+            </div>
+          </div>
+
+          <!-- Module 4: Lemmatize -->
+          <div class="tree-branch-card" style="border-top: 3px solid var(--color-document); cursor: pointer;" onclick="switchAppleMode('lemma')">
+            <div class="branch-header">
+              <span class="branch-name" style="color: var(--color-document);">📚 nltk.stem.wordnet</span>
+              <span class="branch-role">Dictionary Roots</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+              Consults WordNet dictionary to extract true grammatical root words (better ➔ good).
+            </p>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <span class="token-chip" style="font-size:0.75rem; border-color:var(--color-document); color:var(--color-document);">WordNetLemmatizer</span>
+            </div>
+          </div>
+
+          <!-- Module 5: FreqDist -->
+          <div class="tree-branch-card" style="border-top: 3px solid var(--color-vocab); cursor: pointer;" onclick="switchAppleMode('freq')">
+            <div class="branch-header">
+              <span class="branch-name" style="color: var(--color-vocab);">📊 nltk.probability</span>
+              <span class="branch-role">Keyword Frequency</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
+              Counts word occurrences and ranks top keywords with visual frequency bars.
+            </p>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <span class="token-chip" style="font-size:0.75rem; border-color:var(--color-vocab); color:var(--color-vocab);">FreqDist()</span>
+            </div>
+          </div>
+
         </div>
+      </section>
 
-        <!-- Module 3: Stem -->
-        <div class="tree-branch-card" style="border-top: 3px solid var(--color-word); cursor: pointer;" onclick="switchAppleMode('stem')">
-          <div class="branch-header">
-            <span class="branch-name" style="color: var(--color-word);">🌱 nltk.stem</span>
-            <span class="branch-role">Stemming</span>
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
-            Chops off prefixes and suffixes using rule-based heuristics (Porter & Snowball).
-          </p>
-          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-            <span class="token-chip" style="font-size:0.75rem;">PorterStemmer</span>
-            <span class="token-chip" style="font-size:0.75rem;">SnowballStemmer</span>
-          </div>
-        </div>
+      <!-- Footer Navigation (Apple Minimalist) -->
+      <footer class="page-nav-footer">
+        <a href="study.html" class="nav-pager-link prev">
+          <span class="nav-pager-sub">Previous Module</span>
+          <span class="nav-pager-title">← 🏛️ NLP Pillars</span>
+        </a>
+        <a href="index.html" class="nav-pager-link next">
+          <span class="nav-pager-sub">Home Portal</span>
+          <span class="nav-pager-title">Start NLP Home ➔</span>
+        </a>
+      </footer>
 
-        <!-- Module 4: Lemmatize -->
-        <div class="tree-branch-card" style="border-top: 3px solid var(--color-document); cursor: pointer;" onclick="switchAppleMode('lemma')">
-          <div class="branch-header">
-            <span class="branch-name" style="color: var(--color-document);">📚 nltk.stem.wordnet</span>
-            <span class="branch-role">Dictionary Roots</span>
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
-            Consults WordNet dictionary to extract true grammatical root words (better ➔ good).
-          </p>
-          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-            <span class="token-chip" style="font-size:0.75rem; border-color:var(--color-document); color:var(--color-document);">WordNetLemmatizer</span>
-          </div>
-        </div>
-
-        <!-- Module 5: FreqDist -->
-        <div class="tree-branch-card" style="border-top: 3px solid var(--color-vocab); cursor: pointer;" onclick="switchAppleMode('freq')">
-          <div class="branch-header">
-            <span class="branch-name" style="color: var(--color-vocab);">📊 nltk.probability</span>
-            <span class="branch-role">Keyword Frequency</span>
-          </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.85rem;">
-            Counts word occurrences and ranks top keywords with visual frequency bars.
-          </p>
-          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-            <span class="token-chip" style="font-size:0.75rem; border-color:var(--color-vocab); color:var(--color-vocab);">FreqDist()</span>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Footer Navigation (Apple Minimalist) -->
-    <footer class="page-nav-footer" style="margin-top: 2rem;">
-      <a href="study.html" class="nav-pager-link prev">
-        <span class="nav-pager-sub">Previous Module</span>
-        <span class="nav-pager-title">← 🏛️ NLP Pillars</span>
-      </a>
-      <a href="index.html" class="nav-pager-link next">
-        <span class="nav-pager-sub">Home Portal</span>
-        <span class="nav-pager-title">Start NLP Home ➔</span>
-      </a>
-    </footer>
-
-  </main>
+    </main>
+  </div>
 
   <script src="script.js"></script>
 </body>

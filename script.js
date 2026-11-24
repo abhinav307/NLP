@@ -663,6 +663,15 @@ function switchAppleMode(mode) {
     }
   });
 
+  // Synchronize Left Sidebar Mode Items
+  const sideItems = document.querySelectorAll('.sidebar-mode-item');
+  sideItems.forEach(item => {
+    item.classList.remove('active');
+    if (item.getAttribute('data-mode') === mode) {
+      item.classList.add('active');
+    }
+  });
+
   const info = APPLE_MODE_INFO[mode];
   const titleEl = document.getElementById('apple-studio-title');
   const badgeEl = document.getElementById('apple-studio-badge');
