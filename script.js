@@ -1117,15 +1117,25 @@ const PRACTICE_LAB_CONFIGS = {
     title: "Tokenizer Arena: The Benchmark Showdown",
     desc: "Comparing word_tokenize, wordpunct_tokenize, and TreebankWordTokenizer on real-world tricky contractions, money, and abbreviations.",
     badge: "Unit 1 Practice",
-    code: `# Unit 1 Practice: Benchmark Tokenizers on Tricky Edge Cases
+    code: `# Unit 1: Tokenization (Sourced from tokenization Example using NLTK.ipynb)
 from nltk.tokenize import sent_tokenize, word_tokenize, wordpunct_tokenize, TreebankWordTokenizer
 
-sample_text = "Dr. Smith said: 'NLP isn't easy in 2026, but it's 100% worth it at $49.99/mo!' Can't wait."
+# 1. Sentence Tokenization (Paragraph ➔ Documents)
+documents = sent_tokenize(corpus)
+for sentence in documents:
+    print(sentence)
 
-tb = TreebankWordTokenizer()
-print("word_tokenize:      ", word_tokenize(sample_text))
-print("wordpunct_tokenize: ", wordpunct_tokenize(sample_text))
-print("TreebankTokenizer:  ", tb.tokenize(sample_text))`
+# 2. Word Tokenization (Document ➔ Words)
+for sentence in documents:
+    print("word_tokenize:      ", word_tokenize(sentence))
+
+# 3. WordPunct Tokenization (Separates punctuation & quotes)
+for sentence in documents:
+    print("wordpunct_tokenize: ", wordpunct_tokenize(sentence))
+
+# 4. TreebankWordTokenizer (Penn Treebank Rules)
+tokenizer = TreebankWordTokenizer()
+print("Treebank:           ", tokenizer.tokenize(corpus))`
   },
   stemming: {
     icon: "✂️",
@@ -1305,6 +1315,10 @@ function updatePracticeVisualStage() {
 
 // 1. Tokenizer Arena Renderer
 function renderTokenizerArena(text, container) {
+  // Simulate sent_tokenize (Sentence boundary detection)
+  let sentMatches = text.match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g) || [];
+  let sentTok = sentMatches.map(s => s.trim()).filter(s => s.length > 0);
+
   // Simulate word_tokenize (splits contractions standard NLTK style)
   let wordTok = text
     .replace(/n't\b/gi, " n't")
@@ -1325,8 +1339,31 @@ function renderTokenizerArena(text, container) {
     .match(/\b[\w$]+(?:\.\d+)?\.?|n't|'[a-z]+|[.,!?;:()]/gi) || [];
 
   container.innerHTML = `
-    <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.85rem;">
-      Live side-by-side comparison of 3 tokenizers on the exact same string:
+    <!-- Step 1: Sentence Tokenizer (sent_tokenize) -->
+    <div style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 1.1rem; margin-bottom: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem;">
+        <span style="font-size: 0.88rem; font-weight: 700; color: var(--color-corpus); display: flex; align-items: center; gap: 0.45rem;">
+          <span>📄</span>
+          <span>1. Sentence Tokenizer: sent_tokenize(corpus) ➔ Documents</span>
+        </span>
+        <span class="token-box-badge">${sentTok.length} Documents</span>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem;">
+        Splits unstructured text paragraph into individual sentences (Documents) by fullstops, exclamation marks, and question marks:
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+        ${sentTok.map((s, i) => `
+          <div style="font-size: 0.82rem; background: rgba(0,0,0,0.3); padding: 0.5rem 0.85rem; border-radius: 8px; border-left: 3px solid var(--color-corpus); color: var(--text-main);">
+            <strong style="color: var(--color-corpus); margin-right: 0.5rem;">Document #${i + 1}:</strong> "${escapeHtml(s)}"
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Step 2: Word Tokenizers Comparison Arena -->
+    <div style="margin-bottom: 0.85rem; color: var(--text-muted); font-size: 0.88rem; font-weight: 700; display: flex; align-items: center; gap: 0.45rem;">
+      <span>🏷️</span>
+      <span>2. Word Tokenizers Showdown (Document ➔ Word Tokens):</span>
     </div>
     <div class="practice-arena-grid">
       
